@@ -82,5 +82,18 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 return NotFound();
             return View(category);
         }
+
+        //POST - Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var category = await _db.Category.FindAsync(id);
+            if (category == null)
+                return View();
+            _db.Category.Remove(category);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
