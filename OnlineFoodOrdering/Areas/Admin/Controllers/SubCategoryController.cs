@@ -105,7 +105,9 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 }
                 else
                 {
-                    _db.SubCategory.Add(model.SubCategory);
+                    var subCat = await _db.SubCategory.FindAsync(id);
+                    subCat.Name = model.SubCategory.Name;
+                    
                     await _db.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -118,6 +120,30 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 StatusMessage = StatusMessage_
             };
             return View(modelVM);
+        }
+
+        //GET - Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            var subCategory = await _db.SubCategory.FindAsync(id);
+            if (subCategory == null)
+                return NotFound();
+            return View(subCategory);
+        }
+
+        //POST - Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var subCategory = await _db.SubCategory.FindAsync(id);
+            if (subCategory == null)
+                return View();
+            _db.SubCategory.Remove(subCategory);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
