@@ -23,5 +23,12 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
 
             return View(await _db.Category.ToListAsync());
         }
+
+        //GET - Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
     }
 }
