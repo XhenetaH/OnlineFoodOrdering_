@@ -9,6 +9,15 @@
 
 <h4>SubCategory</h4>
 <hr />
+@if(!String.IsNullOrEmpty(Model.StatusMessage))
+{
+    var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"/></button>
+        @Model.StatusMessage
+    </div>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

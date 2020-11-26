@@ -13,6 +13,8 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
     public class SubCategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
+        [TempData]
+        public string StatusMessage_ { get; set; }
         public SubCategoryController(ApplicationDbContext db)
         {
             this._db = db;
@@ -47,7 +49,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
 
                 if(existSubCategory.Count()>0)
                 {
-                    //Error
+                    StatusMessage_ = "Error : SubCategory exists under " + existSubCategory.First().Category.Name + " category. Please use another name.";
                 }
                 else
                 {
@@ -60,7 +62,8 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             {
                 CategoryList = await _db.Category.ToListAsync(),
                 SubCategory = model.SubCategory,
-                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync()
+                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
+                StatusMessage = StatusMessage_
             };
             return View(modelVM);
         }
