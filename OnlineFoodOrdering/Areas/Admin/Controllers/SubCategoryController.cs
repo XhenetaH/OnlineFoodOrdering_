@@ -126,11 +126,21 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
+            {
                 return NotFound();
-            var subCategory = await _db.SubCategory.FindAsync(id);
+            }
+            var subCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
             if (subCategory == null)
+            {
                 return NotFound();
-            return View(subCategory);
+            }
+            SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = await _db.Category.ToListAsync(),
+                SubCategory = subCategory,
+                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+            };
+            return View(model);
         }
 
         //POST - Delete
