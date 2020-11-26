@@ -19,7 +19,8 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         //GET - Index
         public async  Task<IActionResult> Index()
         {
-            return View(await _db.SubCategory.ToListAsync());
+            var subCategories = await _db.SubCategory.Include(s => s.Category).ToListAsync();
+            return View(subCategories);
         }
     }
 }
