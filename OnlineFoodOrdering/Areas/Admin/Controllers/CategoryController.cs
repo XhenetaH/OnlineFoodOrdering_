@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
+using OnlineFoodOrdering.Models;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -29,6 +30,20 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             return View();
         }
+        
+        //POST - Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Category category)
+        {
+            if(ModelState.IsValid)
+            {
+                _db.Category.Add(category);
+                await _db.SaveChangesAsync();
 
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
     }
 }
