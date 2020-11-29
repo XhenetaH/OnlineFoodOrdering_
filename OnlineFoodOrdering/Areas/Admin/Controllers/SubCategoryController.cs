@@ -183,9 +183,9 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         public async Task<IActionResult> GetSubCategory(int id)
         {
             List<SubCategory> subCategories = new List<SubCategory>();
-            subCategories = (from SubCategory in _db.SubCategory
+            subCategories = await (from SubCategory in _db.SubCategory
                              where SubCategory.CategoryId == id
-                             select SubCategory).ToList();
+                             select SubCategory).ToListAsync();
 
             return Json(new SelectList(subCategories, "Id", "Name"));
         }
