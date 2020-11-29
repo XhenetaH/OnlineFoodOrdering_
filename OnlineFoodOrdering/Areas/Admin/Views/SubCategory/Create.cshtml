@@ -25,22 +25,39 @@
             <div class="form-group">
                 <label asp-for="SubCategory.CategoryId" class="control-label"></label>
                 <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"></select>
-                
+
             </div>
             <div class="form-group">
                 <label asp-for="SubCategory.Name" class="control-label"></label>
                 <input asp-for="SubCategory.Name" class="form-control" />
                 <span asp-validation-for="SubCategory.Name" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+
+    <br/>
+
+    <div class="col-3 offset-1">
+        @if (Model.SubCategoryList.Count() > 0)
+        {
+            <p>Existing Subcategories: </p>
+
+            <div id="SubCategoryList">
+                <ul class="list-group"></ul>
+            </div>
+        }
+
     </div>
 </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
 

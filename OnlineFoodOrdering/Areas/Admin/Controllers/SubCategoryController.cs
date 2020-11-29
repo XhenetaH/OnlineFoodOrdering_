@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
+using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Models.ViewModels;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
@@ -176,5 +178,17 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             };
             return View(model);
         }
+
+        [ActionName("GetSubCategory")]
+        public async Task<IActionResult> GetSubCategory(int id)
+        {
+            List<SubCategory> subCategories = new List<SubCategory>();
+            subCategories = (from SubCategory in _db.SubCategory
+                             where SubCategory.CategoryId == id
+                             select SubCategory).ToList();
+
+            return Json(new SelectList(subCategories, "Id", "Name"));
+        }
+
     }
 }
