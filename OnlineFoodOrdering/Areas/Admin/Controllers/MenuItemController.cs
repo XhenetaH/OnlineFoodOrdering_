@@ -184,5 +184,29 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             return View(MenuItemVM);
         }
 
+        //POST - Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePOST(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var menuItem = await _db.MenuItem.FindAsync(id);
+            var imagePath = Path.Combine(webRootPath, menuItem.Image.TrimStart('\\'));
+
+            if(System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+                       
+            _db.MenuItem.Remove(menuItem);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
