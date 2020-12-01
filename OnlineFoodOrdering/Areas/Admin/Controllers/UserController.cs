@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
+using OnlineFoodOrdering.Utility;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles =SD.ManagerUser)]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _db;
