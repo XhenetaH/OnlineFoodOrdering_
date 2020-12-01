@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@using OnlineFoodOrdering.Utility
 @{
     ViewData["Title"] = "Register";
 }
@@ -58,6 +59,22 @@
                 <input asp-for="Input.PostalCode" class="form-control" />
                 <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
             </div>
+
+            @if (User.IsInRole(SD.ManagerUser))
+            {
+                <div class="form-group row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-6">
+                        <input type="radio" name="rdUserRole" value="@SD.KitchenUser" checked />@SD.KitchenUser
+                        <input type="radio" name="rdUserRole" value="@SD.FrontDeskUser" checked />@SD.FrontDeskUser
+                        <input type="radio" name="rdUserRole" value="@SD.ManagerUser" checked />@SD.ManagerUser
+                    </div>
+                </div>
+            }
+
+
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
