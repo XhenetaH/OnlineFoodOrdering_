@@ -14,7 +14,7 @@ namespace OnlineFoodOrdering.Models
         public string Name { get; set; }
         [Required]
         public string CouponType { get; set; }
-        public enum ECouponType { Percent=0, Dollar=1 }
+        public enum ECouponType { Percent=0, Euro=1 }
         [Required]
         public double Discount { get; set; }
         [Required]
