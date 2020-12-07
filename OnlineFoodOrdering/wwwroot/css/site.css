@@ -6,7 +6,7 @@
     text-transform: uppercase;
     font-weight: 700;
     background: #7fad39;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .back-btn {
     display: inline-block;
@@ -16,6 +16,13 @@
     text-transform: uppercase;
     font-weight: 700;
     background-color: #6f6f6f;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+}
+
+.backgroundWhite {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
 }
 
