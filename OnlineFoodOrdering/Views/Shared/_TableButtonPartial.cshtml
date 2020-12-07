@@ -1,0 +1,15 @@
+﻿@model int
+
+<td style="width:120px">
+    <div class="btn-group" role="group">
+        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-Id="@Model">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a class="btn btn-outline-success" asp-action="Details" asp-route-Id="@Model">
+            <i class="fa fa-info-circle"></i>
+        </a>
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-Id="@Model">
+            <i class="fa fa-trash"></i>
+        </a>
+    </div>
+</td> 
