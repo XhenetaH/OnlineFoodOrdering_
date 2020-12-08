@@ -1,8 +1,10 @@
 ﻿@model int
 
-<div class="col-6">
-    <a asp-action="Edit" class="edit-btn" asp-route-id="@Model" >&nbsp;&nbsp;Update&nbsp;&nbsp;</a>
-</div>
-<div class="col-6">
-    <a asp-action="Index" class="back-btn">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-6">
+            <a asp-action="Edit" class="edit-btn" asp-route-id="@Model">&nbsp;&nbsp;&nbsp;Edit&nbsp;&nbsp;&nbsp;</a>
+        </div>
+        <div class="col-6">
+            <a asp-action="Index" class="back-btn">Back to List</a>
+        </div>
+    </div>
