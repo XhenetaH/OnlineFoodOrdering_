@@ -57,5 +57,31 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             }
             return View(coupons);
         }
+
+        //GET - Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            var coupon = await _db.Coupon.FindAsync(id);
+            if (coupon == null)
+                return NotFound();
+            return View(coupon);
+        }
+
+        //POST - Edit
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(Coupon coupon)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Update(coupon);
+        //        await _db.SaveChangesAsync();
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(coupon);
+        //}
     }
 }
