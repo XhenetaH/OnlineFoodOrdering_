@@ -26,11 +26,13 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             return View(await _db.Coupon.ToListAsync());
         }
 
+        //GET - Create
         public IActionResult Create()
         {
             return View();
         }
 
+        //POST - Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Coupon coupons)
@@ -111,6 +113,30 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             if (coupon == null)
                 return NotFound();
             return View(coupon);
+        }
+
+        //GET - Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            var coupon = await _db.Coupon.FindAsync(id);
+            if (coupon == null)
+                return NotFound();
+            return View(coupon);
+        }
+
+        //POST - Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var coupon = await _db.Coupon.FindAsync(id);
+            if (coupon == null)
+                return View();
+            _db.Coupon.Remove(coupon);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
