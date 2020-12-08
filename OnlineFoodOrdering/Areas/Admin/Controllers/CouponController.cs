@@ -69,19 +69,33 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             return View(coupon);
         }
 
-        //POST - Edit
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Coupon coupon)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _db.Update(coupon);
-        //        await _db.SaveChangesAsync();
+       // POST - Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, Coupon coup)
+        {
+            var coupon = await _db.Coupon.FindAsync(id);
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = files[0].OpenReadStream())
+                    {
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                    }
+                    coupon.Picture = p1;
+                }
+                coupon.Name = coup.Name;
+                coupon.MinimumAmount = coup.MinimumAmount;
+                coupon.Discount = coup.Discount;
+                coupon.IsActive = coup.IsActive;
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(coupon);
-        //}
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+        }
     }
 }
