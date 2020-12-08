@@ -75,6 +75,8 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int? id, Coupon coup)
         {
             var coupon = await _db.Coupon.FindAsync(id);
+            if (ModelState.IsValid)
+            {
                 var files = HttpContext.Request.Form.Files;
                 if (files.Count > 0)
                 {
@@ -96,6 +98,19 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
 
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            return View(coupon);
+        }
+
+        //GET - Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            var coupon = await _db.Coupon.FindAsync(id);
+            if (coupon == null)
+                return NotFound();
+            return View(coupon);
         }
     }
 }
