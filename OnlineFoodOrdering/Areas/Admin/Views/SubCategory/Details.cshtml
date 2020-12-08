@@ -5,29 +5,74 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<br />
+<br />
+<br />
+<div class="border backgroundWhite">
+    <br />
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="SubCategory.Name" class="col-form-label"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="SubCategory.Name" readonly class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="SubCategory.Category.Name" class="col-form-label"></label>
+        </div>
+        <div class="col-5">
+            <input asp-for="SubCategory.Category.Name" readonly class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-5 offset-2">
+            <div class="row">
+                <partial name="_DetailsAndBackToListButton" model="Model.SubCategory.Id" />
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
 
-<div>
-    <h4>SubCategoryAndCategoryViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SubCategory.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SubCategory.Name)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SubCategory.Category.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.SubCategory.Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+<br />
+<br />
+<br />
+
+
+
+
+@*@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
+
+    @{
+        ViewData["Title"] = "Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h1>Details</h1>
+
+    <div>
+        <h4>SubCategoryAndCategoryViewModel</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SubCategory.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SubCategory.Name)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SubCategory.Category.Name)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.ActionLink("Edit", "Edit", new {  id = Model.SubCategory.Id }) |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
