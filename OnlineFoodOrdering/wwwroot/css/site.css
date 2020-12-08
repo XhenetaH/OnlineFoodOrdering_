@@ -49,3 +49,8 @@
     letter-spacing: 1px;
     border: none;
 }
+
+.myfonts {
+    font-size: 15px;
+    min-width: 280px;
+}

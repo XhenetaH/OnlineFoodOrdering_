@@ -1,46 +1,53 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
 @using OnlineFoodOrdering.Extensions
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>SubCategory</h4>
-<hr />
-@if(!String.IsNullOrEmpty(Model.StatusMessage))
+<br />
+<br />
+<br />
+@if (!String.IsNullOrEmpty(Model.StatusMessage))
 {
     var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
     <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"/></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" /></button>
         @Model.StatusMessage
     </div>
 }
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="border backgroundWhite row">
+    <div class="col-8 border-right">
+        <form method="post" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SubCategory.CategoryId" class="control-label"></label>
-                <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"></select>
-
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategory.CategoryId" class="control-label"></label>
+                </div>
+                <div class="col-3">
+                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="myfonts"><option>Please Select One</option></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SubCategory.Name" class="control-label"></label>
-                <input asp-for="SubCategory.Name" class="form-control" />
+
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="SubCategory.Name" class="control-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategory.Name" class="form-control" />
+                </div>
                 <span asp-validation-for="SubCategory.Name" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group row">
+                <div class="col-8 offset-3">
+                    <div class="row">
+                        <partial name="_CreateAndBackToListButtonPartial" />
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-
-    <br/>
-
     <div class="col-3 offset-1">
         @if (Model.SubCategoryList.Count() > 0)
         {
@@ -54,13 +61,85 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<br />
+<br />
+<br />
+<br />
 
 
 
-@section Scripts{ 
+
+
+
+
+
+
+
+
+@*@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
+    @using OnlineFoodOrdering.Extensions
+    @{
+        ViewData["Title"] = "Create";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h1>Create</h1>
+
+    <h4>SubCategory</h4>
+    <hr />
+    @if(!String.IsNullOrEmpty(Model.StatusMessage))
+    {
+        var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
+        <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"/></button>
+            @Model.StatusMessage
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SubCategory.CategoryId" class="control-label"></label>
+                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"></select>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubCategory.Name" class="control-label"></label>
+                    <input asp-for="SubCategory.Name" class="form-control" />
+                    <span asp-validation-for="SubCategory.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+        <br/>
+
+        <div class="col-3 offset-1">
+            @if (Model.SubCategoryList.Count() > 0)
+            {
+                <p>Existing Subcategories: </p>
+
+                <div id="SubCategoryList">
+                    <ul class="list-group"></ul>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+
+
+@section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
