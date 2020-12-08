@@ -26,8 +26,8 @@
                 <div class="col-3">
                     <label asp-for="SubCategory.CategoryId" class="control-label"></label>
                 </div>
-                <div class="col-3">
-                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" disabled asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="myfonts"><option>Please Select One</option></select>
+                <div class="col-5">
+                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" disabled asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"><option>Please Select One</option></select>
                 </div>
             </div>
 
