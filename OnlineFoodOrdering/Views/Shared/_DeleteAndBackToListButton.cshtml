@@ -1,8 +1,10 @@
 ﻿@model int
 
-<div class="col-6">
-    <input type="submit" class="delete-btn" asp-route-id="@Model" value="&nbsp&nbsp;Delete&nbsp&nbsp;" />
-</div>
-<div class="col-6">
-    <a asp-action="Index" class="back-btn">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" class="delete-btn" asp-route-id="@Model" value="&nbsp&nbsp;Delete&nbsp&nbsp;" />
+        </div>
+        <div class="col-6">
+            <a asp-action="Index" class="back-btn">Back to List</a>
+        </div>
+    </div>

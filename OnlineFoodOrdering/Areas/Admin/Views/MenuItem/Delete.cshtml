@@ -1,71 +1,131 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.MenuItemViewModel
-
+@using OnlineFoodOrdering.Extensions
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<br />
+<br />
+<br />
+<form method="post" enctype="multipart/form-data">
+    <div class="border backgroundWhite row">
+        <input type="hidden" asp-for="MenuItem.Id" />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>SubCategoryAndCategoryViewModel</h4>
-    <hr />
-    <input type="hidden" asp-for="MenuItem.Id" />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.Name)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.Description)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.Price)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.CategoryId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.Category.Name)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.SubCategoryId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.SubCategory.Name)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuItem.Spicyness)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MenuItem.Spicyness)
-        </dd>
-    </dl>
-    <div class="col-3 offset-1">
-        <img src="@Model.MenuItem.Image" width="100%" style="border-radius:5px; border: 1px solid #bbb9b9;" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Name" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MenuItem.Name" readonly class="form-control" />
+                </div>
+                <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Description" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    @Html.TextAreaFor(m => m.MenuItem.Description, new { @readonly = true })
+                </div>
+                <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Price" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MenuItem.Price" readonly class="form-control" />
+                </div>
+                <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.CategoryId" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MenuItem.CategoryId" disabled id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryId)" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.SubCategoryId" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.MenuItem.SubCategoryId" disabled name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Image" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" disabled multiple class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Spicyness" class="control-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="MenuItem.Spicyness" disabled asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 offset-1">
+            <img src="@Model.MenuItem.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+        </div>
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_DeleteAndBackToListButton" model="Model.MenuItem.Id" />
+            </div>
+        </div>
+
     </div>
+</form>
 
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+
+<br />
+<br />
+<br />
+<br />
+
+
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+                var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+                var ddlsource = '#CategoryId';
+                $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                    var items = '';
+                    $('#SubCategoryId').empty();
+                    $.each(data, function (i, subcategory) {
+                        items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                    });
+                    $('#SubCategoryId').html(items);
+                })
+            }
+    </script>
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
