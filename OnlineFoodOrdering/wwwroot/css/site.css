@@ -27,3 +27,25 @@
     margin-bottom: 30px;
 }
 
+.delete-btn {
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 60px 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: #f0382b;
+    letter-spacing: 1px;
+    border: none;
+}
+.edit-btn {
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 60px 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: #5dbcd2;
+    letter-spacing: 1px;
+    border: none;
+}
