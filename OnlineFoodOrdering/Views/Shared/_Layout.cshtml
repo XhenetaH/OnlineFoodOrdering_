@@ -29,38 +29,7 @@
     <header class="header">
         <div class="header__top">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
-                            <div class="header__top__right__language">
-                                <img src="img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_LoginPartial"/>
             </div>
         </div>
         <div class="container">
@@ -73,18 +42,19 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
+                            @if (User.IsInRole(SD.ManagerUser))
+                            {
                             <li>
                                 <a href="#">Content Management</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
                                     <li><a asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sub Category</a></li>
                                     <li><a asp-area="Admin" asp-controller="MenuItem" asp-action="Index">Menu Item</a></li>
-                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Index">Users</a></li>
                                     <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
+                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Index">Users</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Order History</a></li>
-                            <li><a href="./contact.html">Order</a></li>
+                            }
                         </ul>
                     </nav>
                 </div>
