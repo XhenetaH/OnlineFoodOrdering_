@@ -18,13 +18,11 @@ namespace OnlineFoodOrdering.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
 
-        public HomeController(ApplicationDbContext db)
-        {
-            this._db = db;
-        }
-        public HomeController(ILogger<HomeController> logger)
+      
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public async Task<IActionResult> Index()
