@@ -772,12 +772,12 @@ ol {
 }
 
 .categories__item h5 a {
-	font-size: 18px;
+	font-size: 15px;
 	color: #1c1c1c;
 	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 2px;
-	padding: 12px 0 10px;
+	letter-spacing: 1px;
+	padding: 12px 0 12px;
 	background: #ffffff;
 	display: block;
 }
