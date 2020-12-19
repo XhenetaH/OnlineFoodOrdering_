@@ -18,55 +18,59 @@
 </section>
 <!-- Breadcrumb Section End -->
 <!-- Product Details Section Begin -->
-<section class="product-details spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="product__details__pic">
-                    <div class="product__details__pic__item">
-                        <img class="product__details__pic__item--large"
-                             src="@Model.ShoppingCart.MenuItem.Image" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="product__details__text">
-                    <h3>@Model.ShoppingCart.MenuItem.Name</h3>
 
-                    <div class="product__details__price">Price &nbsp @Model.ShoppingCart.MenuItem.Price $</div>
-                    <p>@Model.ShoppingCart.MenuItem.Description</p>
-                    <div class="product__details__quantity">
-                        <div class="quantity">
-                            <div class="pro-qty">
-                                <input type="text" value="1">
-                            </div>
+<form method="post">
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                 src="@Model.ShoppingCart.MenuItem.Image" alt="">
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">ADD TO CARD</a>
-                    
-                    <ul>
-                        @{
-                            int enumvalue = int.Parse(Model.ShoppingCart.MenuItem.Spicyness);
-                            var checkStatusName = Enum.GetName(typeof(MenuItem.ESpicy), enumvalue);
-                        }
-                        <li><b>Category</b> <span>@Model.ShoppingCart.MenuItem.Category.Name</span></li>
-                        <li><b>SubCategory</b> <span>@Model.ShoppingCart.MenuItem.SubCategory.Name</span></li>
-                        <li><b>Spicyness</b> <span>@checkStatusName</span></li>
-                        <li>
-                            <b>Share on</b>
-                            <div class="share">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>@Model.ShoppingCart.MenuItem.Name</h3>
+
+                        <div class="product__details__price">Price &nbsp @Model.ShoppingCart.MenuItem.Price $</div>
+                        <p>@Model.ShoppingCart.MenuItem.Description</p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input asp-for="ShoppingCart.Count">
+                                </div>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <input type="submit" class="primary-btn" value="ADD TO CART" style="border:none" />
+                        <input asp-for="ShoppingCart.MenuItemId" hidden />
+
+                        <ul>
+                            @{
+                                int enumvalue = int.Parse(Model.ShoppingCart.MenuItem.Spicyness);
+                                var checkStatusName = Enum.GetName(typeof(MenuItem.ESpicy), enumvalue);
+                            }
+                            <li><b>Category</b> <span>@Model.ShoppingCart.MenuItem.Category.Name</span></li>
+                            <li><b>SubCategory</b> <span>@Model.ShoppingCart.MenuItem.SubCategory.Name</span></li>
+                            <li><b>Spicyness</b> <span>@checkStatusName</span></li>
+                            <li>
+                                <b>Share on</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
 <!-- Product Details Section End -->
 <!-- Categories Section Begin -->
 <section class="categories">
@@ -77,7 +81,7 @@
                 {
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="@item.Image">
-                            <h5><a href="#">@item.Name</a></h5>
+                            <h5><a asp-action="Details" asp-route-id="@item.Id">@item.Name</a></h5>
                         </div>
                     </div>
                 }

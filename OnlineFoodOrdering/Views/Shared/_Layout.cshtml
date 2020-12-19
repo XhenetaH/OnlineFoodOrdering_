@@ -1,4 +1,7 @@
 ﻿@using OnlineFoodOrdering.Utility
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,11 +64,37 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
+                        {
+                            <ul>
+                                @{
+                                    var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
+                                }
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>@count</span></a></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul>
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
+                            </ul>
+                        }
+
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("ssCartPrice") != null)
+                        {
+                            
+                                var price = HttpContextAccessor.HttpContext.Session.GetString("ssCartPrice");
+                            
+
+                            <div class="header__cart__price">item: <span>@price $</span></div>
+                        }
+                        else
+                        {
+                            <div class="header__cart__price">item: <span>0.00 $</span></div>
+                        }
+
+
                     </div>
                 </div>
             </div>

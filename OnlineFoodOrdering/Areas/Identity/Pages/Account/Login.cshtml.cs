@@ -11,23 +11,27 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OnlineFoodOrdering.Data;
+using Microsoft.EntityFrameworkCore;
+using OnlineFoodOrdering.Models;
+using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace OnlineFoodOrdering.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
+        private readonly ApplicationDbContext _db;
         public LoginModel(SignInManager<IdentityUser> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            ILogger<LoginModel> logger,ApplicationDbContext db)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _db = db;
         }
 
         [BindProperty]
@@ -82,6 +86,21 @@ namespace OnlineFoodOrdering.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _db.Users.Where(u => u.Email == Input.Email).FirstOrDefaultAsync();
+
+                    List<ShoppingCart> lstShoppingCart = await _db.ShoppingCart.Where(u => u.ApplicationUserId == user.Id).ToListAsync();
+                    var price =(from shp in _db.ShoppingCart
+                                join mnt in _db.MenuItem on shp.MenuItemId equals mnt.Id
+                                where shp.ApplicationUserId == user.Id
+                                select new
+                                {
+                                    pricee = mnt.Price * shp.Count
+                                });
+                    var sum = price.Sum(x => x.pricee);
+                    HttpContext.Session.SetInt32("ssCartCount", lstShoppingCart.Count);
+                    HttpContext.Session.SetString("ssCartPrice", sum.ToString());
+                    
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
