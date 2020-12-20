@@ -809,7 +809,7 @@ ol {
 /*---------------------
   Featured
 -----------------------*/
-
+	
 .featured {
 	padding-top: 80px;
 	padding-bottom: 40px;
@@ -848,6 +848,53 @@ ol {
 .featured__controls ul li:last-child {
 	margin-right: 0;
 }
+
+
+
+
+.featured___controls {
+	text-align: left;
+	margin-bottom: 50px;
+}
+
+	.featured___controls ul li {
+		list-style: none;
+	
+		color: #1c1c1c;
+		margin-right: 25px;
+		position: relative;
+		cursor: pointer;
+		font-size: 16px;
+		line-height: 39px;
+		display: block;
+	}
+
+		.featured___controls ul li.active:after {
+			opacity: 1;
+		}
+
+		.featured___controls ul li:after {
+			position: absolute;
+			left: 0;
+			bottom: -2px;
+			width: 100%;
+			height: 5px;
+			background: #7fad39;
+			content: "";
+			opacity: 0;
+		}
+
+		.featured___controls ul li:last-child {
+			margin-right: 0;
+		}
+
+
+
+
+
+
+
+
 
 .featured__item {
 	margin-bottom: 50px;
