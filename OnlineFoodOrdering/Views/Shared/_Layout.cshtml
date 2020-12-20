@@ -47,6 +47,7 @@
                         <ul>
                             @if (User.IsInRole(SD.ManagerUser))
                             {
+                                <li><a asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a></li>
                                 <li>
                                     <a href="#">Content Management</a>
                                     <ul class="header__menu__dropdown">
@@ -57,6 +58,11 @@
                                         <li><a asp-area="Admin" asp-controller="User" asp-action="Index">Users</a></li>
                                     </ul>
                                 </li>
+
+                            }
+                            else if (User.IsInRole(SD.CustomerEndUser))
+                            {
+                                <li><a asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a></li>
                             }
 
                         </ul>
