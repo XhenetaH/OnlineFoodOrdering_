@@ -270,25 +270,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach (var item in Model.MenuItem)
+                    @foreach (var category in Model.Category)
                     {
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="@item.Image">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">@item.Name</a></h6>
-                                    <h5>@item.Price</h5>
-                                </div>
-                            </div>
-                        </div>
-                    }
 
+                        <partial name="_ThumbnailAreaPartial" model="@Model.MenuItem.Where(u=>u.Category.Name.Equals(category.Name))" />
+
+                    }
                 </div>
                 <div class="product__pagination">
                     <a href="#">1</a>
