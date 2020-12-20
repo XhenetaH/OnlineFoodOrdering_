@@ -130,5 +130,17 @@ namespace OnlineFoodOrdering.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Search()
+        {
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
+                MenuItem = _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).ToList(),
+                Category = _db.Category.ToList()
+
+            };            
+            return View(IndexVM);
+        }
+
     }
 }

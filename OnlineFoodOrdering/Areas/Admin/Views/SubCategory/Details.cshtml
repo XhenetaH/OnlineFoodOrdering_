@@ -8,30 +8,33 @@
 <br />
 <br />
 <br />
-<div class="border backgroundWhite">
-    <br />
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="SubCategory.Name" class="col-form-label"></label>
+<div class="container">
+    <div class="border backgroundWhite">
+        <br />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="SubCategory.Name" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="SubCategory.Name" readonly class="form-control" />
+            </div>
         </div>
-        <div class="col-5">
-            <input asp-for="SubCategory.Name" readonly class="form-control" />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="SubCategory.Category.Name" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="SubCategory.Category.Name" readonly class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="SubCategory.Category.Name" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="SubCategory.Category.Name" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-5 offset-2">
+        <div class="form-group row">
+            <div class="col-5 offset-2">
                 <partial name="_DetailsAndBackToListButton" model="Model.SubCategory.Id" />
+            </div>
         </div>
+        <br />
     </div>
-    <br />
+
 </div>
 
 <br />

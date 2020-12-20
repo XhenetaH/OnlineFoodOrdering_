@@ -5,52 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
-
-<div class="border backgroundWhite">
-    <div class="row">
-        <div class="col-12 text-right">
-            <a asp-action="Create" class="site-btn"><i class="fa fa-plus"></i>  Create New</a>
+<div class="container">
+    <div class="border backgroundWhite">
+        <div class="row">
+            <div class="col-12 text-right">
+                <a asp-action="Create" class="site-btn"><i class="fa fa-plus"></i>  Create New</a>
+            </div>
         </div>
-    </div>
-    <br />
-    <div>
-        @if (Model.Count() > 0)
-        {
-            <table class="table table-striped border" style="background-color:#fff">
-                <tr class="table-secondary">
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name).ToUpper()
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category.Name).ToUpper()
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.Name)
-                        </td>
-                        <td>
-                            <partial name="_TableButtonPartial" model="item.Id" />
-                        </td>
+        <br />
+        <div>
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border" style="background-color:#fff">
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name).ToUpper()
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Category.Name).ToUpper()
+                        </th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                }
-            </table>
-        }
-        else
-        {
-            <p>No SubCategory Exist!</p>
-        }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.Name)
+                            </td>
+                            <td>
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No SubCategory Exist!</p>
+            }
+        </div>
+
     </div>
 
 </div>
-
 <br />
 <br />
 
