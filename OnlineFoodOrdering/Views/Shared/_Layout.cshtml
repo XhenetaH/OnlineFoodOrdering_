@@ -89,9 +89,9 @@
 
                         @if (HttpContextAccessor.HttpContext.Session.GetString("ssCartPrice") != null)
                         {
-                            
-                                var price = HttpContextAccessor.HttpContext.Session.GetString("ssCartPrice");
-                            
+
+                            var price = HttpContextAccessor.HttpContext.Session.GetString("ssCartPrice");
+
 
                             <div class="header__cart__price">item: <span>@price $</span></div>
                         }
@@ -186,16 +186,28 @@
         </div>
     </footer>
     <script src="https://cdn.tiny.cloud/1/9kg6nl7ex8bl66glj977lj9lhfp74t2qevk5s6axl3yuuf2v/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
+
     <script src="~/js/jquery.nice-select.min.js"></script>
     <script src="~/js/jquery-ui.min.js"></script>
     <script src="~/js/jquery.slicknav.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
-    <script src="~/js/mixitup.min.js"></script>
-    <script src="~/js/site.js"></script>
+    @*
 
+
+
+
+
+
+        <script src="~/js/mixitup.min.js"></script>
+        <script src="~/js/site.js"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>*@
+    @RenderSection("Scripts", required: false)
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -204,7 +216,5 @@
         <script src="~/js/jquery-3.3.1.min.js"></script>
         <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/jquery.nice-select.min.js"></script>*@
-
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

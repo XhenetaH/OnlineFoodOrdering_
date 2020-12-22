@@ -19,18 +19,9 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
         {
             _db = db;
         }
-        //public IActionResult Index()
-        //{
-        //    IndexViewModel IndexVM = new IndexViewModel()
-        //    {
-        //        MenuItem = _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).ToList(),
-        //        Category = _db.Category.ToList()
 
-        //    };
-        //    return View(IndexVM);
-        //}
-
-        public IActionResult Index(string searchString)
+        
+        public async Task<IActionResult> Index(string searchString)
         {
             var menuItem = from m in _db.MenuItem
                          select m;
@@ -42,8 +33,8 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
 
             IndexViewModel IndexVM = new IndexViewModel()
             {
-                MenuItem = menuItem,
-                Category = _db.Category.ToList()
+                MenuItem = await menuItem.ToListAsync(),
+                Category = await _db.Category.ToListAsync()
             };
             return View(IndexVM);
         }
