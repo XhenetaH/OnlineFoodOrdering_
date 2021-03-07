@@ -1,52 +1,265 @@
 ﻿@model IEnumerable<OnlineFoodOrdering.Models.Category>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
 
 <div class="container">
-    <div class="border backgroundWhite">
+    <div class="">
+        <br />
+        <br />
         <div class="row">
-            <div class="col-12 text-right">
-                <a asp-action="Create" class="site-btn"><i class="fa fa-plus"></i>  Create New</a>
+            <div class="col-2">
+                <button type="button" data-toggle="modal" style="margin-bottom:40px; " class="obrien-button primary-btn anchorDetail3"><i class="fa fa-plus"></i>  @localizer["Create New"]</button>
             </div>
+
+            <div class="col-12">
+                <input type="text" id="Search" placeholder="@localizer["Search"]" class="form-control" style="border-radius:15px;" />
+            </div>
+
         </div>
         <br />
-        <div>
+        <div class="myaccount-table table-responsive text-center">
             @if (Model.Count() > 0)
             {
-                <table class="table table-striped border" style="background-color:#fff">
-                    <tr class="table-secondary">
-                        <th>
-                            @Html.DisplayNameFor(model => model.Name).ToUpper()
-                        </th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    @foreach (var item in Model)
-                    {
+                <table class="table table-bordered">
+                    <thead class="thead-light">
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                <partial name="_TableButtonPartial" model="item.Id" />
-                            </td>
+                            <th>
+                                @localizer["Name"]
+                            </th>
+                            <th></th>
+
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="Search">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+
+                                <td>
+                                    <button style="margin-left:-20px;" type="button" class="anchorDetail" data-toggle="modal" data-id="@item.Id" title="Quick View">
+                                        <i class="ion-edit"></i>
+                                    </button>&nbsp;
+                                    |&nbsp;
+                                    <button type="button" class="anchorDetail1" data-toggle="modal" data-id="@item.Id" title="Quick View">
+                                        <i class="ion-information-circled"></i>
+                                    </button>&nbsp;
+                                    |&nbsp;
+                                    <button style="margin-right:-20px;" type="button" class="anchorDetail2" data-toggle="modal" data-id="@item.Id" title="Quick View">
+                                        <i class="ion-android-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
                 </table>
-            }
-            else
-            {
-                <p>No Category Exist!</p>
+
+
+
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+new X.PagedList.Mvc.Core.Common.PagedListRenderOptions
+{
+    DisplayItemSliceAndTotal = false,
+    ContainerDivClasses = new[] { "pagination pagination-wrap mb-10 mb-sm-0" },
+    LiElementClasses = new[] { "pagination" },
+    PageClasses = new[] { "page-link" },
+    Display = X.PagedList.Web.Common.PagedListDisplayMode.IfNeeded
+    
+});
+                
+
+
             }
         </div>
-
     </div>
 
 </div>
+<!-- Modal Area Start Here -->
+<div class="modal fade obrien-modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close close-button" data-dismiss="modal" aria-label="Close">
+                <span class="close-icon" aria-hidden="true">x</span>
+            </button>
+            <div class="modal-body" id="myModalContent">
 
-<br />
-<br />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Area End Here -->
+<!-- Modal Area Start Here -->
+<div class="modal fade obrien-modal" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close close-button" data-dismiss="modal" aria-label="Close">
+                <span class="close-icon" aria-hidden="true">x</span>
+            </button>
+            <div class="modal-body" id="myModalContent1">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Area End Here -->
+<!-- Modal Area Start Here -->
+<div class="modal fade obrien-modal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close close-button" data-dismiss="modal" aria-label="Close">
+                <span class="close-icon" aria-hidden="true">x</span>
+            </button>
+            <div class="modal-body" id="myModalContent2">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Area End Here -->
+<!-- Modal Area Start Here -->
+<div class="modal fade obrien-modal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close close-button" data-dismiss="modal" aria-label="Close">
+                <span class="close-icon" aria-hidden="true">x</span>
+            </button>
+            <div class="modal-body" id="myModalContent3">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Area End Here -->
+
+@section Scripts
+{
+    <script>
+        var PostBackURL = '/Admin/Category/Edit';
+        var DetailsURL = '/Admin/Category/Details';
+        var DeleteURL = '/Admin/Category/Delete';
+        var CreateURL = '/Admin/Category/Create';
+        $(function () {
+            $(".anchorDetail").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                })
+            });
+        });
+
+        $(function () {
+            $(".anchorDetail1").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: DetailsURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myModalContent1').html(data);
+                        $('#myModal1').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                })
+            });
+        });
+
+        $(function () {
+            $(".anchorDetail2").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: DeleteURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myModalContent2').html(data);
+                        $('#myModal2').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                })
+            });
+        });
+
+        $(function () {
+            $(".anchorDetail3").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: CreateURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myModalContent3').html(data);
+                        $('#myModal3').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                })
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+
+}

@@ -1,0 +1,33 @@
+﻿@model OnlineFoodOrdering.Models.ViewModels.OrderDetailsViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Confirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<div class="container">
+    <div class="row px-3">
+        <div class="col-8 checkout__form">
+            <h2>@localizer["Order Confirmed"] ✔</h2>
+        </div>
+        <div class="col-4 text-right">
+            <a asp-action="Index" asp-controller="Home" class="site-btn">@localizer["New Order"]</a>
+        </div>
+    </div>
+
+    @if (Model.Order != null)
+    {
+        <div style="color:maroon" class="p-3">
+            @localizer["Your order"]
+            <br />
+            @localizer["questions"]
+        </div>
+        <partial name="_IndividualOrderDetails" model="Model" />
+    }
+    else
+    {
+        <div class="text-danger">@localizer["Error"]</div>
+    }
+</div>

@@ -1,0 +1,95 @@
+﻿@model OnlineFoodOrdering.Models.ViewModels.CompareViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+<!-- Breadcrumb Area Start Here -->
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">@localizer["Compare"]</h3>
+                    <ul>
+                        <li><a asp-action="Index" asp-controller="Home">@localizer["Home"]</a></li>
+                        <li>@localizer["Compare"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Area End Here -->
+<!-- Compare Area Start Here -->
+
+<div class="compare-area mt-no-text mb-no-text">
+    <div class="container container-default-2 custom-area">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- Compare Page Content Start -->
+                <div class="compare-page-content-wrap">
+                    <div class="compare-table table-responsive">
+                        @if (Model.CompareList.Count() > 0)
+                        {
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <td class="first-column">@localizer["Product"]</td>
+                                        <td class="first-column">@localizer["Description"]</td>
+                                        <td class="first-column">@localizer["Price"]</td>
+
+                                        <td class="first-column">@localizer["Category"]</td>
+                                        <td class="first-column">@localizer["Add To Cart"]</td>
+                                        <td class="first-column">@localizer["Remove"]</td>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.CompareList)
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td class="product-image-title">
+                                                <a href="product-details.html" class="image">
+                                                    <img class="img-fluid" src="@item.MenuItem.Image" alt="Compare Product">
+                                                </a>
+                                                <br />
+                                                <a href="product-details.html" class="title">@item.MenuItem.Name</a>
+                                            </td>
+                                            <td class="pro-desc" style="width:300px;"><p>@item.MenuItem.Description</p></td>
+                                            <td class="pro-price">$@item.MenuItem.Price</td>
+                                            <td class="pro-desc">@item.MenuItem.Category.Name</td>
+
+                                            <td>
+                                                @using (Html.BeginForm("AddToCart", "Compare", FormMethod.Post))
+                                                {
+
+                                                    <input asp-for="Compare.MenuItemId" value="@item.MenuItem.Id" hidden />
+                                                    <button type="submit" class="btn btn__bg btn__sqr">@localizer["Add To Cart"]</button>
+                                                }
+                                            </td>
+
+                                            <td class="pro-remove">
+                                                @using (Html.BeginForm("Remove", "Compare", FormMethod.Post))
+                                                {
+                                                    <button type="submit" asp-action="remove" asp-route-compareId="@item.Id"><i class="fa fa-trash-o"></i></button>
+
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                }
+                            </table>
+
+                        }
+                        else
+                        {
+                            <p>ska</p>
+                        }
+
+
+                    </div>
+                </div>
+                <!-- Compare Page Content End -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Compare Area End Here -->

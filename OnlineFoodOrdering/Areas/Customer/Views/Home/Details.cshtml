@@ -1,92 +1,338 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.ShoppingCartViewModel
-    <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="/images/longphoto.jpg">
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+<!-- Breadcrumb Area Start Here -->
+<div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text">
-                    <h2>@Model.ShoppingCart.MenuItem.Name</h2>
-                    <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <a href="./index.html">Vegetables</a>
-                        <span>@Model.ShoppingCart.MenuItem.Name</span>
-                    </div>
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">@localizer["Product Details"]</h3>
+                    <ul>
+                        <li><a asp-action="Index">@localizer["Home"]</a></li>
+                        <li>@localizer["Product Details"]</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<!-- Breadcrumb Section End -->
-<!-- Product Details Section Begin -->
-
-<form method="post">
-    <section class="product-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="product__details__pic">
-                        <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
-                                 src="@Model.ShoppingCart.MenuItem.Image" alt="">
+</div>
+<!-- Breadcrumb Area End Here -->
+<!-- Single Product Main Area Start -->
+<div class="single-product-main-area">
+    <div class="container container-default custom-area">
+        <div class="row">
+            <div class="col-lg-5 col-custom">
+                <div class="product-details-img horizontal-tab">
+                    <div class="product-slider popup-gallery product-details_slider" data-slick-options='{
+                        "slidesToShow": 1,
+                        "arrows": false,
+                        "fade": true,
+                        "draggable": false,
+                        "swipe": false,
+                        "asNavFor": ".pd-slider-nav"
+                        }'>
+                        <div class="single-image border">
+                            <a href="@Model.ShoppingCart.MenuItem.Image">
+                                <img src="@Model.ShoppingCart.MenuItem.Image" alt="Product">
+                            </a>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="product__details__text">
-                        <h3>@Model.ShoppingCart.MenuItem.Name</h3>
 
-                        <div class="product__details__price">Price &nbsp @Model.ShoppingCart.MenuItem.Price $</div>
-                        <p>@Model.ShoppingCart.MenuItem.Description</p>
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input asp-for="ShoppingCart.Count">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-custom">
+                <div class="product-summery position-relative">
+                    <div class="product-head mb-3">
+                        <h2 class="product-title">@Model.ShoppingCart.MenuItem.Name</h2>
+                    </div>
+                    <div class="price-box mb-2">
+                        <span class="regular-price">$@Model.ShoppingCart.MenuItem.Price</span>
+
+                    </div>
+                    @{
+                        var sum = ViewBag.RatingSum;
+                        var count = ViewBag.RatingCount;
+
+
+                    }
+                    @if (count > 0)
+                    {
+                        var result = sum / count;
+                        <div class="product-rating mb-3">
+                            @for (int i = 0; i < result; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
+                            @for (int i = result; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o"></i>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-rating mb-3">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                    }
+
+                    <div class="sku mb-3">
+                        <span>ID: @Model.ShoppingCart.MenuItemId</span>
+                    </div>
+                    <p class="desc-content mb-5">@Model.ShoppingCart.MenuItem.Description</p>
+
+
+                    @using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
+                    {
+                        <div class="quantity-with_btnxh mb-4">
+                            <div class="quantityxh">
+                                <div class="cart-plus-minus">
+                                    <input id="IP" asp-for="ShoppingCart.Count" class="cart-plus-minus-box" value="1" type="text">
+                                    <div class="dec qtybutton">-</div>
+                                    <div class="inc qtybutton">+</div>
                                 </div>
                             </div>
+                            <div class="add-to_cart">
+                                <input asp-for="ShoppingCart.MenuItemId" hidden />
+                                <input type="submit" class="btn obrien-button primary-btn" value="@localizer["Add"]">
+                            </div>
                         </div>
-                        <input type="submit" class="primary-btn" value="ADD TO CART" style="border:none" />
-                        <input asp-for="ShoppingCart.MenuItemId" hidden />
+                    }
+                    @using (Html.BeginForm("WishList", "Home", FormMethod.Post))
+                    {
+                        <div class="quantity-with_btnxh mb-4" style=" margin-left:380px; margin-top:-68px;">
+                            <div class="add-to_cart">
+                                <input asp-for="WishList.MenuItemId" value="@Model.ShoppingCart.MenuItemId" hidden />
+                                <input type="submit" class="btn obrien-button-2 treansparent-color pt-0 pb-0" value="@localizer["Add to wishlist"]">
+                            </div>
+                        </div>
 
-                        <ul>
-                            @{
-                                int enumvalue = int.Parse(Model.ShoppingCart.MenuItem.Spicyness);
-                                var checkStatusName = Enum.GetName(typeof(MenuItem.ESpicy), enumvalue);
-                            }
-                            <li><b>Category</b> <span>@Model.ShoppingCart.MenuItem.Category.Name</span></li>
-                            <li><b>SubCategory</b> <span>@Model.ShoppingCart.MenuItem.SubCategory.Name</span></li>
-                            <li><b>Spicyness</b> <span>@checkStatusName</span></li>
-                            <li>
-                                <b>Share on</b>
-                                <div class="share">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </li>
-                        </ul>
+                    }
+                    @*@using(Html.BeginForm("Summary","Cart",FormMethod.Post))
+                    {
+                    }*@
+                <div class="buy-button mb-5">
+                    @Html.ActionLink(localizer["Buy Now"].Value.ToString(), "SingleSummary", "Cart", new { id = @Model.ShoppingCart.MenuItemId, count = "xxx" }, new { @class = "btn obrien-button-3 black-button link" })
+                </div>
+
+
+
+
+                    <div class="social-share mb-4">
+                        <span>@localizer["Share"] :</span>
+                        <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
+                        <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
+                        <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
                     </div>
+                    @*<div class="payment">
+            <a href="#"><img class="border" src="assets/images/payment/img-payment.png" alt="Payment"></a>
+        </div>*@
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-no-text">
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-uppercase" id="profile-tab" data-toggle="tab" href="#connect-2" role="tab" aria-selected="true">@localizer["Review"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase" id="home-tab" data-toggle="tab" href="#connect-1" role="tab" aria-selected="false">@localizer["Description"]</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase" id="contact-tab" data-toggle="tab" href="#connect-3" role="tab" aria-selected="false">@localizer["ShippingTitle"]</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content mb-text" id="myTabContent">
+                    <div class="tab-pane fade" id="connect-1" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="desc-content">
+                            <p class="mb-3">@localizer["DescriptionLine1"]</p>
+                            <p>@localizer["DescriptionLine2"]</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
+                        <!-- Start Single Content -->
+                        <div class="product_tab_content  border p-3">
+                            <div class="review_address_inner">
+                                <!-- Start Single Review -->
+                                @if (Model.Ratings.Count() > 0)
+                                {
+                                    @foreach (var item in Model.Ratings)
+                                    {
+                                        <div class="pro_review mb-5">
+                                            <div>
+                                                <h5>@item.Name  </h5>
+                                            </div>
+                                            <div class="review_details">
+                                                <div class="review_info mb-2">
+                                                    <div class="product-rating mb-2">
+                                                        @for (int i = 0; i < item.Rating; i++)
+                                                        {
+                                                            <i class="fa fa-star"></i>
+                                                        }
+                                                        @for (int i = item.Rating; i < 5; i++)
+                                                        {
+                                                            <i class="fa fa-star-o"></i>
+                                                        }
+
+                                                    </div>
+                                                    <span>Published Date -  @item.PublishedDate.ToShortDateString()</span>
+                                                </div>
+                                                <p>@item.Comments</p>
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <p>ska ylla</p>
+                                }
+
+
+                                <!-- End Single Review -->
+                            </div>
+                            @using (Html.BeginForm("AddComment", "Home", FormMethod.Post, new { onsubmit = "return VerifyRating()" }))
+                            {
+                                <!-- Start RAting Area -->
+                                <div class="rating_wrap">
+                                    <h5 class="rating-title-1 mb-2">@localizer["Add a review"] </h5>
+                                    <p class="mb-2">@localizer["emailReq"] *</p>
+                                    <h6 class="rating-title-2 mb-2">@localizer["Your Rating"]</h6>
+                                    <div class="rating_list mb-4">
+                                        <div class="review_info">
+                                            <div onmouseout="CRateSelected()" class="product-rating mb-3">
+                                                <i id="star1" onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)" class="fa fa-star-o"></i>
+                                                <i id="star2" onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)" class="fa fa-star-o"></i>
+                                                <i id="star3" onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)" class="fa fa-star-o"></i>
+                                                <i id="star4" onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)" class="fa fa-star-o"></i>
+                                                <i id="star5" onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)" class="fa fa-star-o"></i>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End RAting Area -->
+                                <div class="comments-area comments-reply-area">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-custom">
+                                            <div class="row comment-input">
+                                                <div class="col-md-6 col-custom comment-form-author mb-3">
+                                                    <label>@localizer["Name"] <span class="required">*</span></label>
+                                                    <input asp-for="@Model.Rating.Name" required="required">
+                                                </div>
+                                                <div class="col-md-6 col-custom comment-form-emai mb-3">
+                                                    <label>@localizer["Email"] <span class="required">*</span></label>
+                                                    <input asp-for="@Model.Rating.Email" required="required">
+                                                </div>
+                                                <div>
+                                                    <input asp-for="@Model.Rating.Rating" type="hidden" id="lblRating" value="0" />
+                                                </div>
+                                                <div>
+                                                    <input asp-for="@Model.Rating.MenuItemId" value="@Model.ShoppingCart.MenuItemId" type="hidden" />
+
+                                                </div>
+                                            </div>
+                                            <div class="comment-form-comment mb-3">
+                                                <label>@localizer["Comment"]</label>
+                                                <textarea asp-for="@Model.Rating.Comments" class="comment-notes" id="txtArticleComment" required="required"></textarea>
+                                            </div>
+                                            <div class="comment-form-submit">
+                                                <input type="submit" value="@localizer["Add Rating"]" class="comment-submit btn obrien-button primary-btn">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            
+                        </div>
+
+                        <!-- End Single Content -->
+                    </div>
+                    <div class="tab-pane fade" id="connect-3" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="shipping-policy">
+                            <h4 class="title-3 mb-4">@localizer["ShippingTitle"]</h4>
+                            <p class="desc-content mb-2">@localizer["ShippingLine1"]</p>
+                            <ul class="policy-list mb-2">
+                                <li>@localizer["ShippingLine2"]</li>
+                                <li><a href="#">@localizer["ShippingLine3"]</a></li>
+                                <li>@localizer["ShippingLine4"]</li>
+                                
+                            </ul>
+                            @*<p class="desc-content mb-2">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum</p>
+                            <p class="desc-content mb-2">claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per</p>
+                            <p class="desc-content mb-2">seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>*@
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </section>
-</form>
-<!-- Product Details Section End -->
-<!-- Categories Section Begin -->
-<section class="categories">
-    <div class="container">
-        <div class="row">
-            <div class="categories__slider owl-carousel">
-                @foreach (var item in Model.MenuItemList)
-                {
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="@item.Image">
-                            <h5><a asp-action="Details" asp-route-id="@item.Id">@item.Name</a></h5>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
     </div>
-</section>
-<!-- Categories Section End -->
+</div>
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            $('.link').click(function () {
+                var ipvalue = $("#IP").val();
+                this.href = this.href.replace("xxx", ipvalue);
+            });
+        });
+    </script>
+
+    <script>
+        function CRateOut(rating) {
+            for (var i = 1; i <= rating; i++) {
+                $("#star" + i).attr('class', 'fa fa-star-o');
+            }
+        }
+
+        function CRateOver(rating) {
+            for (var i = 1; i <= rating; i++) {
+                $("#star" + i).attr('class', 'fa fa-star');
+            }
+        }
+
+        function CRateClick(rating) {
+            $("#lblRating").val(rating);
+            for (var i = 1; i <= rating; i++) {
+                $("#star" + i).attr('class', 'fa fa-star');
+            }
+
+            for (var i = rating + 1; i <= 5; i++) {
+                $("#star" + i).attr('class', 'fa fa-star-empty');
+            }
+        }
+
+        function CRateSelected() {
+            var rating = $("#lblRating").val();
+            for (var i = 1; i <= rating; i++) {
+                $("#star" + i).attr('class', 'fa fa-star');
+            }
+        }
+
+        function VerifyRating() {
+            var rating = $("#lblRating").val();
+            if (rating == "0") {
+                alert("Please Select Rating.");
+                return false;
+            }
+        }
+
+    </script>
+
+}

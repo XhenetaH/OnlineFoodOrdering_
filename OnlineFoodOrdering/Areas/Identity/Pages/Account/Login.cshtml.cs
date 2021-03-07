@@ -89,16 +89,10 @@ namespace OnlineFoodOrdering.Areas.Identity.Pages.Account
                     var user = await _db.Users.Where(u => u.Email == Input.Email).FirstOrDefaultAsync();
 
                     List<ShoppingCart> lstShoppingCart = await _db.ShoppingCart.Where(u => u.ApplicationUserId == user.Id).ToListAsync();
-                    var price =(from shp in _db.ShoppingCart
-                                join mnt in _db.MenuItem on shp.MenuItemId equals mnt.Id
-                                where shp.ApplicationUserId == user.Id
-                                select new
-                                {
-                                    pricee = mnt.Price * shp.Count
-                                });
-                    var sum = price.Sum(x => x.pricee);
+                    List<WishList> lstWishList = await _db.WishList.Where(m => m.ApplicationUserId == user.Id).ToListAsync();
+                   
                     HttpContext.Session.SetInt32("ssCartCount", lstShoppingCart.Count);
-                    HttpContext.Session.SetString("ssCartPrice", sum.ToString());
+                    HttpContext.Session.SetInt32("ssWishCount", lstWishList.Count);
                     
 
                     _logger.LogInformation("User logged in.");

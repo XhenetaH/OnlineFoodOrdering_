@@ -1,0 +1,176 @@
+﻿@model IEnumerable<OnlineFoodOrdering.Models.ViewModels.OrderDetailsViewModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="">
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-12">
+                <input type="text" id="Search" placeholder="@localizer["Search"]" class="form-control" style="border-radius:15px;" />
+
+            </div>
+        </div>
+        <br />
+        <div class="myaccount-table table-responsive text-center">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                @localizer["Full Name"]
+                            </th>
+                            <th>
+                                @localizer["Email"]
+                            </th>
+                            <th>
+                                @localizer["Pickup Time"]
+                            </th>
+                            <th>
+                                @localizer["OrderTotal"]
+                            </th>
+                            <th>
+                                @localizer["Total Items"]
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="Search">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order.PickupName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order.ApplicationUser.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order.PickUpTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order.OrderTotal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDetails.Count)
+                                </td>
+                                <td>
+                                    <button data-id="@item.Order.Id" data-toggle="modal" class="btn obrien-button-2 primary-color rounded-0 anchorDetail"> <i class="fa fa-info-circle"></i></button>
+
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+    new X.PagedList.Mvc.Core.Common.PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = false,
+        ContainerDivClasses = new[] { "pagination pagination-wrap mb-10 mb-sm-0" },
+        LiElementClasses = new[] { "pagination" },
+        PageClasses = new[] { "page-link" },
+        Display = X.PagedList.Web.Common.PagedListDisplayMode.IfNeeded
+
+         });
+
+            }
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body justify-content-center" id="myModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        var PostBackURL = '/Customer/Order/GetOrderDetails';
+        var OrderStatusURL = '/Customer/Order/GetOrderStatus';
+
+        $(function () {
+            $(".anchorDetail").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed");
+                    }
+                })
+            });
+
+            $(".btnOrderStatus").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: OrderStatusURL,
+                    contentType: "text/html; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    dataType: "html",
+                    success: function (data) {
+                        $('#myOrderStatusContent').html(data);
+                        $('#myOrderStatus').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+
+}
+

@@ -1,79 +1,30 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="myaccount-content">
+    <h3>@localizer["SubCategory Details"]</h3>
+    <br />
+    <div class="account-details-form">
+        <form method="post">
 
-<br />
-<br />
-<br />
-<div class="container">
-    <div class="border backgroundWhite">
-        <br />
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="SubCategory.Name" class="col-form-label"></label>
+            <div class="row">
+
+                <br />
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["SubCategory Name"]</label>
+                    <input readonly asp-for="SubCategory.Name" />
+                </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" asp-for="SubCategory.Category.Name" class="required mb-1">@localizer["Category Name"]</label>
+                    <input readonly asp-for="SubCategory.Category.Name" />
+                </div>
             </div>
-            <div class="col-5">
-                <input asp-for="SubCategory.Name" readonly class="form-control" />
+            <br />
+
+            <div class="single-input-item single-item-button">
+                <button type="submit" disabled asp-route-id="@Model.SubCategory.Id" class="btn obrien-button primary-btn" value="Save Changes">Save Changes</button>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="SubCategory.Category.Name" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="SubCategory.Category.Name" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_DetailsAndBackToListButton" model="Model.SubCategory.Id" />
-            </div>
-        </div>
-        <br />
+
+        </form>
     </div>
-
 </div>
-
-<br />
-<br />
-<br />
-
-
-
-
-@*@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
-
-    @{
-        ViewData["Title"] = "Details";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-
-    <h1>Details</h1>
-
-    <div>
-        <h4>SubCategoryAndCategoryViewModel</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.SubCategory.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.SubCategory.Name)
-            </dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.SubCategory.Category.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.SubCategory.Category.Name)
-            </dd>
-        </dl>
-    </div>
-    <div>
-        @Html.ActionLink("Edit", "Edit", new {  id = Model.SubCategory.Id }) |
-        <a asp-action="Index">Back to List</a>
-    </div>*@

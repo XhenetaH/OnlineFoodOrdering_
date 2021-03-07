@@ -1,85 +1,41 @@
 ﻿@model OnlineFoodOrdering.Models.Coupon
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="myaccount-content">
+    <h3>@localizer["Coupon Details"]</h3>
+    <br />
+    <div class="account-details-form">
+        <form method="post">
+            <div class="row">
 
-<br />
-<br />
-<br />
-<div class="container">
-    <div class="border backgroundWhite">
-        <br />
-        <form enctype="multipart/form-data">
-            <input type="hidden" asp-for="Id" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-control-file">
-                <img src="data:image/*;base64,@(Convert.ToBase64String(Model.Picture))" style="border-radius:5px; border:1px solid #bbb9b9; max-width:800px; max-height:100px;" />
+                <br />
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
+                    <input readonly asp-for="Name" />
+                </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Coupon Type"]</label>
+                    <select disabled asp-for="CouponType" asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
+                </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Discount"]</label>
+                    <input readonly asp-for="Discount" />
+                </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Minimum Amount"]</label>
+                    <input readonly asp-for="MinimumAmount" />
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input disabled type="checkbox" class="custom-control-input" asp-for="IsActive">
+                    <label class="custom-control-label">@localizer["Is Active"]</label>
+                </div>
             </div>
             <br />
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Name" class="col-form-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Name" readonly class="form-control" />
-                </div>
-                <span asp-validation-for="Name" class="text-danger"></span>
+
+            <div class="single-input-item single-item-button">
+                <button disabled type="submit" asp-route-coupon="@Model" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Save Changes"]</button>
             </div>
 
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="CouponType" class="control-label"></label>
-                </div>
-                <div class="col-5">
-                    <select asp-for="CouponType" disabled asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Discount" class="control-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Discount" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="MinimumAmount" class="control-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="MinimumAmount" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="MinimumAmount" class="text-danger"></span>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" disabled class="form-check-input" asp-for="IsActive">
-                <label class="form-check-label" asp-for="IsActive">Is this coupon active?</label>
-            </div>
-            <br />
-            <div class="form-group row">
-                <div class="col-5 offset-2">
-                    <partial name="_DetailsAndBackToListButton" model="Model.Id" />
-                </div>
-            </div>
         </form>
-        <br />
     </div>
-
 </div>
-
-
-<br />
-<br />
-<br />
-<br />
-
-
-@section Scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-}
-

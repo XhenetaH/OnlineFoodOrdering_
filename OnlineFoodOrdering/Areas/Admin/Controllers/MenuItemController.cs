@@ -11,11 +11,13 @@ using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Models.ViewModels;
 using OnlineFoodOrdering.Utility;
+using X.PagedList;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
     [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public class MenuItemController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -32,16 +34,18 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 MenuItem = new Models.MenuItem()
             };
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int?page)
         {
-            var menuItems = await _db.MenuItem.Include(m=>m.Category).Include(m=>m.SubCategory).ToListAsync();
-            return View(menuItems);
+            var pageNumber = page ?? 1;
+            int pageSize = 10;
+            var onePageOfMenuitems = await _db.MenuItem.Include(m=>m.Category).Include(m=>m.SubCategory).ToPagedListAsync(pageNumber,pageSize);
+            return View(onePageOfMenuitems);
         }
 
         //GET - Create
         public IActionResult Create()
         {
-            return View(MenuItemVM);
+            return PartialView("Create",MenuItemVM);
         }
 
         //POST - Create
@@ -53,7 +57,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
 
             if(!ModelState.IsValid)
             {
-                return View(MenuItemVM);
+                return PartialView("Create",MenuItemVM);
             }
             _db.MenuItem.Add(MenuItemVM.MenuItem);
             await _db.SaveChangesAsync();
@@ -100,7 +104,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(MenuItemVM);
+            return PartialView("Edit",MenuItemVM);
         }
 
         //POST - Edit
@@ -108,7 +112,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPOST(int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -119,38 +123,46 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 MenuItemVM.SubCategory = await _db.SubCategory.Where(s => s.CategoryId == MenuItemVM.MenuItem.CategoryId).ToListAsync();
                 return View(MenuItemVM);
             }
-           
+
+            //Work on the image saving section
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
             var menuItemFromDb = await _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
+
             if (files.Count > 0)
             {
+                //New Image has been uploaded
                 var uploads = Path.Combine(webRootPath, "images");
                 var extension_new = Path.GetExtension(files[0].FileName);
 
+                //Delete the original file
                 var imagePath = Path.Combine(webRootPath, menuItemFromDb.Image.TrimStart('\\'));
 
-                if(System.IO.File.Exists(imagePath))
+                if (System.IO.File.Exists(imagePath))
                 {
                     System.IO.File.Delete(imagePath);
                 }
 
+                //we will upload the new file
                 using (var filesStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension_new), FileMode.Create))
                 {
                     files[0].CopyTo(filesStream);
                 }
-                menuItemFromDb.Image = @"/images/" + MenuItemVM.MenuItem.Id + extension_new;
+                menuItemFromDb.Image = @"\images\" + MenuItemVM.MenuItem.Id + extension_new;
             }
+
             menuItemFromDb.Name = MenuItemVM.MenuItem.Name;
             menuItemFromDb.Description = MenuItemVM.MenuItem.Description;
             menuItemFromDb.Price = MenuItemVM.MenuItem.Price;
             menuItemFromDb.Spicyness = MenuItemVM.MenuItem.Spicyness;
             menuItemFromDb.CategoryId = MenuItemVM.MenuItem.CategoryId;
             menuItemFromDb.SubCategoryId = MenuItemVM.MenuItem.SubCategoryId;
+            menuItemFromDb.isFeatured = MenuItemVM.MenuItem.isFeatured;
 
             await _db.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -167,7 +179,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(MenuItemVM);
+            return PartialView("Details",MenuItemVM);
         }
 
         //GET - Delete
@@ -183,7 +195,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(MenuItemVM);
+            return PartialView("Delete",MenuItemVM);
         }
 
         //POST - Delete

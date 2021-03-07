@@ -31,7 +31,7 @@ namespace OnlineFoodOrdering.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             HttpContext.Session.SetInt32("ssCartCount", 0);
-            HttpContext.Session.SetString("ssCartPrice", "0.00 ");
+            HttpContext.Session.SetInt32("ssWishCount", 0);
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {

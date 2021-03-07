@@ -6,17 +6,77 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20201231182203_updateApplicationUser.cs" />
+    <Compile Remove="Data\Migrations\20201231182203_updateApplicationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210202192747_addRatingsMigration.cs" />
+    <Compile Remove="Data\Migrations\20210202192747_addRatingsMigration.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\fonts\ionicons.svg" />
+    <None Include="wwwroot\js\main.js" />
+    <None Include="wwwroot\js\plugins\jquery-ui.min.js" />
+    <None Include="wwwroot\js\plugins\jquery.ajaxchimp.min.js" />
+    <None Include="wwwroot\js\plugins\jquery.countdown.min.js" />
+    <None Include="wwwroot\js\plugins\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\js\plugins\jquery.nice-select.min.js" />
+    <None Include="wwwroot\js\plugins\map.js" />
+    <None Include="wwwroot\js\plugins\plugins.js" />
+    <None Include="wwwroot\js\plugins\plugins.min.js" />
+    <None Include="wwwroot\js\plugins\slick.min.js" />
+    <None Include="wwwroot\js\vendor\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\js\vendor\jquery-3.5.1.min.js" />
+    <None Include="wwwroot\js\vendor\jQuery-migrate-3.3.0.min.js" />
+    <None Include="wwwroot\js\vendor\modernizr-2.8.3.min.js" />
+    <None Include="wwwroot\js\vendor\vendor.js" />
+    <None Include="wwwroot\js\vendor\vendor.min.js" />
+    <None Include="wwwroot\scss\0-base\_mixins.scss" />
+    <None Include="wwwroot\scss\0-base\_variables.scss" />
+    <None Include="wwwroot\scss\1-global\_color.scss" />
+    <None Include="wwwroot\scss\1-global\_default.scss" />
+    <None Include="wwwroot\scss\1-global\_helper.scss" />
+    <None Include="wwwroot\scss\2-layout\_footer.scss" />
+    <None Include="wwwroot\scss\2-layout\_header.scss" />
+    <None Include="wwwroot\scss\3-pages\_blog.scss" />
+    <None Include="wwwroot\scss\3-pages\_cart.scss" />
+    <None Include="wwwroot\scss\3-pages\_checkout.scss" />
+    <None Include="wwwroot\scss\3-pages\_compare.scss" />
+    <None Include="wwwroot\scss\3-pages\_contact.scss" />
+    <None Include="wwwroot\scss\3-pages\_error.scss" />
+    <None Include="wwwroot\scss\3-pages\_faq.scss" />
+    <None Include="wwwroot\scss\3-pages\_login-register.scss" />
+    <None Include="wwwroot\scss\3-pages\_my-account.scss" />
+    <None Include="wwwroot\scss\3-pages\_shop.scss" />
+    <None Include="wwwroot\scss\3-pages\_single-product.scss" />
+    <None Include="wwwroot\scss\3-pages\_wishlist.scss" />
+    <None Include="wwwroot\scss\4-components\_action-plan.scss" />
+    <None Include="wwwroot\scss\4-components\_banner.scss" />
+    <None Include="wwwroot\scss\4-components\_brand-logo.scss" />
+    <None Include="wwwroot\scss\4-components\_breadcrumb.scss" />
+    <None Include="wwwroot\scss\4-components\_button.scss" />
+    <None Include="wwwroot\scss\4-components\_feature.scss" />
+    <None Include="wwwroot\scss\4-components\_modal.scss" />
+    <None Include="wwwroot\scss\4-components\_newsletter.scss" />
+    <None Include="wwwroot\scss\4-components\_product.scss" />
+    <None Include="wwwroot\scss\4-components\_slider.scss" />
+    <None Include="wwwroot\scss\4-components\_support.scss" />
+    <None Include="wwwroot\scss\style.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
+    <PackageReference Include="Stripe.net" Version="39.31.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
   </ItemGroup>
 
 </Project>

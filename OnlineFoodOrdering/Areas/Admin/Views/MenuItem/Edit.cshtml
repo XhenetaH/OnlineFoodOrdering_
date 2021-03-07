@@ -1,134 +1,97 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.MenuItemViewModel
 @using OnlineFoodOrdering.Extensions
-@{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-<br />
-<br />
-<br />
-<div class="container">
-    <form method="post" enctype="multipart/form-data">
-        <div class="border backgroundWhite row">
-            <input type="hidden" asp-for="MenuItem.Id" />
+<div class="myaccount-content">
+    <h3>@localizer["Menu Item Update"]</h3>
+    <br />
+    <div class="account-details-form">
+        <form method="post" enctype="multipart/form-data">
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-8">
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.Name" class="control-label"></label>
+            <div class="row">
+
+                <br />
+                <div class="row">
+                    <div class="col-lg-7 col-custom">
+                        <input type="hidden" asp-for="MenuItem.Id" />
+                        <div class="single-input-item mb-12">
+                            <label for="last-name" class="required mb-1">@localizer["Name"]</label>
+                            <input asp-for="MenuItem.Name" />
+                        </div>
                     </div>
-                    <div class="col-8">
-                        <input asp-for="MenuItem.Name" class="form-control" />
+
+                    <div class="col-lg-7 col-custom">
+                        <br />
+                        <div class="single-input-item mb-3">
+                            <label for="last-name" class="required mb-1">@localizer["Price"]</label>
+                            <input asp-for="MenuItem.Price" />
+                        </div>
                     </div>
-                    <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.Description" class="control-label"></label>
-                    </div>
-                    <div class="col-8">
-                        @Html.TextAreaFor(m => m.MenuItem.Description)
-                    </div>
-                    <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.Price" class="col-form-label"></label>
-                    </div>
-                    <div class="col-8">
-                        <input asp-for="MenuItem.Price" class="form-control" />
-                    </div>
-                    <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.CategoryId" class="control-label"></label>
-                    </div>
-                    <div class="col-8">
-                        <select asp-for="@Model.MenuItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryId)" class="form-control"></select>
+                    <div class="input-item mb-6">
+
+                        <img src="@Model.MenuItem.Image" width="280" style="float:right; margin-top:-170px;" />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.SubCategoryId" class="control-label"></label>
-                    </div>
-                    <div class="col-8">
-                        <select asp-for="@Model.MenuItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
-                    </div>
+
+
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Description"]</label>
+                    <textarea asp-for="MenuItem.Description" cols="30" rows="5" class="border rounded-0 w-100 custom-textarea input-area" style="padding:10px;"></textarea>
+
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.Image" class="control-label"></label>
-                    </div>
-                    <div class="col-8">
-                        <input type="file" name="files" multiple class="form-control" />
-                    </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Image"]</label>
+                    <input type="file" name="files" multiple class="form-control" />
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="MenuItem.Spicyness" class="control-label"></label>
-                    </div>
-                    <div class="col-8">
-                        <select asp-for="MenuItem.Spicyness" asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
-                    </div>
+                <div class="single-input-item mb-3">
+                    <label asp-for="MenuItem.CategoryId" class="required mb-1"></label>
+                    <select asp-for="@Model.MenuItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryId)" class="form-control"></select>
                 </div>
-            </div>
-            <div class="col-3 offset-1">
-                <img src="@Model.MenuItem.Image" style="border-radius:5px; border:1px solid #bbb9b9; width:100%" />
-            </div>
-            <div class="col-8">
-                <div class="col-8 offset-4">
-                    <partial name="_EditAndBackToListButton" model="Model.MenuItem.Id" />
+                <div class="single-input-item mb-3">
+                    <label asp-for="MenuItem.SubCategoryId" class="required mb-1"></label>
+                    <select asp-for="@Model.MenuItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="Model.SubCategory.ToSelectListItem(Model.MenuItem.SubCategory.Id)" class="form-control"></select>
                 </div>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Spiciness"]</label>
+                    <select asp-for="MenuItem.Spicyness" asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" asp-for="MenuItem.isFeatured">
+                    <label class="custom-control-label">@localizer["Is Featured"]</label>
+                </div>
+
             </div>
 
-        </div>
-    </form>
+            <div class="single-input-item single-item-button">
+                <br />
+                <button type="submit" asp-route-id="@Model.MenuItem.Id" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Save Changes"]</button>
+            </div>
 
+        </form>
+    </div>
 </div>
-
-<br />
-<br />
-<br />
-<br />
-
-
-
-@section Scripts{
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: "lists",
-            menubar: 'file edit format'
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            getSubCategory();
-            $('#CategoryId').change(function () {
+<script type="text/javascript">
+            $(document).ready(function () {
                 getSubCategory();
+                $('#CategoryId').change(function () {
+                    getSubCategory();
+
+                });
+
             });
-        });
 
 
-        function getSubCategory() {
-                var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
-                var ddlsource = '#CategoryId';
-                $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
-                    var items = '';
-                    $('#SubCategoryId').empty();
-                    $.each(data, function (i, subcategory) {
-                        items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
-                    });
-                    $('#SubCategoryId').html(items);
-                })
-            }
-    </script>
-
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-}
+            function getSubCategory() {
+                    var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+                    var ddlsource = '#CategoryId';
+                    $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                        var items = '';
+                        $('#SubCategoryId').empty();
+                        $.each(data, function (i, subcategory) {
+                            items += "<option value='" + subcategory.value + "' " + (subcategory.value == @Model.MenuItem.SubCategoryId ? "selected" : "") + ">" + subcategory.text + "</option>";
+                        });
+                        $('#SubCategoryId').html(items);
+                    })
+                }
+</script>
 

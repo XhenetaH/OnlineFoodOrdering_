@@ -1,108 +1,34 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
 @using OnlineFoodOrdering.Extensions
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="myaccount-content">
+    <h3>@localizer["Update SubCategory"]</h3>
+    <br />
+    <div class="account-details-form">
+        <form method="post">
 
-<br />
-<br />
-<br />
-<div class="container">
-    @if (!String.IsNullOrEmpty(Model.StatusMessage))
-    {
-        var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
-        <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" /></button>
-            @Model.StatusMessage
-        </div>
-    }
-    <div class="border backgroundWhite row">
-        <div class="col-8 border-right">
-            <form asp-action="Edit">
-                <input type="hidden" asp-for="SubCategory.CategoryId" />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="SubCategory.CategoryId" class="control-label"></label>
-                    </div>
-                    <div class="col-6">
-                        <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" disabled asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"><option>Please Select One</option></select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="SubCategory.Name" class="control-label"></label>
-                    </div>
-                    <div class="col-6">
-                        <input asp-for="SubCategory.Name" class="form-control" />
-                    </div>
-                    <span asp-validation-for="SubCategory.Name" class="text-danger"></span>
-                </div>
+            <div class="row">
                 <br />
+                <div class="single-input-item mb-3">
+                    <label for="first-name" asp-for="SubCategory.CategoryId" class="required mb-1"></label>
+                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)"><option>@localizer["Please Select One"]</option></select>
 
-                <div class="form-group">
-                    <div class="col-8 offset-3">
-                        <partial name="_EditAndBackToListButton" model="Model.SubCategory.Id" />
-                    </div>
                 </div>
-            </form>
-        </div>
-        <div class="col-3 offset-1">
-            @if (Model.SubCategoryList.Count() > 0)
-            {
-                <p>Existing Subcategories: </p>
-
-                <div id="SubCategoryList">
-                    <ul class="list-group"></ul>
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
+                    <input id="input1" asp-for="SubCategory.Name" />
                 </div>
-            }
+            </div>
+            <br />
 
-        </div>
+            <div class="single-input-item single-item-button">
+                <button id="butoni" type="submit" asp-route-id="@Model.SubCategory.Id" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Save Changes"]</button>
+            </div>
+
+        </form>
     </div>
-
 </div>
 
-<br />
-<br />
-<br />
-<br />
 
-
-
-
-@section Scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script>
-        function updateSubCategoryList() {
-            var categorySelected = document.getElementById("ddlCategoryList").value;
-
-            $list = $('#SubCategoryList');
-
-            $.ajax({
-                url: '/Admin/SubCategory/GetSubCategory/' + categorySelected,
-                type: 'GET',
-                dataType: 'text',
-                success: function (data) {
-                    results = JSON.parse(data);
-                    $list.html('');
-                    $list.append(' <ul class="list-group"> ');
-                    for (i in results) {
-                        $list.append('<li class="list-group-item">' + results[i].text + '</li>');
-                    }
-                    $list.append('</ul>');
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            updateSubCategoryList();
-        });
-
-      
-    </script>
-}
 

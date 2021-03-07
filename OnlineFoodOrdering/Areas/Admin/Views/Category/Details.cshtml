@@ -1,35 +1,26 @@
 ﻿@model OnlineFoodOrdering.Models.Category
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="myaccount-content">
+    <h3>@localizer["Category Details"]</h3>
+    <br />
+    <div class="account-details-form">
+        <form method="post">
 
-<br />
-<br />
-<br />
-<div class="container">
-    <div class="border backgroundWhite">
-        <br />
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Name" class="col-form-label"></label>
+            <div class="row">
+
+                <br />
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
+                    <input disabled asp-for="Name" />
+                </div>
             </div>
-            <div class="col-5">
-                <input asp-for="Name" readonly class="form-control" />
+            <br />
+
+            <div class="single-input-item single-item-button">
+                <button type="submit" disabled asp-route-id="@Model.Id" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Save Changes"]</button>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_DetailsAndBackToListButton" model="Model.Id" />
-            </div>
-        </div>
-        <br />
+
+        </form>
     </div>
-
 </div>
-
-<br />
-<br />
-<br />
-

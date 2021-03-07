@@ -9,5 +9,9 @@ namespace OnlineFoodOrdering.Models.ViewModels
     {
         public ShoppingCart ShoppingCart { get; set; }
         public IEnumerable<MenuItem> MenuItemList { get; set; }
+        public IEnumerable<Ratings> Ratings { get; set; }
+        public Ratings Rating { get; set; }
+
+        public WishList WishList { get; set; }
     }
 }

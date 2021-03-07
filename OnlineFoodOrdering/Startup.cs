@@ -12,6 +12,14 @@ using OnlineFoodOrdering.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OnlineFoodOrdering.Utility;
+using Stripe;
+using OnlineFoodOrdering.Service;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace OnlineFoodOrdering
 {
@@ -27,15 +35,36 @@ namespace OnlineFoodOrdering
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
+            services.AddMvc().AddMvcLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+            services.Configure<RequestLocalizationOptions>(
+                opt =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en"),
+                        new CultureInfo("sq")
+                    };
+                    opt.DefaultRequestCulture = new RequestCulture("en");
+                    opt.SupportedCultures = supportedCultures;
+                    opt.SupportedUICultures = supportedCultures;
+                });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser,IdentityRole>()
                 .AddDefaultTokenProviders().AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "239210080945032";
+                facebookOptions.AppSecret = "f9b9fa5332148202814a34e156f1dd41";
+            });
 
             services.AddSession(options =>
             {
@@ -60,6 +89,7 @@ namespace OnlineFoodOrdering
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
@@ -67,6 +97,7 @@ namespace OnlineFoodOrdering
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseEndpoints(endpoints =>
             {

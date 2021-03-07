@@ -1,0 +1,88 @@
+﻿@model List<OnlineFoodOrdering.Models.ViewModels.OrderDetailsViewModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@using OnlineFoodOrdering.Utility
+@{
+    ViewData["Title"] = "ManageOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="myaccount-content">
+    <form method="post" class="container">
+        <br />
+        <br />
+        @if (Model.Count > 0)
+        {
+
+            @foreach (var item in Model)
+            {
+                <div class="col-12 pb-3 pt-3">
+                    <div>
+                        <div class="row">
+                            <div class="col-lg-4 col-12">
+                                <b>@localizer["Order Number"]&nbsp;&nbsp; @item.Order.Id </b>
+
+
+                                <ul style="list-style-type:none">
+
+                                    @foreach (var details in item.OrderDetails)
+                                    {
+                                        <li style="display:list-item; padding-left:15px;">@details.Name x @details.Count</li>
+                                    }
+                                </ul>
+
+                            </div>
+                            <div class="col-lg-4 col-12 pb-2">
+                                <div class="single-input-item pb-2">
+                                    <input type="text" readonly value="@localizer["Time"]   @item.Order.PickUpTime" />
+                                </div>
+                                @{
+                                    var comments = item.Order.Comments;
+                                    if (comments == null || comments.Trim().Length == 0)
+                                    {
+                                        item.Order.Comments = "No Instructions";
+                                    }
+
+                                }
+                                <textarea asp-for="@item.Order.Comments" readonly cols="30" rows="4" class="border rounded-0 w-100 custom-textarea input-area" style="padding:10px;" placeholder="@localizer["Message"]"></textarea>
+
+                            </div>
+                            <div class="col-lg-4 col-12 d-flex align-content-center">
+                                @if (item.Order.Status.Equals(SD.StatusSubmitted))
+                                {
+                                    <div class="col-12">
+
+                                        <button type="submit" asp-action="OrderPrepare" asp-route-OrderId="@item.Order.Id" class="btn obrien-button primary-btn" style="width:100%; margin-bottom:40px; ">
+                                            <i class="fa fa-check"></i> &nbsp; @localizer["Start Cooking"]
+                                        </button>
+
+                                        <button type="submit" asp-action="OrderCancel" asp-route-OrderId="@item.Order.Id" class="btn obrien-button-3 black-button" style="width:100%;">
+                                            <i class="fa fa-times"></i> &nbsp; @localizer["Cancel Order"]
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @if (item.Order.Status.Equals(SD.StatusInProcess))
+                                    {
+                                        <div class="col-12">
+                                            <button type="submit" asp-action="OrderReady" asp-route-OrderId="@item.Order.Id" class="btn obrien-button green-btn" style="width:100%; margin-bottom:40px; ">
+                                                <i class="fa fa-flag-checkered"></i> &nbsp; @localizer["Order Ready"]
+                                            </button>
+                                            <button type="submit" asp-action="OrderCancel" asp-route-OrderId="@item.Order.Id" class="btn obrien-button-3 black-button" style="width:100%;">
+                                                <i class="fa fa-times"></i> &nbsp; @localizer["Cancel Order"]
+                                            </button>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
+
+        }
+    </form>
+
+</div>

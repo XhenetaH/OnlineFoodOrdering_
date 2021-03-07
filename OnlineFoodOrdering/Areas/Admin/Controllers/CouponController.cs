@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Utility;
+using X.PagedList;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -21,15 +22,18 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int?page)
         {
-            return View(await _db.Coupon.ToListAsync());
+            var pageNumber = page ?? 1;
+            int pageSize = 10;
+            var onePageOfCoupons =await _db.Coupon.ToPagedListAsync(pageNumber, pageSize);
+            return View(onePageOfCoupons);
         }
 
         //GET - Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         //POST - Create
@@ -68,7 +72,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var coupon = await _db.Coupon.FindAsync(id);
             if (coupon == null)
                 return NotFound();
-            return View(coupon);
+            return PartialView("Edit",coupon);
         }
 
        // POST - Edit
@@ -101,7 +105,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(coupon);
+            return PartialView("Edit",coupon);
         }
 
         //GET - Details
@@ -112,7 +116,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var coupon = await _db.Coupon.FindAsync(id);
             if (coupon == null)
                 return NotFound();
-            return View(coupon);
+            return PartialView("Details",coupon);
         }
 
         //GET - Delete
@@ -123,7 +127,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var coupon = await _db.Coupon.FindAsync(id);
             if (coupon == null)
                 return NotFound();
-            return View(coupon);
+            return PartialView("Delete",coupon);
         }
 
         //POST - Delete
@@ -133,7 +137,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             var coupon = await _db.Coupon.FindAsync(id);
             if (coupon == null)
-                return View();
+                return PartialView();
             _db.Coupon.Remove(coupon);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

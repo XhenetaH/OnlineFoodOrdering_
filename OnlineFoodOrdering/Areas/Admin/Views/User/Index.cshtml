@@ -1,71 +1,245 @@
 ﻿@model IEnumerable<OnlineFoodOrdering.Models.ApplicationUser>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
+
 <div class="container">
-    <div class="border backgroundWhite">
+    <div class="">
+        <br />
+        <br />
         <div class="row">
-            <div class="col-12 text-right">
-                <a asp-area="Identity" asp-page="/Account/Register" class="site-btn"><i class="fa fa-plus"></i>  New  Employee </a>
+            <div class="col-2">
+                <button type="button" data-toggle="modal" style="margin-bottom:40px; " class="obrien-button primary-btn anchorDetail3"><i class="fa fa-plus"></i>  @localizer["Create New"]</button>
+            </div>
+
+            <div class="col-12">
+                <input type="text" id="Search" placeholder="@localizer["Search"]" class="form-control" style="border-radius:15px;" />
+            </div>
+
+        </div>
+        <br />
+        <div class="myaccount-table table-responsive text-center">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                @localizer["Name"]
+                            </th>
+                            <th>
+                                @localizer["Email"]
+                            </th>
+                            <th>
+                                @localizer["Phone Number"]
+                            </th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="Search">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td>
+                                    @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
+                                    {
+                                        <a type="button" asp-action="Lock" asp-route-id="@item.Id">
+                                            <i style="font-size:25px; color:green;" class="ion-android-unlock"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a type="button" asp-action="UnLock" asp-route-id="@item.Id">
+                                            <i style="font-size:25px; color:darkred;" class="ion-android-lock"></i>
+                                        </a>
+                                    }
+                                </td>
+
+
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+    new X.PagedList.Mvc.Core.Common.PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = false,
+        ContainerDivClasses = new[] { "pagination pagination-wrap mb-10 mb-sm-0" },
+        LiElementClasses = new[] { "pagination" },
+        PageClasses = new[] { "page-link" },
+        Display = X.PagedList.Web.Common.PagedListDisplayMode.IfNeeded
+
+         });
+
+            }
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            function Contains(text_one, text_two) {
+                if (text_one.indexOf(text_two) != -1)
+                    return true;
+            }
+            $("#Search").keyup(function () {
+                var searchText = $("#Search").val().toLowerCase();
+                $(".Search").each(function () {
+                    if (!Contains($(this).text().toLowerCase(), searchText)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+
+}
+
+
+
+
+@*@model IEnumerable<OnlineFoodOrdering.Models.ApplicationUser>
+    @using X.PagedList.Mvc.Core;
+    @using X.PagedList;
+
+    @{
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-10">
+                <input type="text" id="Search" placeholder="Search" class="form-control" style="border-radius:15px;" />
+
+            </div>
+            <div class="col-2">
+                <a asp-action="Create" class="site-btn"><i class="fa fa-plus"></i>  Create New</a>
+
             </div>
         </div>
         <br />
         <div>
             @if (Model.Count() > 0)
             {
-                <table class="table table-striped border" style="background-color:#fff">
-                    <tr class="table-secondary">
-                        <th>
-                            @Html.DisplayNameFor(model => model.Name).ToUpper()
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Email).ToUpper()
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PhoneNumber).ToUpper()
-                        </th>
-                        <th></th>
-                    </tr>
+                <table class="table">
+                    <thead class="table-borderless">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name).ToUpper()
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email).ToUpper()
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PhoneNumber).ToUpper()
+                            </th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PhoneNumber)
-                            </td>
+                        <tbody>
+                            <tr class="Search">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
 
-                            <td>
-                                @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
-                                {
-                                    <a class="btn btn-success text-white" asp-action="Lock" asp-route-id="@item.Id"></a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-danger text-white" asp-action="UnLock" asp-route-id="@item.Id"></a>
-                                }
-                            </td>
-                        </tr>
+                                <td>
+                                    @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
+                                    {
+                                        <a class="btn btn-success text-white" asp-action="Lock" asp-route-id="@item.Id"></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger text-white" asp-action="UnLock" asp-route-id="@item.Id"></a>
+                                    }
+                                </td>
+                            </tr>
+
+                        </tbody>
                     }
                 </table>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+        new X.PagedList.Mvc.Core.Common.PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = false,
+            ContainerDivClasses = new[] { "navigation" },
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+        })
+
             }
             else
             {
                 <p>No Users Exist!</p>
             }
         </div>
-
     </div>
 
-</div>
+    <br />
+    <br />
 
-<br />
-<br />
-
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                function Contains(text_one, text_two) {
+                    if (text_one.indexOf(text_two) != -1)
+                        return true;
+                }
+                $("#Search").keyup(function () {
+                    var searchText = $("#Search").val().toLowerCase();
+                    $(".Search").each(function () {
+                        if (!Contains($(this).text().toLowerCase(), searchText)) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('ul.pagination > li.disabled > a').addClass('page-link');
+            });
+        </script>
+    }*@

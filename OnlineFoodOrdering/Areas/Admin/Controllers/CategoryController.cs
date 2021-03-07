@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Utility;
+using X.PagedList;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -22,16 +23,20 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int?page)
         {
 
-            return View(await _db.Category.ToListAsync());
+            var pageNumber = page ?? 1;
+            int pageSize = 10;
+            var onePageOfCategory = await _db.Category.ToPagedListAsync(pageNumber, pageSize);
+
+            return View(onePageOfCategory);
         }
 
         //GET - Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView("Create");
         }
         
         //POST - Create
@@ -57,8 +62,9 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var category = await _db.Category.FindAsync(id);
             if (category == null)
                 return NotFound();
-            return View(category);
+            return PartialView("Edit",category);
         }
+        
 
         //POST - Edit
         [HttpPost]
@@ -83,7 +89,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var category = await _db.Category.FindAsync(id);
             if (category == null)
                 return NotFound();
-            return View(category);
+            return PartialView("Delete",category);
         }
 
         //POST - Delete
@@ -107,7 +113,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var category = await _db.Category.FindAsync(id);
             if (category == null)
                 return NotFound();
-            return View(category);
+            return PartialView("Details",category);
         }
     }
 }

@@ -27,5 +27,8 @@ namespace OnlineFoodOrdering.Models
         public virtual SubCategory SubCategory { get; set; }
         [Range(1,int.MaxValue, ErrorMessage ="Price should be greater than ${1}")]
         public double Price { get; set; }
+        public bool isFeatured { get; set; }
+        public DateTime InsertDate { get; set; }
+        public ICollection<Ratings> Ratings { get; set; }
     }
 }

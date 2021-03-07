@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Utility;
+using X.PagedList;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -20,12 +21,14 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            var pageNumber = page ?? 1;
+            int pageSize = 10;
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            return View(await _db.ApplicationUser.Where(u => u.Id != claim.Value).ToListAsync());
+            return View(await _db.ApplicationUser.Where(u => u.Id != claim.Value).ToPagedListAsync(pageNumber,pageSize));
         }
 
         public async Task<IActionResult> Lock(string id)

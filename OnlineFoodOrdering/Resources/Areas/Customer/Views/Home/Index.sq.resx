@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="bite" xml:space="preserve">
+    <value>kafshatë...</value>
+  </data>
+  <data name="coupon" xml:space="preserve">
+    <value>kuponin</value>
+  </data>
+  <data name="delight" xml:space="preserve">
+    <value>Kenaqësi në secilën</value>
+  </data>
+  <data name="ensure" xml:space="preserve">
+    <value>Ne ofrojmë cilësi të produkteve gjatë gjithë kohës</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>Të gjitha produktet e veçanta janë të disponueshme për ju dhe mund ti blini keto produkte në ç'do kohë</value>
+  </data>
+  <data name="Featured Products" xml:space="preserve">
+    <value>Produktet e Veçanta</value>
+  </data>
+  <data name="fishContent1" xml:space="preserve">
+    <value>Peshku i pregaditur nga kuzhinierët tonë, jo vetëm që shijon tej mase por, ka edhe vlera të mëdha ushqyese për shendetin tonë.</value>
+  </data>
+  <data name="fishContent2" xml:space="preserve">
+    <value>Peshku është një ushqim me shumë proteina dhe me pak yndyrë që ofron një sërë përfitimesh shëndetësore.</value>
+  </data>
+  <data name="fishContent3" xml:space="preserve">
+    <value>Në veçanti, peshku me mish të bardhë, ka më pak yndyrë se çdo burim tjetër i proteinave shtazore, dhe peshqit me vaj janë të pasur me acide yndyrore omega-3, ose yndyrnat “e mira”.</value>
+  </data>
+  <data name="fishTitle" xml:space="preserve">
+    <value>Rendësia e të ushqyerit me mish peshku</value>
+  </data>
+  <data name="food" xml:space="preserve">
+    <value>është ushqimi...</value>
+  </data>
+  <data name="free" xml:space="preserve">
+    <value>Transporti Falas</value>
+  </data>
+  <data name="get" xml:space="preserve">
+    <value>Përfito</value>
+  </data>
+  <data name="healthy" xml:space="preserve">
+    <value>Gjëja e vetme për të cilën jemi serioz</value>
+  </data>
+  <data name="latest" xml:space="preserve">
+    <value>Të gjitha produktet e fundit janë të disponueshme për ju dhe mund ti blini keto produkte në ç'do kohë</value>
+  </data>
+  <data name="Latest Products" xml:space="preserve">
+    <value>Produktet e Fundit</value>
+  </data>
+  <data name="off" xml:space="preserve">
+    <value>zbritje me</value>
+  </data>
+  <data name="Online Support" xml:space="preserve">
+    <value>Ndihmë Online</value>
+  </data>
+  <data name="provide" xml:space="preserve">
+    <value>Ofrojmë transport falas për produktet me vlerë mbi 30 €</value>
+  </data>
+  <data name="quality" xml:space="preserve">
+    <value>Produkte Kualitative</value>
+  </data>
+  <data name="satisfy" xml:space="preserve">
+    <value>Për kënaqësin e klientëve tonë, ne iu ofrojm ndihmë online</value>
+  </data>
+  <data name="Shop Now" xml:space="preserve">
+    <value>Porosit Tani</value>
+  </data>
+  <data name="vegetableContent1" xml:space="preserve">
+    <value>Ngrënia e perimeve siguron përfitime shëndetësore - njerëzit që hanë më shumë perime dhe fruta si pjesë e një diete të shëndetshme në përgjithësi ka të ngjarë të kenë një rrezik të zvogëluar të disa sëmundjeve kronike.</value>
+  </data>
+  <data name="vegetableContent2" xml:space="preserve">
+    <value>Perimet sigurojnë lëndë ushqyese jetike për shëndetin dhe mirëmbajtjen e trupit tuaj. Shumica e perimeve janë natyrshëm të ulëta në yndyrë dhe kalori.</value>
+  </data>
+  <data name="vegetableContent3" xml:space="preserve">
+    <value>Në restorantin tonë ka pjata që përmbajnë një larmi perimesh të ndryshme me shije të mrekullueshme.</value>
+  </data>
+  <data name="vegetableTitle" xml:space="preserve">
+    <value>Rendësia e të ushqyerit me perime</value>
+  </data>
+</root>

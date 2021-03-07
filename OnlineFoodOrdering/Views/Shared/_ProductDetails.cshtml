@@ -1,0 +1,107 @@
+﻿@model OnlineFoodOrdering.Models.ViewModels.ShoppingCartViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 text-center">
+            <div class="product-image">
+                <img src="@Model.ShoppingCart.MenuItem.Image" alt="Product Image">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="modal-product">
+                <div class="product-content">
+                    <div class="product-title">
+                        <h4 class="title">@Model.ShoppingCart.MenuItem.Name</h4>
+                    </div>
+                    <div class="price-box">
+                        <span class="regular-price ">$@Model.ShoppingCart.MenuItem.Price</span>
+
+                    </div>
+
+                    @{
+                        var sum = ViewBag.RatingSum;
+                        var count = ViewBag.RatingCount;
+
+                    }
+                    @if (count > 0)
+                    {
+                        var result = sum / count;
+                        <div class="product-rating">
+                            @for (int i = 0; i < result; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
+                            @for (int i = result; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o"></i>
+                            }
+
+                            <span>&nbsp;@count @localizer["Review"]</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-rating">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span>&nbsp;0 @localizer["Review"]</span>
+                        </div>
+                    }
+
+                    <p class="desc-content">@Model.ShoppingCart.MenuItem.Description</p>
+                    <form class="d-flex flex-column w-100" action="#">
+                        <div class="form-group">
+                            <select disabled asp-for="@Model.ShoppingCart.MenuItem.Spicyness" asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control nice-select w-100" style="padding-top:2px;">
+                                <option> </option>
+                            </select>
+                        </div>
+                    </form>
+                    <br />
+                    <br />
+                    @using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
+                    {
+                        <div class="quantity-with_btnxh mb-4">
+                            <div class="quantityxh">
+                                <div class="cart-plus-minus">
+                                    <input asp-for="ShoppingCart.Count" class="cart-plus-minus-box" value="1" type="text">
+                                    <div class="dec qtybutton">-</div>
+                                    <div class="inc qtybutton">+</div>
+                                </div>
+                            </div>
+                            <div class="add-to_cart">
+                                <input asp-for="ShoppingCart.MenuItemId" value="@Model.ShoppingCart.MenuItem.Id" hidden />
+
+                                <input type="submit" class="btn obrien-button primary-btn" value="@localizer["Add to cart"] ">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.cart-plus-minus').append(
+        '<div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>'
+    );
+    $('.qtybutton').on('click', function () {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        if ($button.hasClass('inc')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+    });
+</script>

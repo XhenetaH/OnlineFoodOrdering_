@@ -1,75 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="header__top__left">
-                <ul>
-                    <li><i class="fa fa-envelope"></i> Hello @User.Identity.Name!</li>
-                    <li>Free Shipping for all Order of $99</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="header__top__right">
-                <div class="header__top__right__social">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                </div>
-                <div class="header__top__right__language">
-                    <img src="img/language.png" alt="">
-                    <div>English</div>
-                    <span class="arrow_carrot-down"></span>
-                    <ul>
-                        <li><a href="#">Spanis</a></li>
-                        <li><a href="#">English</a></li>
-                    </ul>
-                </div>
-                <form class="header__top__right__auth" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link text-dark" style="border:none; background-color:transparent;font-size:14px;"><i class="fa fa-sign-out"></i> Logout</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <li class="login-register-wrap d-none d-xl-flex">
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit"><i class="fa fa-sign-out"></i> @localizer["Logout"]</button>
+        </form>
+    </li>
+
 }
 else
 {
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="header__top__left">
-                <ul>
-                    <li><i class="fa fa-envelope"></i> Hello Guest!</li>
-                    <li>Free Shipping for all Order of $99</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="header__top__right">
-                <div class="header__top__right__social">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                </div>
-                <div class="header__top__right__language">
-                    <img src="img/language.png" alt="">
-                    <div>English</div>
-                    <span class="arrow_carrot-down"></span>
-                    <ul>
-                        <li><a href="#">Spanis</a></li>
-                        <li><a href="#">English</a></li>
-                    </ul>
-                </div>
-                <div class="header__top__right__auth">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user"></i> Login</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <li class="login-register-wrap d-none d-xl-flex">
+        <span><a asp-area="Identity" asp-page="/Account/Login">@localizer["Login"]</a></span>
+        <span><a asp-area="Identity" asp-page="/Account/Register">@localizer["Register"]</a></span>
+    </li>
 }

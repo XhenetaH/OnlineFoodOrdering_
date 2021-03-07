@@ -1,43 +1,28 @@
 ﻿@model OnlineFoodOrdering.Models.Category
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="myaccount-content">
 
-<br />
-<br />
-<br />
-<div class="container">
-    <div class="border backgroundWhite">
-        <br />
-        <form asp-action="Delete">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Name" class="col-form-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Name" readonly class="form-control" />
+    <h3>@localizer["Are you"]</h3>
+
+    <br />
+    <div class="account-details-form">
+        <form method="post">
+
+            <div class="row">
+
+                <br />
+                <div class="single-input-item mb-3">
+                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
+                    <input disabled asp-for="Name" />
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-5 offset-2">
-                    <partial name="_DeleteAndBackToListButton" model="Model.Id" />
-                </div>
+            <br />
+
+            <div class="single-input-item single-item-button">
+                <button type="submit" asp-route-id="@Model.Id" class="btn obrien-button primary-btn">@localizer["Delete"]</button>
             </div>
+
         </form>
-        <br />
     </div>
-
 </div>
-
-<br />
-<br />
-<br />
-
-
-
-
-
-

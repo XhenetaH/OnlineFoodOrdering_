@@ -1,0 +1,299 @@
+﻿@model OnlineFoodOrdering.Models.ViewModels.OrderDetailsCart
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@using Microsoft.Extensions.Options
+
+@inject IOptions<OnlineFoodOrdering.Utility.StripeSettings> Stripe
+
+@{
+    ViewData["Title"] = "Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Breadcrumb Area Start Here -->
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">Checkout</h3>
+                    <ul>
+                        <li><a asp-action="Index" asp-controller="Home">@localizer["Home"]</a></li>
+                        <li>@localizer["Checkout"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Area End Here -->
+<!-- Checkout Area Start Here -->
+<div class="checkout-area">
+    <div class="container container-default-2 custom-container">
+        <div class="row">
+            @if (Model.Order.CouponCode == null)
+            {
+                <input id="userId" asp-for="@Model.listCart[0].ApplicationUserId" hidden />
+                <div class="col-12">
+                    <div class="coupon-accordion">
+
+                        <h3>@localizer["Have a coupon"] <span id="showcoupon">@localizer["Click here"]</span></h3>
+                        <div id="checkout_coupon" class="coupon-checkout-content">
+                            <div class="coupon-info">
+                                <form method="post">
+                                    <p class="checkout-coupon">
+                                        <input asp-for="@Model.Order.CouponCode" id="txtCouponCode" placeholder="@localizer["Coupon code"]">
+                                        <input type="submit" id="btnCoupon" asp-action="AddCoupon" class="coupon-inner_btn" value="@localizer["Apply Coupon"]" />
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+        <div class="row">
+            <form method="post" asp-action="Summary" asp-controller="Cart" class="row">
+                <input id="userId" asp-for="@Model.listCart[0].ApplicationUserId" hidden />
+                <div class="col-lg-6 col-12">
+
+                    <div class="checkbox-form">
+                        <h3>@localizer["Billing Details"]</h3>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Full Name"]<span class="required">*</span></label>
+                                    <input asp-for="@Model.Order.PickupName" placeholder="" id="txtName" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Phone Number"]</label>
+                                    <input asp-for="@Model.Order.PhoneNumber" placeholder="" id="txtPhoneNr" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Date"] <span class="required">*</span></label>
+                                    <input asp-for="@Model.Order.PickUpDate" id="datepicker" value="" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Time"] <span class="required">*</span></label>
+                                    <input asp-for="@Model.Order.PickUpTime" id="timepicker" value="" type="text">
+                                </div>
+                            </div>
+
+
+                            <div class="order-notes mt-3">
+                                <div class="checkout-form-list checkout-form-list-2">
+                                    <label>@localizer["Order Notes"]</label>
+                                    <textarea asp-for="@Model.Order.Comments" id="checkout-mess" cols="30" rows="10" placeholder="@localizer["Notes about"]"></textarea>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="your-order">
+                        <h3>@localizer["Your order"]</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="cart-product-name">@localizer["Produkti"]</th>
+                                        <th class="cart-product-total">@localizer["Total"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.listCart)
+                                    {
+                                        var total = 0.0;
+                                        <tr class="cart_item">
+
+                                            <td class="cart-product-name">
+                                                @item.MenuItem.Name<strong class="product-quantity">
+                                                    × @item.Count
+                                                </strong>
+                                            </td>
+                                            <td class="cart-product-total text-center"><span class="amount">@(item.MenuItem.Price*item.Count) €</span></td>
+                                            @{total += (item.MenuItem.Price * item.Count);}
+                                        </tr>
+
+                                    }
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr class="cart-subtotal">
+                                        <th>@localizer["Cart Subtotal"]</th>
+                                        <td class="text-center"><span class="amount">@Model.Order.OrderTotalOriginal €</span></td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>@localizer["Discount"]</th>
+                                        <td class="text-center"><span class="amount">- @(Model.Order.OrderTotalOriginal-Model.Order.OrderTotal) €</span></td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>@localizer["Order Total"]</th>
+                                        <td class="text-center"><strong><span class="amount">@Model.Order.OrderTotal €</span></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div id="accordion">
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-1">
+                                            <h5 class="panel-title mb-2">
+                                                <a href="#" class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    @localizer["Direct Bank Transfer."]
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                            <div class="card-body mb-2 mt-2">
+                                                <p>@localizer["Make your payment"]</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <script src="//checkout.stripe.com/v2/checkout.js"
+                                        class="stripe-button"
+                                        data-key="@Stripe.Value.PublishableKey"
+                                        data-locale="auto"
+                                        data-description="Sample Charge">
+                                </script>
+                                <script>
+                                    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                </script>
+                                <div class="order-button-payment">
+                                    <input value="@localizer["Place order"]" id="btnPlaceOrder" onclick="return validateInput()" type="submit">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Checkout Area End Here -->
+
+@section Scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.16/jquery.timepicker.js" integrity="sha512-znJmsCnj1pyv7QN2fn4UYqXw3Bp2KXMYPPbphEOkhGP8RQbePNSLUfZWd733MXIQsyaszx4PhVq9jadWa1fq5w==" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+
+            var minDt = 0;
+            if (getTimeFromCurrentDate >= 20) {
+                minDt = 1;
+            }
+
+            $("#datepicker").datepicker({ minDate: minDt, maxDate: "+1W" });
+            $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00 PM', step: '30' });
+        });
+
+        function setPickUpTime() {
+            var dateSelected = document.getElementById("datepicker").value;
+            var dt = new Date(dateSelected);
+            var today = new Date();
+
+            dt.setHours(0, 0, 0, 0);
+            if (dt > today) {
+                selectedTime = '11:00am';
+
+            }
+            else {
+                selectedTime = getTimeFromCurrentDate();
+            }
+
+            $('#timepicker').timepicker('option', 'minTime', selectedTime);
+        }
+
+        function getTimeFromCurrentDate() {
+            var curDt = new Date();
+
+            var minTime = "";
+            if (curDt.getHours() < 11) {
+                minTime = '12:00pm';
+            }
+            else {
+                if (curDt.getMinutes() < 30) {
+                    minTime = (curDt.getHours() + 1).toString() + ':30pm'
+                }
+                else {
+                    minTime = (curDt.getHours() + 2).toString() + ':00pm'
+                }
+            }
+            return minTime;
+        }
+
+
+        function validateInput() {
+            var name = document.getElementById("txtName").value;
+            var phone = document.getElementById("txtPhoneNr").value;
+            var time = document.getElementById("timepicker").value;
+            var dt = document.getElementById("datepicker").value;
+
+            if (time.toString() == '') {
+                alert("Please select pickup time");
+                return false;
+            }
+            else {
+                if (dt.toString() == '') {
+                    alert("Please select pickup Date");
+                    return false;
+                }
+                else {
+                    if (name.toString() == '') {
+                        alert("Please enter picup name");
+                        return false;
+                    }
+                    else {
+                        if (lastname.toString() == '') {
+                            alert("Please enter pickup lastname");
+                            return false;
+                        }
+                        else {
+                            if (phone.toString() == '') {
+                                alert("Please enter phone number");
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+        $('#datepicker').change(function () {
+            setPickUpTime();
+        });
+
+    </script>
+
+}
+
