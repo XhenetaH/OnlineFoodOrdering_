@@ -14,5 +14,7 @@ namespace OnlineFoodOrdering.Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        public DateTime RegisterDate { get; set; }
+
     }
 }

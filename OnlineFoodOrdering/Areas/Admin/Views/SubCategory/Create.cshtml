@@ -2,42 +2,125 @@
 @using OnlineFoodOrdering.Extensions
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-<div class="myaccount-content">
-    <h3>@localizer["New SubCategory"]</h3>
-    @*@if (!String.IsNullOrEmpty(Model.StatusMessage))
-        {
-            var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
-            <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" /></button>
-                @Model.StatusMessage
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
             </div>
-        }*@
-    <br />
-    <div class="account-details-form">
-        <form method="post">
-            <div class="row">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="SubCategory">@localizer["SubCategory Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Create SubCategory"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-                <br />
 
-                <div class="single-input-item mb-3">
-                    <label for="first-name" asp-for="SubCategory.CategoryId" class="required mb-1"></label>
-                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)"><option>@localizer["Please Select One"]</option></select>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Create SubCategory"]</h3>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.StatusMessage))
+                    {
+                        var statusMessageClass = Model.StatusMessage.StartsWith("Error") ? "danger" : "success";
+                        <div class="alert alert-@statusMessageClass alert-default-danger" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" /></button>
+                            @Model.StatusMessage
+                        </div>
+                    }
+                    <form asp-action="Create">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="SubCategory.CategoryId"></label>
+                                <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"><option>@localizer["Please Select One"]</option></select>
+
+                            </div>
+                            <div class="form-group">
+                                <label>@localizer["Name"]</label>
+                                <input asp-for="@Model.SubCategory.Name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success">@localizer["Create"]</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Existing Subcategories"]</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+                        @if (Model.SubCategoryList.Count() > 0)
+                        {
+                            <p>@localizer["Existing Subcategories"]: </p>
+
+                            <div id="SubCategoryList">
+                                <ul class="list-group">
+                                </ul>
+                            </div>
+                        }
+                    </div>
 
                 </div>
 
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
-                    <input asp-for="SubCategory.Name" />
-                </div>
+                <!-- /.card -->
             </div>
-            <br />
-
-            <div class="single-input-item single-item-button">
-                <button type="submit" asp-route-category="@Model.SubCategory" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Create"]</button>
-            </div>
-
-        </form>
-
+        </div>
     </div>
+</section>
 
-</div>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function updateSubCategoryList() {
+            var categorySelected = document.getElementById("ddlCategoryList").value;
+
+            $list = $('#SubCategoryList');
+
+            $.ajax({
+                url: '/Admin/SubCategory/GetSubCategory/' + categorySelected,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $list.html('');
+                    $list.append(' <ul class="list-group"> ');
+                    for (i in results) {
+                        $list.append('<li class="list-group-item">' + results[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            updateSubCategoryList();
+        });
+
+        $("#ddlCategoryList").on("change", function () {
+            updateSubCategoryList();
+        });
+
+    </script>
+}

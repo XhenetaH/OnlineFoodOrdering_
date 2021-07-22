@@ -6,7 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*Breadcrumb Area Start Here*@
 <div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
@@ -22,13 +21,10 @@
         </div>
     </div>
 </div>
-@*Breadcrumb Area End Here*@
-<!-- Shop Main Area Start Here -->
 <div class="shop-main-area">
     <div class="container container-default custom-area">
         <div class="row flex-row-reverse">
             <div class="col-lg-9 col-12 col-custom widget-mt">
-                <!--shop toolbar start-->
                 <div class="shop_toolbar_wrapper">
                     <div class="shop_toolbar_btn">
                         <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"><i class="fa fa-th"></i></button>
@@ -45,8 +41,6 @@
                         </form>
                     </div>
                 </div>
-                <!--shop toolbar end-->
-                <!-- Shop Wrapper Start -->
                 <div class="row shop_wrapper grid_3">
                     @foreach (var item in Model.MenuItem)
                     {
@@ -153,11 +147,8 @@
 
                     }
                 </div>
-                <!-- Shop Wrapper End -->
-               
             </div>
             <div class="col-lg-3 col-12 col-custom">
-                <!-- Sidebar Widget Start -->
                 <aside class="sidebar_widget widget-mt">
                     <div class="widget_inner">
                         <form role="search" method="get" action="@Url.Action("Index","Shop")">
@@ -180,7 +171,6 @@
                         </form>
                         <div class="widget-list widget-mb-1">
                             <h3 class="widget-title">@localizer["Menu Categories"]</h3>
-                            <!-- Widget Menu Start -->
                             <nav>
                                 <ul class="mobile-menu p-0 m-0">
                                     <li class="menu-item-has-children">
@@ -194,13 +184,9 @@
                                         </li>
                                     }
 
-
                                 </ul>
                             </nav>
-                            <!-- Widget Menu End -->
                         </div>
-                      
-
                         <div class="widget-list widget-mb-4">
                             <h3 class="widget-title">@localizer["Featured Products"]</h3>
                             <div class="sidebar-body">
@@ -232,13 +218,10 @@
                         </div>
                     </div>
                 </aside>
-                <!-- Sidebar Widget End -->
             </div>
         </div>
     </div>
 </div>
-<!-- Shop Main Area End Here -->
-<!-- Modal Area Start Here -->
 <div class="modal fade obrien-modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -251,7 +234,6 @@
         </div>
     </div>
 </div>
-<!-- Modal Area End Here -->
 
 @section Scripts
 {

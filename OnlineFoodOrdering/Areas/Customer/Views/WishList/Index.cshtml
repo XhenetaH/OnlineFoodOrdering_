@@ -6,7 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Breadcrumb Area Start Here -->
 <div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
@@ -22,13 +21,10 @@
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End Here -->
-<!-- Wishlist main wrapper start -->
 <div class="wishlist-main-wrapper mt-no-text mb-no-text">
     <div class="container container-default-2 custom-area">
         <div class="row">
             <div class="col-lg-12">
-                <!-- Wishlist Table Area -->
                 <div class="wishlist-table table-responsive">
                     @if (Model.WishLista.Count() > 0)
                     {
@@ -48,7 +44,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="@item.MenuItem.Image" alt="Product" /></a></td>
-                                        <td class="pro-title"><a href="#">@item.MenuItem.Name' @*<br> s / green</a></td>*@
+                                        <td class="pro-title"><a href="#">@item.MenuItem.Name</a></td>
                                         <td class="pro-price"><span>$@item.MenuItem.Price</span></td>
 
                                         <td class="pro-cart">
@@ -82,4 +78,4 @@
         </div>
     </div>
 </div>
-<!-- Wishlist main wrapper end -->
+

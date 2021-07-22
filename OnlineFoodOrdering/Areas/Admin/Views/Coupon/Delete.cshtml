@@ -1,38 +1,73 @@
 ﻿@model OnlineFoodOrdering.Models.Coupon
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-
-<div class="myaccount-content">
-    <h3>@localizer["Are you"]</h3>
-    <br />
-    <div class="account-details-form">
-        <form method="post">
-            <div class="row">
-                <input type="hidden" asp-for="Id" />
-                <br />
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
-                    <input readonly asp-for="Name" />
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Coupon Type"]</label>
-                    <select disabled asp-for="CouponType" asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Discount"]</label>
-                    <input readonly asp-for="Discount" />
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Minimum Amount"]</label>
-                    <input readonly asp-for="MinimumAmount" />
-                </div>
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
             </div>
-            <br />
-
-            <div class="single-input-item single-item-button">
-                <button type="submit" asp-route-id="@Model" class="btn obrien-button primary-btn">@localizer["Delete"]</button>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Coupon">@localizer["Coupon Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Delete Coupon"]</li>
+                </ol>
             </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Are you"]</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post">
+                        
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>@localizer["Coupon Name"]</label>
+                                <input asp-for="Name" disabled class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>@localizer["Coupon Type"]</label>
+                                <select disabled asp-for="CouponType" asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>@localizer["Discount"]</label>
+                                <input asp-for="Discount" disabled class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>@localizer["Minimum Amount"]</label>
+                                <input asp-for="MinimumAmount" disabled class="form-control">
+                            </div>
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" disabled id="checkboxSuccess1" asp-for="IsActive">
+                                <label for="checkboxSuccess1">
+                                    @localizer["Is Active"]
+                                </label>
+                            </div>
 
-        </form>
+                            <br />
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" asp-route-id="@Model.Id" class="btn btn-danger">@localizer["Delete"]</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
     </div>
-</div>
+</section>

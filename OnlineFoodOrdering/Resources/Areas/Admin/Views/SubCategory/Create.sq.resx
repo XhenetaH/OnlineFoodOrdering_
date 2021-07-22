@@ -120,6 +120,12 @@
   <data name="Create" xml:space="preserve">
     <value>Krijo</value>
   </data>
+  <data name="Create SubCategory" xml:space="preserve">
+    <value>Krijo Nën kategori</value>
+  </data>
+  <data name="Existing Subcategories" xml:space="preserve">
+    <value>Nën kategoritë ekzistuese</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
   </data>
@@ -128,5 +134,8 @@
   </data>
   <data name="Please Select One" xml:space="preserve">
     <value>Zgjidhni një</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>Tabela e Nën kategorive</value>
   </data>
 </root>

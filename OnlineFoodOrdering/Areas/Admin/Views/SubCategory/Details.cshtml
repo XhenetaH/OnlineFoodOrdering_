@@ -1,30 +1,61 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.SubCategoryAndCategoryViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@using OnlineFoodOrdering.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
-<div class="myaccount-content">
-    <h3>@localizer["SubCategory Details"]</h3>
-    <br />
-    <div class="account-details-form">
-        <form method="post">
-
-            <div class="row">
-
-                <br />
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["SubCategory Name"]</label>
-                    <input readonly asp-for="SubCategory.Name" />
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" asp-for="SubCategory.Category.Name" class="required mb-1">@localizer["Category Name"]</label>
-                    <input readonly asp-for="SubCategory.Category.Name" />
-                </div>
             </div>
-            <br />
-
-            <div class="single-input-item single-item-button">
-                <button type="submit" disabled asp-route-id="@Model.SubCategory.Id" class="btn obrien-button primary-btn" value="Save Changes">Save Changes</button>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="SubCategory">@localizer["SubCategory Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["SubCategory Details"]</li>
+                </ol>
             </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["SubCategory Details"]</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form>
+                        <br />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="SubCategory.CategoryId">@localizer["Category Name"]</label>
+                                <input asp-for="SubCategory.Category.Name" disabled class="form-control"/>
 
-        </form>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@localizer["SubCategory Name"]</label>
+                                <input asp-for="SubCategory.Name" disabled class="form-control">
+                            </div>
+
+                            <br />
+                        </div>
+                        <!-- /.card-body -->
+
+
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+

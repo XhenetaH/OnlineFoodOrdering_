@@ -1,0 +1,215 @@
+.your-order1{
+    background-color:white;
+
+}
+.your-order1 input:disabled{
+    background-color:transparent;
+}
+
+.your-order1 textarea:disabled{
+    background-color:transparent;
+}
+
+.your-order {
+    background: #efedee;
+    padding: 30px 40px 30px;
+}
+
+@media (max-width: 479px) {
+    .your-order {
+        padding: 30px 20px;
+    }
+}
+
+.your-order h3 {
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 20px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    width: 100%;
+    font-family: "Oswald", sans-serif;
+    font-weight: 800;
+}
+
+
+
+@media (max-width: 479px) {
+    .your-order h3 {
+        font-size: 18px;
+    }
+}
+
+.your-order .your-order-table table {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    width: 100%;
+}
+
+    .your-order .your-order-table table thead {
+        background-color: #efedee;
+    }
+
+        .your-order .your-order-table table thead tr th {
+            border-top: medium none;
+            font-weight: normal;
+            text-align: center;
+            text-transform: uppercase;
+            vertical-align: middle;
+            width: 250px;
+        }
+
+        .your-order .your-order-table table thead tr th,
+        .your-order .your-order-table table thead tr td {
+            border-bottom: 1px solid #000000;
+            border-right: medium none;
+            font-size: 16px;
+            padding: 13px 0;
+            text-align: center;
+        }
+
+    .your-order .your-order-table table tbody tr th,
+    .your-order .your-order-table table tbody tr td {
+        border-bottom: 1px solid #000000;
+        border-right: medium none;
+        font-size: 16px;
+        padding: 12px 0;
+        text-align: left;
+    }
+
+    .your-order .your-order-table table tfoot tr th,
+    .your-order .your-order-table table tfoot tr td {
+        border-bottom: 1px solid #000000;
+        border-right: medium none;
+        font-size: 16px;
+        padding: 12px 0;
+        text-align: left;
+    }
+
+    .your-order .your-order-table table .cart_item:hover {
+        background: #efedee;
+    }
+
+    .your-order .your-order-table table .order-total td {
+        border-bottom: medium none;
+    }
+
+        .your-order .your-order-table table .order-total td span {
+            font-size: 20px;
+        }
+
+    .your-order .your-order-table table .order-total th {
+        border-bottom: medium none;
+        font-size: 18px;
+    }
+
+
+
+
+.steps .step {
+    display: block;
+    width: 100%;
+    margin-bottom: 35px;
+    text-align: center
+}
+
+    .steps .step .step-icon-wrap {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 80px;
+        text-align: center
+    }
+
+        .steps .step .step-icon-wrap::before,
+        .steps .step .step-icon-wrap::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            width: 50%;
+            height: 3px;
+            margin-top: -1px;
+            background-color: #e1e7ec;
+            content: '';
+            z-index: 1
+        }
+
+        .steps .step .step-icon-wrap::before {
+            left: 0
+        }
+
+        .steps .step .step-icon-wrap::after {
+            right: 0
+        }
+
+    .steps .step .step-icon {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+        border: 1px solid #e1e7ec;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        color: #374250;
+        font-size: 38px;
+        line-height: 81px;
+        z-index: 5
+    }
+
+    .steps .step .step-title {
+        margin-top: 16px;
+        margin-bottom: 0;
+        color: #606975;
+        font-size: 14px;
+        font-weight: 500
+    }
+
+    .steps .step:first-child .step-icon-wrap::before {
+        display: none
+    }
+
+    .steps .step:last-child .step-icon-wrap::after {
+        display: none
+    }
+
+    .steps .step.completed .step-icon-wrap::before,
+    .steps .step.completed .step-icon-wrap::after {
+        background-color: #E98C81
+    }
+
+    .steps .step.completed .step-icon {
+        border-color: #E98C81;
+        background-color: #E98C81;
+        color: #fff
+    }
+
+@media (max-width: 576px) {
+    .flex-sm-nowrap .step .step-icon-wrap::before,
+    .flex-sm-nowrap .step .step-icon-wrap::after {
+        display: none
+    }
+}
+
+@media (max-width: 768px) {
+    .flex-md-nowrap .step .step-icon-wrap::before,
+    .flex-md-nowrap .step .step-icon-wrap::after {
+        display: none
+    }
+}
+
+@media (max-width: 991px) {
+    .flex-lg-nowrap .step .step-icon-wrap::before,
+    .flex-lg-nowrap .step .step-icon-wrap::after {
+        display: none
+    }
+}
+
+@media (max-width: 1200px) {
+    .flex-xl-nowrap .step .step-icon-wrap::before,
+    .flex-xl-nowrap .step .step-icon-wrap::after {
+        display: none
+    }
+}
+
+.bg-faded, .bg-secondary {
+    background-color: #f5f5f5 !important;
+}

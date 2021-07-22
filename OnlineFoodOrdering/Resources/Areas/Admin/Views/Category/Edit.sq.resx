@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+  <data name="Category Name" xml:space="preserve">
+    <value>Emri i Kategorisë</value>
+  </data>
+  <data name="Category Table" xml:space="preserve">
+    <value>Tabela e Kategorive</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Shëno Emrin</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Ruaj Ndryshimet</value>

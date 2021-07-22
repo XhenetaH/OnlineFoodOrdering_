@@ -123,6 +123,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -131,5 +134,8 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="User's Table" xml:space="preserve">
+    <value>User's Table</value>
   </data>
 </root>

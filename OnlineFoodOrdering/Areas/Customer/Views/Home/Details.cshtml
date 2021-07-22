@@ -1,6 +1,5 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.ShoppingCartViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-<!-- Breadcrumb Area Start Here -->
 <div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
@@ -16,8 +15,6 @@
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End Here -->
-<!-- Single Product Main Area Start -->
 <div class="single-product-main-area">
     <div class="container container-default custom-area">
         <div class="row">
@@ -115,9 +112,6 @@
                         </div>
 
                     }
-                    @*@using(Html.BeginForm("Summary","Cart",FormMethod.Post))
-                    {
-                    }*@
                 <div class="buy-button mb-5">
                     @Html.ActionLink(localizer["Buy Now"].Value.ToString(), "SingleSummary", "Cart", new { id = @Model.ShoppingCart.MenuItemId, count = "xxx" }, new { @class = "btn obrien-button-3 black-button link" })
                 </div>
@@ -132,9 +126,6 @@
                         <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
                         <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
                     </div>
-                    @*<div class="payment">
-            <a href="#"><img class="border" src="assets/images/payment/img-payment.png" alt="Payment"></a>
-        </div>*@
                 </div>
             </div>
 
@@ -162,10 +153,10 @@
                         </div>
                     </div>
                     <div class="tab-pane fade show active" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
-                        <!-- Start Single Content -->
                         <div class="product_tab_content  border p-3">
                             <div class="review_address_inner">
-                                <!-- Start Single Review -->
+                                @if (Model.Ratings != null)
+                                {
                                 @if (Model.Ratings.Count() > 0)
                                 {
                                     @foreach (var item in Model.Ratings)
@@ -199,13 +190,10 @@
                                 {
                                     <p>ska ylla</p>
                                 }
-
-
-                                <!-- End Single Review -->
+                                }
                             </div>
                             @using (Html.BeginForm("AddComment", "Home", FormMethod.Post, new { onsubmit = "return VerifyRating()" }))
                             {
-                                <!-- Start RAting Area -->
                                 <div class="rating_wrap">
                                     <h5 class="rating-title-1 mb-2">@localizer["Add a review"] </h5>
                                     <p class="mb-2">@localizer["emailReq"] *</p>
@@ -223,7 +211,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End RAting Area -->
                                 <div class="comments-area comments-reply-area">
                                     <div class="row">
                                         <div class="col-lg-12 col-custom">
@@ -258,8 +245,6 @@
                             }
                             
                         </div>
-
-                        <!-- End Single Content -->
                     </div>
                     <div class="tab-pane fade" id="connect-3" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="shipping-policy">
@@ -271,9 +256,6 @@
                                 <li>@localizer["ShippingLine4"]</li>
                                 
                             </ul>
-                            @*<p class="desc-content mb-2">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum</p>
-                            <p class="desc-content mb-2">claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per</p>
-                            <p class="desc-content mb-2">seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>*@
                         </div>
                     </div>
 

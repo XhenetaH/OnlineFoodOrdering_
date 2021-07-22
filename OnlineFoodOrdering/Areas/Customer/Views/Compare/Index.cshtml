@@ -1,6 +1,5 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.CompareViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-<!-- Breadcrumb Area Start Here -->
 <div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
@@ -16,14 +15,11 @@
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End Here -->
-<!-- Compare Area Start Here -->
 
 <div class="compare-area mt-no-text mb-no-text">
     <div class="container container-default-2 custom-area">
         <div class="row">
             <div class="col-sm-12">
-                <!-- Compare Page Content Start -->
                 <div class="compare-page-content-wrap">
                     <div class="compare-table table-responsive">
                         @if (Model.CompareList.Count() > 0)
@@ -83,13 +79,9 @@
                             <p>ska</p>
                         }
 
-
                     </div>
                 </div>
-                <!-- Compare Page Content End -->
             </div>
         </div>
     </div>
 </div>
-
-<!-- Compare Area End Here -->

@@ -120,6 +120,12 @@
   <data name="Create" xml:space="preserve">
     <value>Create New</value>
   </data>
+  <data name="Create SubCategory" xml:space="preserve">
+    <value>Create SubCategory</value>
+  </data>
+  <data name="Existing Subcategories" xml:space="preserve">
+    <value>Existing Subcategories</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -128,5 +134,8 @@
   </data>
   <data name="Please Select One" xml:space="preserve">
     <value>Please Select One</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>SubCategory Table</value>
   </data>
 </root>

@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you" xml:space="preserve">
+  <data name="Are you sure" xml:space="preserve">
     <value>Are you sure you want to delete this?</value>
+  </data>
+  <data name="Category Name" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="Category Table" xml:space="preserve">
+    <value>Category Table</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="Delete Category" xml:space="preserve">
+    <value>Delete Category</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Enter Name</value>
   </data>
 </root>

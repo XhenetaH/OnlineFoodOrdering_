@@ -1,25 +1,49 @@
 ﻿@model OnlineFoodOrdering.Models.Category
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
-<div class="myaccount-content">
-    <h3>@localizer["New Category"]</h3>
-    <br />
-    <div class="account-details-form">
-        <form method="post">
-            <div class="row">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Category">@localizer["Category Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Create Category"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Create Category"]</h3>
+                    </div>
+                    <form method="post">
+                        <br />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@localizer["Category Name"]</label>
+                                <input asp-for="Name" class="form-control" id="exampleInputEmail1" placeholder="@localizer["Enter Name"]">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
 
-                <br />
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
-                    <input asp-for="Name" />
+                            <br />
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" asp-route-category="@Model" class="btn btn-success">@localizer["Create New"]</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <br />
-
-            <div class="single-input-item single-item-button">
-                <button type="submit" asp-route-category="@Model" class="btn obrien-button primary-btn">@localizer["Create New"]</button>
-            </div>
-
-        </form>
+        </div>
     </div>
-</div>
+</section>

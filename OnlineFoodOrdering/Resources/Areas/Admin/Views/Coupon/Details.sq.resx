@@ -120,6 +120,9 @@
   <data name="Coupon Details" xml:space="preserve">
     <value>Detajet e Kuponit</value>
   </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Tabela e Kuponëve</value>
+  </data>
   <data name="Coupon Type" xml:space="preserve">
     <value>Lloji i kuponit</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Shuma Minimale</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+    <value>Emri i Kuponit</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Ruaj ndryshimet</value>

@@ -1,0 +1,111 @@
+﻿@model OnlineFoodOrdering.Models.ViewModels.OrderDetailsViewModel
+@using OnlineFoodOrdering.Utility
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+<!-- Checkout Area Start Here -->
+<div class="checkout-area">
+    <div class="container container-default-2 custom-container">
+        <form method="post" asp-action="OrderPickup" asp-controller="Order" asp-route-orderId="@Model.Order.Id">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+
+                    <div class="checkbox-form">
+                        <h3>@localizer["Billing Details"]</h3>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Full Name"] <span class="required">*</span></label>
+                                    <input asp-for="@Model.Order.PickupName" readonly placeholder="" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Phone Number"]</label>
+                                    <input asp-for="@Model.Order.PhoneNumber" readonly placeholder="" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>@localizer["Date and Time"] <span class="required">*</span></label>
+                                    <input value="@Model.Order.PickUpDate.ToShortDateString()   @Model.Order.PickUpTime.ToShortTimeString()" readonly type="text">
+                                </div>
+                            </div>
+
+
+                            <div class="order-notes mt-3">
+                                <div class="checkout-form-list checkout-form-list-2">
+                                    <label>@localizer["Order Notes"]</label>
+                                    <textarea id="checkout-mess" cols="30" rows="10" readonly placeholder="@localizer["Notes about"]"></textarea>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-12">
+                    <div class="your-order">
+                        <h3>@localizer["Your order"]</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="cart-product-name">@localizer["Product"]</th>
+                                        <th class="cart-product-total">@localizer["Total"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.OrderDetails)
+                                    {
+                        <tr class="cart_item">
+
+                            <td class="cart-product-name">
+                                @item.Name<strong class="product-quantity">
+                                    × @item.Count
+                                </strong>
+                            </td>
+                            <td class="cart-product-total text-center"><span class="amount">@(item.Price*item.Count) €</span></td>
+                        </tr>}
+                                </tbody>
+                                <tfoot>
+                                    <tr class="cart-subtotal">
+                                        <th>@localizer["Order Subtotal"]</th>
+                                        <td class="text-center"><span class="amount">@Model.Order.OrderTotalOriginal €</span></td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>@localizer["Discount"]</th>
+                                        <td class="text-center"><span class="amount">- @(Model.Order.OrderTotalOriginal-Model.Order.OrderTotal) €</span></td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>@localizer["Order Total"]</th>
+                                        <td class="text-center"><strong><span class="amount">@Model.Order.OrderTotal €</span></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+
+                                <div class="order-button-payment">
+                                    @if (Model.Order.Status.Equals(SD.StatusReady) && (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.FrontDeskUser)))
+                                    {
+                        <button type="submit"><i class="fa fa-thumbs-up"></i> @localizer["Confirm Pickup"]</button> }
+                                    else
+                                    {
+                        <button type="submit" disabled>@Model.Order.Status</button>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Checkout Area End Here -->

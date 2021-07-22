@@ -120,6 +120,9 @@
   <data name="Coupon Details" xml:space="preserve">
     <value>Coupon Details</value>
   </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Coupons Table</value>
+  </data>
   <data name="Coupon Type" xml:space="preserve">
     <value>Coupon Type</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Minimum Amount</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Coupon Name</value>
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Save Changes</value>

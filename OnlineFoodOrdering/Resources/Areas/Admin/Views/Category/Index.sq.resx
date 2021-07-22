@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Category Table" xml:space="preserve">
+    <value>Tabela e Kategorive</value>
+  </data>
   <data name="Create New" xml:space="preserve">
-    <value>Krijo </value>
+    <value>Krijo</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Kërko...</value>
   </data>
 </root>

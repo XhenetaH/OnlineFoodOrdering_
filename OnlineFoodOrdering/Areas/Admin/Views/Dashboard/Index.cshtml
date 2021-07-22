@@ -1,0 +1,324 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+
+    </div><!-- /.container-fluid -->
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+
+                        <h3>@ViewBag.OrderCount</h3>
+
+                        <p>@localizer["Orders"]</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">@localizer["More info"] <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.MenuCount</h3>
+
+                        <p>@localizer["Menu Items"]</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-fork"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="MenuItem" class="small-box-footer">@localizer["More info"] <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.UserCount</h3>
+
+                        <p>@localizer["User Registrations"]</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="User" class="small-box-footer">@localizer["More info"] <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.CategoryCount</h3>
+
+                        <p>@localizer["Food Categories"]</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a asp-action="Index" asp-controller="Category" class="small-box-footer">@localizer["More info"] <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <section class="col-lg-7 connectedSortable">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-pie mr-1"></i>
+                        @localizer["Sales"]
+                    </h3>
+                    <div class="card-tools">
+                        <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#revenue-chart" data-toggle="tab">Area</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#sales-chart" data-toggle="tab">Donut</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                    <div class="tab-content p-0">
+                        <!-- Morris chart - Sales -->
+                        <div class="chart tab-pane" id="revenue-chart"
+                             style="position: relative; height: 500px;">
+                            <canvas class="chartjs-render-monitor" id="revenue-chart-canvas" height="200"></canvas>
+                        </div>
+                        <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 500px;">
+                            <canvas class="chartjs-render-monitor" id="sales-chart-canvas" height="500" width="630"></canvas>
+                        </div>
+                    </div>
+                </div><!-- /.card-body -->
+            </div>
+
+        </section>
+        <section class="col-lg-5 connectedSortable">
+
+            <!-- Map card -->
+            <div class="card bg-gradient-primary">
+                <div class="card-header border-0">
+                    <h3 class="card-title">
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        @localizer["Visitors"]
+                    </h3>
+                    <!-- card tools -->
+                    <div class="card-tools">
+
+                        <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <div class="card-body">
+                    <div id="world-map" style="height: 250px; width: 130%;"></div>
+                </div>
+                <!-- /.card-body-->
+
+            </div>
+            <!-- /.card -->
+            <!-- solid sales graph -->
+            <div class="card bg-gradient-info">
+                <div class="card-header border-0">
+                    <h3 class="card-title">
+                        <i class="fas fa-th mr-1"></i>
+                        @localizer["Users Graph"]
+                    </h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+            <!-- Calendar -->
+            <div class="card bg-gradient-success">
+                <div class="card-header border-0">
+
+                    <h3 class="card-title">
+                        <i class="far fa-calendar-alt"></i>
+                        @localizer["Calendar"]
+                    </h3>
+                    <!-- tools card -->
+                    <div class="card-tools">
+                        <!-- button with a dropdown -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <a href="#" class="dropdown-item">Add new event</a>
+                                <a href="#" class="dropdown-item">Clear events</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">View calendar</a>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- /. tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body pt-0">
+                    <!--The calendar -->
+                    <div id="calendar" style="width: 100%"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </section>
+
+    </div>
+</section>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js"></script>
+    <script type="text/javascript">
+
+    var monthList = @Json.Serialize(ViewBag.Months);
+        var salesList = @Json.Serialize(ViewBag.Sales);
+        var userList = @Json.Serialize(ViewBag.Users);
+
+        var line2chart = document.getElementById('line-chart').getContext('2d');
+        var myline2chart = new Chart(line2chart, {
+            type: 'line',
+            data: {
+                labels: monthList,
+                datasets: [{
+                    label: 'User Register',
+                    fill: true,
+
+                    data: userList,
+                    backgroundColor: "rgba(238, 183, 240, 0.92)",
+
+
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    var linechart = document.getElementById('revenue-chart-canvas').getContext('2d');
+    var mylinechart = new Chart(linechart, {
+        type: 'line',
+        data: {
+            labels: monthList,
+            datasets: [{
+                label: 'Sales',
+                fill: true,
+
+                data: salesList,
+                backgroundColor: "rgba(238, 183, 240, 0.92)",
+
+                tension: 0.4
+
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var piechart = document.getElementById('sales-chart-canvas').getContext('2d');
+    var mypiechart = new Chart(piechart, {
+        type: 'pie',
+        data: {
+            labels: monthList,
+            datasets: [{
+                label: 'Bar Chart',
+                fill: true,
+
+                data: salesList,
+                backgroundColor: [
+                    'rgb(210, 237, 7)',
+                    'rgb(34, 7, 237)',
+                    'rgb(237, 34, 7)',
+                    'rgb(149, 7, 237)',
+                    'rgb(95, 237, 7)',
+                    'rgb(224, 66, 150)',
+                    'rgb(30, 4, 18)',
+                    'rgba(30, 4, 18, 0.6)',
+                    'rgba(89, 53, 17, 0.92)',
+                    'rgba(21, 233, 212, 0.92)',
+                    'rgba(73, 238, 232, 0.92)',
+                    'rgba(73, 238, 150, 0.92)'
+
+                ],
+
+                tension: 0.4
+
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            responsive: false
+        }
+    });
+    </script>
+
+    <script>
+        jQuery('#world-map').vectorMap({
+            map: 'europe_en',
+            backgroundColor: null,
+            color: '#FFFFFF',
+            hoverColor: '#999999',
+            enableZoom: true,
+            showTooltip: true
+        });
+    </script>
+
+}
+
+

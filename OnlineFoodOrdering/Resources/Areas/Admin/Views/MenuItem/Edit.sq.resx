@@ -120,6 +120,9 @@
   <data name="Category" xml:space="preserve">
     <value>Kategori</value>
   </data>
+  <data name="Choose file" xml:space="preserve">
+    <value>Zgjedhni një foto</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Përshkrimi</value>
   </data>
@@ -129,8 +132,8 @@
   <data name="Is Featured" xml:space="preserve">
     <value>Është e veçant?</value>
   </data>
-  <data name="Menu Item Update" xml:space="preserve">
-    <value>Përditëso Menynë</value>
+  <data name="MenuItem Table" xml:space="preserve">
+    <value>Tabela e Artikujve</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
@@ -149,5 +152,11 @@
   </data>
   <data name="SubCategory" xml:space="preserve">
     <value>Nën Kategori</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Përditëso</value>
+  </data>
+  <data name="Update MenuItem" xml:space="preserve">
+    <value>Përditëso Menynë</value>
   </data>
 </root>

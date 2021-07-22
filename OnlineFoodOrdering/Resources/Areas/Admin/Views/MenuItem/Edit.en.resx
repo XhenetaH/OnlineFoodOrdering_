@@ -120,6 +120,9 @@
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="Choose file" xml:space="preserve">
+    <value>Choose file</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -129,8 +132,8 @@
   <data name="Is Featured" xml:space="preserve">
     <value>Is Featured?</value>
   </data>
-  <data name="Menu Item Update" xml:space="preserve">
-    <value>Menu Item Update</value>
+  <data name="MenuItem Table" xml:space="preserve">
+    <value>MenuItem Table</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -149,5 +152,11 @@
   </data>
   <data name="SubCategory" xml:space="preserve">
     <value>Sub Category</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update MenuItem" xml:space="preserve">
+    <value>Update MenuItem</value>
   </data>
 </root>

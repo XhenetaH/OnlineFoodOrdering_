@@ -120,6 +120,12 @@
   <data name="Cancel Order" xml:space="preserve">
     <value>Anulo Porosinë</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
+  </data>
+  <data name="Manage Order" xml:space="preserve">
+    <value>Menaxho Porositë</value>
+  </data>
   <data name="Message" xml:space="preserve">
     <value>Mesazhi</value>
   </data>

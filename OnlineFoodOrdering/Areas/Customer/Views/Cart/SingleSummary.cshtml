@@ -30,7 +30,7 @@
     <div class="container container-default-2 custom-container">
 
         <div class="row">
-            <form method="post" asp-action="Summary" asp-controller="Cart" class="row">
+            <form method="post" asp-action="SingleSummary" asp-controller="Cart" class="row">
 
                 <div class="col-lg-6 col-12">
 
@@ -72,6 +72,9 @@
                                 </div>
                             </div>
 
+                            <input asp-for="@Model.Order.OrderTotal" value="@(Model.MenuItem.Price * Model.Count)" hidden />
+                            <input asp-for="@Model.Count" hidden />
+                            <input asp-for="@Model.MenuItem.Id" hidden />
 
 
                         </div>

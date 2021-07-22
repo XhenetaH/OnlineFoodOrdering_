@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Utility;
-using X.PagedList;
+using System.Linq;
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -23,20 +19,17 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET 
-        public async Task<IActionResult> Index(int?page)
+        public IActionResult Index()
         {
+            var list = _db.Category.ToList();
 
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
-            var onePageOfCategory = await _db.Category.ToPagedListAsync(pageNumber, pageSize);
-
-            return View(onePageOfCategory);
+            return View(list);
         }
 
         //GET - Create
         public IActionResult Create()
         {
-            return PartialView("Create");
+            return View("Create");
         }
         
         //POST - Create
@@ -55,14 +48,14 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET - Edit
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
                 return NotFound();
-            var category = await _db.Category.FindAsync(id);
+            var category =  _db.Category.Find(id);
             if (category == null)
                 return NotFound();
-            return PartialView("Edit",category);
+            return View("Edit",category);
         }
         
 
@@ -82,14 +75,14 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET - Delete
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
                 return NotFound();
-            var category = await _db.Category.FindAsync(id);
+            var category = _db.Category.Find(id);
             if (category == null)
                 return NotFound();
-            return PartialView("Delete",category);
+            return View("Delete",category);
         }
 
         //POST - Delete
@@ -106,14 +99,14 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET - Details
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
                 return NotFound();
-            var category = await _db.Category.FindAsync(id);
+            var category = _db.Category.Find(id);
             if (category == null)
                 return NotFound();
-            return PartialView("Details",category);
+            return View("Details",category);
         }
     }
 }

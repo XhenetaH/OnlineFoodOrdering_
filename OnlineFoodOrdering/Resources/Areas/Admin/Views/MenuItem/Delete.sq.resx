@@ -126,6 +126,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Fshije</value>
   </data>
+  <data name="Delete MenuItem" xml:space="preserve">
+    <value>Fshije Artikullin</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Përshkrimi</value>
   </data>
@@ -135,6 +138,9 @@
   <data name="Is Featured" xml:space="preserve">
     <value>Është e veçant?</value>
   </data>
+  <data name="MenuItem Table" xml:space="preserve">
+    <value>Tabela e Artikujve</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Çmimi</value>
+  </data>
+  <data name="Spicyness" xml:space="preserve">
+    <value>Pikante</value>
   </data>
   <data name="SubCategory" xml:space="preserve">
     <value>Nën Kategori</value>

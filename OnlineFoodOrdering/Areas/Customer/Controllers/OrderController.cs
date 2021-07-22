@@ -48,10 +48,8 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> OrderHistory(int? page)
+        public async Task<IActionResult> OrderHistory()
         {
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
             var claimsIndentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIndentity.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -67,7 +65,7 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
                 };
                 orderDetailsList.Add(individual);
             }
-            return View(orderDetailsList.ToPagedList(pageNumber,pageSize));
+            return View(orderDetailsList);
         }
 
         public async Task<IActionResult> GetOrderDetails(int Id)
@@ -82,6 +80,13 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             
         }
 
+        public IActionResult AllOrders()
+        {
+            var list = _db.Order.ToList();
+            return View(list);
+        }
+
+        
 
         public IActionResult GetOrderStatus(int Id)
         {
@@ -150,12 +155,9 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> OrderPickup(int?page)
+        public async Task<IActionResult> OrderPickup()
         {
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
-    
-
+           
             List<OrderDetailsViewModel> orderDetailsList = new List<OrderDetailsViewModel>();
             List<Order> OrderList = await _db.Order.Include(o => o.ApplicationUser).Where(u => u.Status == SD.StatusReady).ToListAsync();
 
@@ -168,7 +170,7 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
                 };
                 orderDetailsList.Add(individual);
             }
-            return View(orderDetailsList.ToPagedList(pageNumber, pageSize));
+            return View(orderDetailsList);
         }
 
         [Authorize(Roles = SD.FrontDeskUser + "," + SD.ManagerUser)]

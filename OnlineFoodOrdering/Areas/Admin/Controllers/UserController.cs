@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Utility;
-using X.PagedList;
+
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -21,14 +20,13 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index(int? page)
+        public IActionResult Index()
         {
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
+            
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            return View(await _db.ApplicationUser.Where(u => u.Id != claim.Value).ToPagedListAsync(pageNumber,pageSize));
+            return View( _db.ApplicationUser.Where(u => u.Id != claim.Value).ToList());
         }
 
         public async Task<IActionResult> Lock(string id)

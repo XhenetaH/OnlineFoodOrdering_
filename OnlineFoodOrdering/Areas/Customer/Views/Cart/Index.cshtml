@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Breadcrumb Area Start Here -->
 <div class="breadcrumbs-area position-relative">
     <div class="container">
         <div class="row">
@@ -21,8 +20,6 @@
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End Here -->
-<!-- cart main wrapper start -->
 <form method="post">
     @if (Model.listCart.Count > 0)
     {
@@ -31,7 +28,6 @@
             <div class="container container-default-2 custom-area">
                 <div class="row">
                     <div class="col-lg-12">
-                        <!-- Cart Table Area -->
                         <div class="cart-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
@@ -58,8 +54,6 @@
                                                         <input type="text" class="cart-plus-minus-box" value="@item.Count" />
                                                         <button type="submit" class="decc" asp-action="minus" asp-route-cartId="@item.Id"> - </button>
                                                     </div>
-
-
                                                 </div>
                                             </td>
 
@@ -67,7 +61,7 @@
                                                 var total = item.MenuItem.Price * item.Count;
                                             }
 
-                                            <td class="pro-subtotal"><span>@total</span></td>
+                                            <td class="pro-subtotal"><span>$@total</span></td>
                                             <td class="pro-remove"><button type="submit" asp-action="remove" asp-route-cartId="@item.Id"><i class="ion-trash-b"></i></button></td>
                                         </tr>
                                     }
@@ -77,7 +71,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Cart Update Option -->
                         <div class="cart-update-option d-block d-md-flex justify-content-between">
                             <div class="apply-coupon-wrapper">
 

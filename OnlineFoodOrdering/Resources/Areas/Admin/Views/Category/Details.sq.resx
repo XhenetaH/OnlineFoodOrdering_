@@ -120,10 +120,13 @@
   <data name="Category Details" xml:space="preserve">
     <value>Detajet e Kategorisë</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+  <data name="Category Name" xml:space="preserve">
+    <value>Emri i Kategorisë</value>
   </data>
-  <data name="Save Changes" xml:space="preserve">
-    <value>Ruaj ndryshimet</value>
+  <data name="Category Table" xml:space="preserve">
+    <value>Tabela e Kategorive</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Shëno Emrin</value>
   </data>
 </root>

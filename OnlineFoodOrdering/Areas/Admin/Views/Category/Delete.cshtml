@@ -1,28 +1,48 @@
 ﻿@model OnlineFoodOrdering.Models.Category
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
-<div class="myaccount-content">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Category">@localizer["Category Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Delete Category"]</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Are you sure"]</h3>
+                    </div>
+                    <form method="post">
+                        <br />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">@localizer["Category Name"]</label>
+                                <input asp-for="Name" disabled class="form-control" id="exampleInputEmail1" placeholder="@localizer["Enter Name"]">
+                            </div>
 
-    <h3>@localizer["Are you"]</h3>
-
-    <br />
-    <div class="account-details-form">
-        <form method="post">
-
-            <div class="row">
-
-                <br />
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Name"]</label>
-                    <input disabled asp-for="Name" />
+                            <br />
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" asp-route-id="@Model.Id" class="btn btn-danger">@localizer["Delete"]</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <br />
-
-            <div class="single-input-item single-item-button">
-                <button type="submit" asp-route-id="@Model.Id" class="btn obrien-button primary-btn">@localizer["Delete"]</button>
-            </div>
-
-        </form>
+        </div>
     </div>
-</div>
+</section>

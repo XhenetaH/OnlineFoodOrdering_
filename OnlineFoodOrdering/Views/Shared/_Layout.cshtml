@@ -1,7 +1,10 @@
-﻿@using OnlineFoodOrdering.Utility
+﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@using OnlineFoodOrdering.Utility
 
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
@@ -35,571 +38,515 @@
     <link rel="stylesheet" href="~/css/plugins/magnific-popup.css">
 
     <!-- Vendor & Plugins CSS (Please remove the comment from below vendor.min.css & plugins.min.css for better website load performance and remove css files from the above) -->
-    <!-- <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
+    <!--<link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"> -->
     <!-- Main Style CSS (Please use minify version for better website load performance) -->
     <link rel="stylesheet" href="~/css/style.css">
     <!-- <link rel="stylesheet" href="assets/css/style.min.css"> -->
 </head>
 <body>
-
-    <!-- Header Area Start Here -->
-    <header class="main-header-area">
-        <!-- Header Top Area Start Here -->
-        <!-- Header Top Area End Here -->
-        <!-- Main Header Area Start -->
-        <div class="main-header">
-            <div class="container container-default custom-area">
-                <div class="row">
-                    <div class="col-lg-12 col-custom">
-                        <div class="row align-items-center">
-                            <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
-                                <div class="header-logo d-flex align-items-center">
-                                    <a href="index.html">
-                                        <img class="img-full" src="~/images/logo/logo.png" alt="Header Logo">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-xl-7 position-static d-none d-lg-block col-custom">
-                                <nav class="main-nav d-flex justify-content-center">
-                                    <ul class="nav">
-                                        @if (User.IsInRole(SD.ManagerUser))
-                                        {
-
-                                            <li>
-                                                <a class="active" asp-area="Customer" asp-controller="Home" asp-action="Index">
-                                                    <span class="menu-text">@localizer["Home"]</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="active" href="index.html">
-                                                    <span class="menu-text"> @localizer["Management"]</span>
-                                                    <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                <ul class="dropdown-submenu dropdown-hover">
-
-                                                    <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">@localizer["Category"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="SubCategory" asp-action="Index">@localizer["SubCategory"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="MenuItem" asp-action="Index">@localizer["MenuItem"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">@localizer["Coupon"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Index">@localizer["User"]</a></li>
-                                                </ul>
-                                            </li>
-
-                                        }
-                                        @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.FrontDeskUser))
-                                        {
-                                            <li>
-                                                <a class="active" asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">
-                                                    <span class="menu-text">@localizer["Order History"]</span>
-                                                </a>
-                                            </li>
-
-                                        }
-                                        @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.FrontDeskUser))
-                                        {
-                                            <li>
-                                                <a class="active" href="index.html">
-                                                    <span class="menu-text"> @localizer["Orders"]</span>
-                                                    <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                <ul class="dropdown-submenu dropdown-hover">
-                                                    <li>
-                                                        @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser))
-                                                        {
-                                                            <a asp-area="Customer" asp-controller="Order" asp-action="ManageOrder">@localizer["Manage Order"]</a>
-                                                        }
-                                                        @if (User.IsInRole(SD.FrontDeskUser) || User.IsInRole(SD.ManagerUser))
-                                                        {
-                                                            <a asp-area="Customer" asp-controller="Order" asp-action="OrderPickup">@localizer["Order Pickup"]</a>
-                                                        }
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-
-                                        }
-
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div class="col-lg-2 col-xl-3 col-sm-6 col-6 col-custom">
-                                <div class="header-right-area main-nav">
-                                    <ul class="nav">
-
-                                        <partial name="_LoginPartial" />
-
-                                        <partial name="_Languages" />
-                                        <li class="minicart-wrap">
-                                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
-                                            {
-                                                var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
-
-                                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <i class="ion-bag"></i>
-                                                    <span class="cart-item_count">@count</span>
-
-                                                </a>
-                                                <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                                    <div class="single-cart-item">
-                                                        <div class="cart-img">
-                                                            <a href="cart.html"><img src="/images/cart/1.jpg" alt=""></a>
-                                                        </div>
-                                                        <div class="cart-text">
-                                                            <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>
-                                                            <div class="cart-text-btn">
-                                                                <div class="cart-qty">
-                                                                    <span>1×</span>
-                                                                    <span class="cart-price">$98.00</span>
-                                                                </div>
-                                                                <button type="button"><i class="ion-trash-b"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="cart-price-total d-flex justify-content-between">
-                                                        <h5>Total :</h5>
-                                                        <h5>$166.00</h5>
-                                                    </div>
-                                                    <div class="cart-links d-flex justify-content-center">
-                                                        <a class="obrien-button white-btn" asp-area="Customer" asp-controller="Cart" asp-action="Index">View cart</a>
-                                                        <a class="obrien-button white-btn" asp-area="Customer" asp-controller="Cart" asp-action="Summary">Checkout</a>
-                                                    </div>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="Identity" asp-page="/Account/Login" class="minicart-btn toolbar-btn">
-                                                    <i class="ion-bag"></i>
-                                                    <span class="cart-item_count">0</span>
-                                                </a>
-                                            }
-
-                                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount") != null)
-                                            {
-                                                var wishcount = HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount");
-                                                <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <span class="wish-item_count">@wishcount</span>
-                                                    <i style="margin-left:20px;" class="fa fa-heart-o"></i>
-
-                                                </a>
-
-
-
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <i style="margin-left:20px;" class="fa fa-heart-o"></i>
-                                                    <span class="wish-item_count">0</span>
-                                                </a>
-                                            }
-
-                                        </li>
-                                        <li class="mobile-menu-btn d-lg-none">
-                                            <a class="off-canvas-btn" href="#">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Main Header Area End -->
-        <!-- Sticky Header Start Here-->
-        <div class="main-header header-sticky">
-            <div class="container container-default custom-area">
-                <div class="row">
-                    <div class="col-lg-12 col-custom">
-                        <div class="row align-items-center">
-                            <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
-                                <div class="header-logo d-flex align-items-center">
-                                    <a href="index.html">
-                                        <img class="img-full" src="~/images/logo/logo.png" alt="Header Logo">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-xl-7 position-static d-none d-lg-block col-custom">
-                                <nav class="main-nav d-flex justify-content-center">
-                                    <ul class="nav">
-                                        @if (User.IsInRole(SD.ManagerUser))
-                                        {
-
-                                            <li>
-                                                <a class="active" asp-area="Customer" asp-controller="Home" asp-action="Index">
-                                                    <span class="menu-text">@localizer["Home"]</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="active" href="index.html">
-                                                    <span class="menu-text"> @localizer["Management"]</span>
-                                                    <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                <ul class="dropdown-submenu dropdown-hover">
-
-                                                    <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">@localizer["Category"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="SubCategory" asp-action="Index">@localizer["SubCategory"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="MenuItem" asp-action="Index">@localizer["MenuItem"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">@localizer["Coupon"]</a></li>
-                                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Index">@localizer["User"]</a></li>
-                                                </ul>
-                                            </li>
-
-                                        }
-                                        @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.FrontDeskUser))
-                                        {
-                                            <li>
-                                                <a class="active" asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">
-                                                    <span class="menu-text">@localizer["Order History"]</span>
-                                                </a>
-                                            </li>
-
-                                        }
-                                        @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.FrontDeskUser))
-                                        {
-                                            <li>
-                                                <a class="active" href="index.html">
-                                                    <span class="menu-text"> @localizer["Orders"]</span>
-                                                    <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                <ul class="dropdown-submenu dropdown-hover">
-                                                    <li>
-                                                        @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser))
-                                                        {
-                                                            <a asp-area="Customer" asp-controller="Order" asp-action="ManageOrder">@localizer["Manage Order"]</a>
-                                                        }
-                                                        @if (User.IsInRole(SD.FrontDeskUser) || User.IsInRole(SD.ManagerUser))
-                                                        {
-                                                            <a asp-area="Customer" asp-controller="Order" asp-action="OrderPickup">@localizer["Order Pickup"]</a>
-                                                        }
-                                                    </li>
-                                                </ul>
-                                            </li>
-
-
-                                        }
-
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div class="col-lg-2 col-xl-3 col-sm-6 col-6 col-custom">
-                                <div class="header-right-area main-nav">
-                                    <ul class="nav">
-
-                                        <partial name="_LoginPartial" />
-                                        <partial name="_Languages"/>
-                                        <li class="minicart-wrap">
-                                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
-                                            {
-                                                var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
-                                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <i class="ion-bag"></i>
-                                                    <span class="cart-item_count">@count</span>
-                                                </a>
-                                                <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                                    <div class="single-cart-item">
-                                                        <div class="cart-img">
-                                                            <a href="cart.html"><img src="~/images/cart/1.jpg" alt=""></a>
-                                                        </div>
-                                                        <div class="cart-text">
-                                                            <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>
-                                                            <div class="cart-text-btn">
-                                                                <div class="cart-qty">
-                                                                    <span>1×</span>
-                                                                    <span class="cart-price">$98.00</span>
-                                                                </div>
-                                                                <button type="button"><i class="ion-trash-b"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="cart-price-total d-flex justify-content-between">
-                                                        <h5>Total :</h5>
-                                                        <h5>$166.00</h5>
-                                                    </div>
-                                                    <div class="cart-links d-flex justify-content-center">
-                                                        <a class="obrien-button white-btn" asp-area="Customer" asp-controller="Cart" asp-action="Index">View cart</a>
-                                                        <a class="obrien-button white-btn" asp-area="Customer" asp-controller="Cart" asp-action="Summary">Checkout</a>
-                                                    </div>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="Identity" asp-page="/Account/Login" class="minicart-btn toolbar-btn">
-                                                    <i class="ion-bag"></i>
-                                                    <span class="cart-item_count">0</span>
-                                                </a>
-                                            }
-                                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount") != null)
-                                            {
-                                                var wishcount = HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount");
-                                                <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <span class="wish-item_count">@wishcount</span>
-                                                    <i style="margin-left:20px;" class="fa fa-heart-o"></i>
-
-                                                </a>
-
-
-
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
-                                                    <i style="margin-left:20px;" class="fa fa-heart-o"></i>
-                                                    <span class="wish-item_count">0</span>
-                                                </a>
-                                            }
-
-                                        </li>
-                                        <li class="mobile-menu-btn d-lg-none">
-                                            <a class="off-canvas-btn" href="#">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Sticky Header End Here -->
-        <!-- off-canvas menu start -->
-        <aside class="off-canvas-wrapper" id="mobileMenu">
-            <div class="off-canvas-overlay"></div>
-            <div class="off-canvas-inner-content">
-                <div class="btn-close-off-canvas">
-                    <i class="fa fa-times"></i>
-                </div>
-                <div class="off-canvas-inner">
-
-                    <div class="search-box-offcanvas">
-                        <form>
-                            <input type="text" placeholder="Search product...">
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
-                        </form>
-                    </div>
-                    <!-- mobile menu start -->
-                    <div class="mobile-navigation">
-
-                        <!-- mobile menu navigation start -->
-                        
-                        <nav>
-                            <ul class="mobile-menu">
-                                @if (User.IsInRole(SD.ManagerUser))
+    <div class="home-wrapper home-4 boxed-layout">
+        <!-- Header Area Start Here -->
+        <header class="main-header-area">
+            <div class="header-top-area header-top-4">
+                <div class="container container-default-2 custom-area">
+                    <div class="row">
+                        <div class="carousel" data-ride="carousel" data-interval="2500">
+                            @{
+                                var list = (List<Coupon>)ViewBag.Coupons;
+                            }
+                            @if (list != null)
+                            {
+                                @for (int i = 0; i < list.Count(); i++)
                                 {
+                                    if (i == 0)
+                                    {
+
+                                        <div class="carousel-item active">
+                                            <div class="col-12 col-custom header-top-wrapper text-center">
+                                                <div class="short-desc">
+                                                    <p>@localizer["Get"] @list.ToList()[i].Discount @localizer["off with"] @list.ToList()[i].Name @localizer["coupon"] </p>
+                                                </div>
+                                                <div class="header-top-button">
+                                                    <a asp-action="Index" asp-controller="Shop" asp-area="Customer">@localizer["Shop Now"]</a>
+                                                </div>
+                                                <span class="top-close-button">X</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item">
+                                            <div class="col-12 col-custom header-top-wrapper text-center">
+                                                <div class="short-desc">
+                                                    <p>@localizer["Get"] @list.ToList()[i].Discount @localizer["off with"] @list.ToList()[i].Name @localizer["coupon"] </p>
+                                                </div>
+                                                <div class="header-top-button">
+                                                    <a asp-action="Index" asp-controller="Shop" asp-area="Customer">@localizer["Shop Now"]</a>
+                                                </div>
+                                                <span class="top-close-button">X</span>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header Top Area Start Here -->
+            <!-- Header Top Area End Here -->
+            <!-- Main Header Area Start -->
+            <div class="main-header">
+                <div class="container container-default custom-area">
+                    <div class="row">
+                        <div class="col-lg-12 col-custom">
+                            <div class="row align-items-center">
+                                <div class="col-lg-2 col-xl-2 col-sm-4 col-4 col-custom">
+                                    <div class="header-logo d-flex align-items-center">
+                                        <a href="index.html">
+                                            <img class="img-full" src="~/images/logo/logo.png" alt="Header Logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-xl-5 position-static d-none d-lg-block col-custom">
+                                    <nav class="main-nav d-flex justify-content-start">
+                                        <ul class="nav">
+
+                                            <li>
+                                                <a class="active" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                                                    <span class="menu-text">@localizer["Home"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="Customer" asp-controller="Shop" asp-action="Index">
+                                                    <span class="menu-text">@localizer["Shop"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-action="Contact" asp-controller="Home">
+                                                    <span class="menu-text">@localizer["Contact Us"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-action="AboutUs" asp-controller="Home">
+                                                    <span class="menu-text">@localizer["About Us"]</span>
+                                                </a>
+                                            </li>
+                                            @if (SignInManager.IsSignedIn(User))
+                                            {
+                                                if (User.IsInRole(SD.KitchenUser))
+                                                {
+                                                    <li style="align-content:start;">
+                                                        <a asp-action="ManageOrder" asp-controller="Order" asp-area="Customer">
+                                                            <span class="menu-text">@localizer["My Account"]</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else if (User.IsInRole(SD.FrontDeskUser))
+                                                {
+                                                    <li style="align-content:start;">
+                                                        <a asp-action="OrderPickup" asp-controller="Order" asp-area="Customer">
+                                                            <span class="menu-text">@localizer["My Account"]</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else if (User.IsInRole(SD.CustomerEndUser))
+                                                {
+                                                    <li style="align-content:start;">
+                                                        <a asp-action="OrderHistory" asp-controller="Order" asp-area="Customer">
+                                                            <span class="menu-text">@localizer["My Account"]</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li style="align-content:start;">
+                                                        <a asp-action="Index" asp-controller="Dashboard" asp-area="Admin">
+                                                            <span class="menu-text">@localizer["My Account"]</span>
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                            }
+
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-lg-2 col-xl-5 col-sm-5 col-5 col-custom">
+                                    <div class="header-right-area main-nav">
+                                        <ul class="nav">
+                                            <partial name="_Languages" />
+                                            <li class="minicart-wrap" style="margin-right:15px;">
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
+                                                {
+                                                    var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
+
+                                                    <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <i class="ion-bag"></i>
+                                                        <span class="cart-item_count">@count</span>
+
+                                                    </a>
+                                                    <partial name="_ShoppingCart" />
+
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Identity" asp-page="/Account/Login" class="minicart-btn toolbar-btn">
+                                                        <i class="ion-bag"></i>
+                                                        <span class="cart-item_count">0</span>
+                                                    </a>
+                                                }
+
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount") != null)
+                                                {
+                                                    var wishcount = HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount");
+                                                    <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <span class="wish-item_count">@wishcount</span>
+                                                        <i style="margin-left:20px;" class="fa fa-heart-o"></i>
+
+                                                    </a>
+
+
+
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <i style="margin-left:20px;" class="fa fa-heart-o"></i>
+                                                        <span class="wish-item_count">0</span>
+                                                    </a>
+                                                }
+
+                                            </li>
+
+                                            <partial name="_LoginPartial" />
+                                            <li class="mobile-menu-btn d-lg-none">
+                                                <a class="off-canvas-btn" href="#">
+                                                    <i class="fa fa-bars"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Header Area End -->
+            <!-- Sticky Header Start Here-->
+            <div class="main-header header-sticky">
+                <div class="container container-default custom-area">
+                    <div class="row">
+                        <div class="col-lg-12 col-custom">
+                            <div class="row align-items-center">
+                                <div class="col-lg-2 col-xl-2 col-sm-4 col-4 col-custom">
+                                    <div class="header-logo d-flex align-items-center">
+                                        <a href="index.html">
+                                            <img class="img-full" src="~/images/logo/logo.png" alt="Header Logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-xl-5 position-static d-none d-lg-block col-custom">
+                                    <nav class="main-nav d-flex justify-content-center">
+                                        <ul class="nav">
+                                            <li>
+                                                <a class="active" asp-area="Customer" asp-controller="Home" asp-action="Index">
+                                                    <span class="menu-text">@localizer["Home"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="Customer" asp-controller="Shop" asp-action="Index">
+                                                    <span class="menu-text">@localizer["Shop"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-action="Contact" asp-controller="Home">
+                                                    <span class="menu-text">@localizer["Contact Us"]</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="menu-text">@localizer["About Us"]</span>
+                                                </a>
+                                            </li>
+                                            @if (SignInManager.IsSignedIn(User))
+                                            {
+                                                <li>
+                                                    <a asp-action="Index" asp-controller="Dashboard" asp-area="Admin">
+                                                        <span class="menu-text">@localizer["My Account"]</span>
+                                                    </a>
+                                                </li>
+                                            }
+
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-lg-2 col-xl-5 col-sm-5 col-5 col-custom">
+                                    <div class="header-right-area main-nav">
+                                        <ul class="nav">
+                                            <partial name="_Languages" />
+                                            <li class="minicart-wrap" style="margin-right:15px;">
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
+                                                {
+                                                    var count = HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount");
+                                                    <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <i class="ion-bag"></i>
+                                                        <span class="cart-item_count">@count</span>
+                                                    </a>
+                                                    <partial name="_ShoppingCart" />
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Identity" asp-page="/Account/Login" class="minicart-btn toolbar-btn">
+                                                        <i class="ion-bag"></i>
+                                                        <span class="cart-item_count">0</span>
+                                                    </a>
+                                                }
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount") != null)
+                                                {
+                                                    var wishcount = HttpContextAccessor.HttpContext.Session.GetInt32("ssWishCount");
+                                                    <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <span class="wish-item_count">@wishcount</span>
+                                                        <i style="margin-left:20px;" class="fa fa-heart-o"></i>
+
+                                                    </a>
+
+
+
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Customer" asp-controller="WishList" asp-action="Index" class="minicart-btn toolbar-btn">
+                                                        <i style="margin-left:20px;" class="fa fa-heart-o"></i>
+                                                        <span class="wish-item_count">0</span>
+                                                    </a>
+                                                }
+
+                                            </li>
+                                            <partial name="_LoginPartial" />
+
+
+                                            <li class="mobile-menu-btn d-lg-none">
+                                                <a class="off-canvas-btn" href="#">
+                                                    <i class="fa fa-bars"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sticky Header End Here -->
+            <!-- off-canvas menu start -->
+            <aside class="off-canvas-wrapper" id="mobileMenu">
+                <div class="off-canvas-overlay"></div>
+                <div class="off-canvas-inner-content">
+                    <div class="btn-close-off-canvas">
+                        <i class="fa fa-times"></i>
+                    </div>
+                    <div class="off-canvas-inner">
+
+                        <div class="search-box-offcanvas">
+                            <form>
+                                <input type="text" placeholder="Search product...">
+                                <button class="search-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <!-- mobile menu start -->
+                        <div class="mobile-navigation">
+
+                            <!-- mobile menu navigation start -->
+
+                            <nav>
+                                <ul class="mobile-menu">
                                     <li>
                                         <a class="active" asp-area="Customer" asp-controller="Home" asp-action="Index">
                                             <span class="menu-text">@localizer["Home"]</span>
                                         </a>
                                     </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="index.html">
-                                            <span class="menu-text"> @localizer["Management"]</span>
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="dropdown">
-                                            <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">@localizer["Category"]</a></li>
-                                            <li><a asp-area="Admin" asp-controller="SubCategory" asp-action="Index">@localizer["SubCategory"]</a></li>
-                                            <li><a asp-area="Admin" asp-controller="MenuItem" asp-action="Index">@localizer["MenuItem"]</a></li>
-                                            <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">@localizer["Coupon"]</a></li>
-                                            <li><a asp-area="Admin" asp-controller="User" asp-action="Index">@localizer["User"]</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                                @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.CustomerEndUser) || User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.FrontDeskUser))
-                                {
                                     <li>
-                                        <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">
-                                            <span class="menu-text">@localizer["Order History"]</span>
+                                        <a asp-area="Customer" asp-controller="Shop" asp-action="Index">
+                                            <span class="menu-text">@localizer["Shop"]</span>
                                         </a>
                                     </li>
-                                }
-                                @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.FrontDeskUser))
-                                {
-                                    <li class="menu-item-has-children ">
-                                        <a>
-                                            <span class="menu-text"> @localizer["Orders"]</span>
-                                            <i class="fa fa-angle-down"></i>
+                                    <li>
+                                        <a asp-action="Contact" asp-controller="Home">
+                                            <span class="menu-text">@localizer["Contact Us"]</span>
                                         </a>
-                                        <ul class="dropdown">
-                                            <li>
-                                                @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser))
-                                                {
-                                                    <a asp-area="Customer" asp-controller="Order" asp-action="ManageOrder">@localizer["Manage Order"]</a>
-                                                }
-                                                @if (User.IsInRole(SD.FrontDeskUser) || User.IsInRole(SD.ManagerUser))
-                                                {
-                                                    <a asp-area="Customer" asp-controller="Order" asp-action="OrderPickup">@localizer["Order Pickup"]</a>
-                                                }
-                                            </li>
-                                        </ul>
                                     </li>
-                                }
-                                
-                            </ul>
-                        </nav>
-                        <!-- mobile menu navigation end -->
-                    </div>
-                    <!-- mobile menu end -->
-                    <div class="header-top-settings offcanvas-curreny-lang-support">
-                        <!-- mobile menu navigation start -->
-                        <nav>
-                            <partial name="_LoginPartial" />
+                                    <li>
+                                        <a href="#">
+                                            <span class="menu-text">@localizer["About Us"]</span>
+                                        </a>
+                                    </li>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Dashboard" asp-area="Admin">
+                                                <span class="menu-text">@localizer["My Account"]</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                            <!-- mobile menu navigation end -->
+                        </div>
+                        <!-- mobile menu end -->
+                        <div class="header-top-settings offcanvas-curreny-lang-support">
+                            <!-- mobile menu navigation start -->
+                            <nav>
+                                <partial name="_Languages" />
+                                <partial name="_LoginPartial" />
 
-                            <partial name="_Languages" />
-                        </nav>
-                        <!-- mobile menu navigation end -->
-                    </div>
-                    <!-- offcanvas widget area start -->
-                    <div class="offcanvas-widget-area">
-                        <div class="top-info-wrap text-left text-black">
-                            <ul>
-                                <li>
-                                    <i class="fa fa-phone"></i>
-                                    <a href="info@yourdomain.com">(1245) 2456 012</a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-envelope"></i>
-                                    <a href="info@yourdomain.com">info@yourdomain.com</a>
-                                </li>
-                            </ul>
+
+                            </nav>
+                            <!-- mobile menu navigation end -->
                         </div>
-                        <div class="off-canvas-widget-social">
-                            <a title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
-                            <a title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
-                            <a title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                            <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
-                            <a title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                        </div>
-                    </div>
-                    <!-- offcanvas widget area end -->
-                </div>
-            </div>
-        </aside>
-        <!-- off-canvas menu end -->
-    </header>
-    <div>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <!-- Support Area Start Here -->
-    <div class="support-area">
-        <div class="container container-default custom-area">
-            <div class="row">
-                <div class="col-lg-12 col-custom">
-                    <div class="support-wrapper d-flex">
-                        <div class="support-content">
-                            <h1 class="title">@localizer["Need Help"]</h1>
-                            <p class="desc-content">@localizer["Call our support 24/7 at 01234-567-890"]</p>
-                        </div>
-                        <div class="support-button d-flex align-items-center">
-                            <a class="obrien-button primary-btn" href="contact-us.html">@localizer["Contact now"]</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Support Area End Here -->
-    <!-- Footer Area Start Here -->
-    <footer class="footer-area">
-        <div class="footer-widget-area">
-            <div class="container container-default custom-area">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-custom">
-                        <div class="single-footer-widget m-0">
-                            <div class="footer-logo">
-                                <a href="index.html">
-                                    <img src="~/images/logo/footer.png" alt="Logo Image">
-                                </a>
-                            </div>
-                            <p class="desc-content">Obrien is the best parts shop of your daily nutritions. What kind of nutrition do you need you can get here soluta nobis</p>
-                            <div class="social-links">
-                                <ul class="d-flex">
+                        <!-- offcanvas widget area start -->
+                        <div class="offcanvas-widget-area">
+                            <div class="top-info-wrap text-left text-black">
+                                <ul>
                                     <li>
-                                        <a class="border rounded-circle" href="#" title="Facebook">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
+                                        <i class="fa fa-phone"></i>
+                                        <a href="info@yourdomain.com">(1245) 2456 012</a>
                                     </li>
                                     <li>
-                                        <a class="border rounded-circle" href="#" title="Twitter">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="border rounded-circle" href="#" title="Linkedin">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="border rounded-circle" href="#" title="Youtube">
-                                            <i class="fa fa-youtube"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="border rounded-circle" href="#" title="Vimeo">
-                                            <i class="fa fa-vimeo"></i>
-                                        </a>
+                                        <i class="fa fa-envelope"></i>
+                                        <a href="info@yourdomain.com">info@yourdomain.com</a>
                                     </li>
                                 </ul>
                             </div>
+                            <div class="off-canvas-widget-social">
+                                <a title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
+                                <a title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                <a title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                                <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
+                                <a title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
+                            </div>
                         </div>
+                        <!-- offcanvas widget area end -->
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
-                        <div class="single-footer-widget">
-                            <h2 class="widget-title">Information</h2>
-                            <ul class="widget-list">
-                                <li><a href="about-us.html">Our Company</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
-                                <li><a href="about-us.html">Our Services</a></li>
-                                <li><a href="about-us.html">Why We?</a></li>
-                                <li><a href="about-us.html">Careers</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    @*<div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
-                        <div class="single-footer-widget">
-                            <h2 class="widget-title">Support</h2>
-                            <ul class="widget-list">
-                                <li><a href="contact-us.html">Online Support</a></li>
-                                <li><a href="contact-us.html">Shipping Policy</a></li>
-                                <li><a href="contact-us.html">Return Policy</a></li>
-                                <li><a href="contact-us.html">Privacy Policy</a></li>
-                                <li><a href="contact-us.html">Terms of Service</a></li>
-                            </ul>
-                        </div>
-                    </div>*@
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-custom">
-                        <div class="single-footer-widget">
-                            <h2 class="widget-title">See Information</h2>
-                            <div class="widget-body">
-                                <address>123, H2, Road #21, Main City, Your address goes here.<br>Phone: 01254 698 785, 36598 254 987<br>Email: https://example.com</address>
+                </div>
+            </aside>
+            <!-- off-canvas menu end -->
+        </header>
+        <div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <!-- Support Area Start Here -->
+        <div class="support-area">
+            <div class="container container-default custom-area">
+                <div class="row">
+                    <div class="col-lg-12 col-custom">
+                        <div class="support-wrapper d-flex">
+                            <div class="support-content">
+                                <h1 class="title">@localizer["Need Help"]</h1>
+                                <p class="desc-content">@localizer["Call our support 24/7 at 01234-567-890"]</p>
+                            </div>
+                            <div class="support-button d-flex align-items-center">
+                                <a class="obrien-button primary-btn" href="contact-us.html">@localizer["Contact now"]</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-copyright-area">
-            <div class="container custom-area">
-                <div class="row">
-                    <div class="col-12 text-center col-custom">
-                        <div class="copyright-content">
-                            <p>Copyright © 2020 <a href="https://hasthemes.com/" title="https://hasthemes.com/">HasThemes</a> | Built with&nbsp;<strong>Obrien</strong>&nbsp;by <a href="https://hasthemes.com/" title="https://hasthemes.com/">HasThemes</a>.</p>
+        <!-- Support Area End Here -->
+        <!-- Footer Area Start Here -->
+        <footer class="footer-area">
+            <div class="footer-widget-area">
+                <div class="container container-default custom-area">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-custom">
+                            <div class="single-footer-widget m-0">
+                                <div class="footer-logo">
+                                    <a href="index.html">
+                                        <img src="~/images/logo/footer.png" alt="Logo Image">
+                                    </a>
+                                </div>
+                                <p class="desc-content">Obrien is the best parts shop of your daily nutritions. What kind of nutrition do you need you can get here soluta nobis</p>
+                                <div class="social-links">
+                                    <ul class="d-flex">
+                                        <li>
+                                            <a class="border rounded-circle" href="#" title="Facebook">
+                                                <i class="fa fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="border rounded-circle" href="#" title="Twitter">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="border rounded-circle" href="#" title="Linkedin">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="border rounded-circle" href="#" title="Youtube">
+                                                <i class="fa fa-youtube"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="border rounded-circle" href="#" title="Vimeo">
+                                                <i class="fa fa-vimeo"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
+                            <div class="single-footer-widget">
+                                <h2 class="widget-title">Information</h2>
+                                <ul class="widget-list">
+                                    <li><a href="about-us.html">Our Company</a></li>
+                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li><a href="about-us.html">Our Services</a></li>
+                                    <li><a href="about-us.html">Why We?</a></li>
+                                    <li><a href="about-us.html">Careers</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-custom">
+                            <div class="single-footer-widget">
+                                <h2 class="widget-title">See Information</h2>
+                                <div class="widget-body">
+                                    <address>123, H2, Road #21, Main City, Your address goes here.<br>Phone: 01254 698 785, 36598 254 987<br>Email: https://example.com</address>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+            <div class="footer-copyright-area">
+                <div class="container custom-area">
+                    <div class="row">
+                        <div class="col-12 text-center col-custom">
+                            <div class="copyright-content">
+                                <p>Copyright © 2020 <a href="https://hasthemes.com/" title="https://hasthemes.com/">HasThemes</a> | Built with&nbsp;<strong>Obrien</strong>&nbsp;by <a href="https://hasthemes.com/" title="https://hasthemes.com/">HasThemes</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Scroll to Top Start -->
+    <a class="scroll-to-top" href="#">
+        <i class="ion-chevron-up"></i>
+    </a>
+    <!-- Scroll to Top End -->
     <!-- Footer Area End Here -->
     <!-- jQuery JS -->
     <script src="~/js/vendor/jquery-3.5.1.min.js"></script>

@@ -8,16 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
-using OnlineFoodOrdering.Areas.Customer.Controllers;
 using OnlineFoodOrdering.Data;
-using OnlineFoodOrdering.Extensions;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Models.ViewModels;
-using Stripe;
 
 namespace OnlineFoodOrdering.Controllers
 {
@@ -25,15 +20,13 @@ namespace OnlineFoodOrdering.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _db;
-        private readonly IHtmlLocalizer<HomeController> _localizer;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IHtmlLocalizer<HomeController> localizer)
+        private readonly ApplicationDbContext _db;        
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
-            _localizer = localizer;
             _logger = logger;
             _db = db;
         }
+
         [HttpPost]
         public IActionResult CultureManagement(string culture, string returnUrl)
         {
@@ -42,14 +35,18 @@ namespace OnlineFoodOrdering.Controllers
 
             return LocalRedirect(returnUrl);
         }
-        public async Task<IActionResult> Index()
-        {
 
+        public IActionResult Index()
+        {
+            List<Models.Coupon> coupon = new List<Models.Coupon>();
+
+            coupon = _db.Coupon.Where(c => c.IsActive == true).ToList();
+            ViewBag.Coupons = coupon;
             IndexViewModel IndexVM = new IndexViewModel()
             {
-                MenuItemFeatured = await _db.MenuItem.Where(m=>m.isFeatured==true).ToListAsync(),
-                MenuItem = await _db.MenuItem.OrderByDescending(n=>n.Id).ToListAsync(),             
-                Coupon = await _db.Coupon.Where(c => c.IsActive == true).ToListAsync()
+                MenuItemFeatured = _db.MenuItem.Where(m=>m.isFeatured==true).ToList(),
+                MenuItem = _db.MenuItem.OrderByDescending(n=>n.Id).ToList(),             
+                Coupon = _db.Coupon.Where(c => c.IsActive == true).ToList()
             };
 
 
@@ -59,14 +56,28 @@ namespace OnlineFoodOrdering.Controllers
 
             if(claim!=null)
             {
+                var list = _db.ShoppingCart.Include(m=>m.MenuItem).Where(u => u.ApplicationUserId == claim.Value).ToList();
                 var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
                 var vishcount = _db.WishList.Where(m => m.ApplicationUserId == claim.Value).ToList().Count;
                 HttpContext.Session.SetInt32("ssCartCount", cnt);
                 HttpContext.Session.SetInt32("ssWishCount", vishcount);
+                ViewBag.Cart = list;
             }
 
             return View(IndexVM);
         }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+       
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Compare(IndexViewModel compareObj)
@@ -174,25 +185,17 @@ namespace OnlineFoodOrdering.Controllers
             }
             else
             {
-                //var menuItemFromDb = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Id == CartObject.ShoppingCart.MenuItemId).FirstOrDefaultAsync();
-                //ShoppingCartViewModel shopObj = new ShoppingCartViewModel()
-                //{
-                //    ShoppingCart = new ShoppingCart()
-                //    {
-                //        MenuItem = menuItemFromDb,
-                //        MenuItemId = menuItemFromDb.Id
-                //    }
-                //};
+
                 return View();
             }
 
         }
 
         [Authorize]
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
             
-            var menuItemFromDb = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Id == id).FirstOrDefaultAsync();
+            var menuItemFromDb =  _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Id == id).FirstOrDefault();
             ShoppingCartViewModel shopObj = new ShoppingCartViewModel()
             {
                 ShoppingCart = new ShoppingCart()
@@ -200,24 +203,24 @@ namespace OnlineFoodOrdering.Controllers
                     MenuItem = menuItemFromDb,
                     MenuItemId = menuItemFromDb.Id
                 },
-                MenuItemList = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Category.Name == menuItemFromDb.Category.Name).ToListAsync(),
-                Ratings = _db.Ratings.Where(m => m.MenuItemId == id).ToList()
+                MenuItemList = _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Category.Name == menuItemFromDb.Category.Name).ToList()
                 
             };
-
-            if (shopObj.Ratings.Count() > 0)
+            if (shopObj.Ratings != null)
             {
-                var ratingSum = shopObj.Ratings.Sum(d => d.Rating);
-                ViewBag.RatingSum = ratingSum;
-                var ratingCount = shopObj.Ratings.Count();
-                ViewBag.RatingCount = ratingCount;
+                if (shopObj.Ratings.Count() > 0)
+                {
+                    var ratingSum = shopObj.Ratings.Sum(d => d.Rating);
+                    ViewBag.RatingSum = ratingSum;
+                    var ratingCount = shopObj.Ratings.Count();
+                    ViewBag.RatingCount = ratingCount;
+                }
+                else
+                {
+                    ViewBag.RatingSum = 0;
+                    ViewBag.RatingCount = 1;
+                }
             }
-            else
-            {
-                ViewBag.RatingSum = 0;
-                ViewBag.RatingCount = 1;
-            }
-
             return View(shopObj);
         }
 

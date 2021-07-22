@@ -120,11 +120,17 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Coupon Table</value>
+  </data>
   <data name="Create New" xml:space="preserve">
     <value>Create New</value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>Discount</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="Is Active" xml:space="preserve">
     <value>Is Active?</value>
@@ -133,7 +139,7 @@
     <value>Minimum Amount</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Coupon Name</value>
   </data>
   <data name="Not Active" xml:space="preserve">
     <value>Not Active</value>

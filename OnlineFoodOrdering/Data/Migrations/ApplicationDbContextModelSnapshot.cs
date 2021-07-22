@@ -230,7 +230,8 @@ namespace OnlineFoodOrdering.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -279,10 +280,8 @@ namespace OnlineFoodOrdering.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
 
                     b.HasKey("Id");
 
@@ -300,7 +299,8 @@ namespace OnlineFoodOrdering.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -310,7 +310,8 @@ namespace OnlineFoodOrdering.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -479,6 +480,8 @@ namespace OnlineFoodOrdering.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MenuItemId");
+
                     b.ToTable("ShoppingCart");
                 });
 
@@ -541,6 +544,9 @@ namespace OnlineFoodOrdering.Data.Migrations
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
@@ -661,6 +667,15 @@ namespace OnlineFoodOrdering.Data.Migrations
                     b.HasOne("OnlineFoodOrdering.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("OnlineFoodOrdering.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("OnlineFoodOrdering.Models.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OnlineFoodOrdering.Models.SubCategory", b =>

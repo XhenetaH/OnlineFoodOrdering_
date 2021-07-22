@@ -3,13 +3,13 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-<div class="container padding-bottom-3x mb-1">
-    <div class="card mb-3">
+
+
         <div class="p-4 text-center text-white text-lg bg-dark rounded-top"><span class="text-uppercase">@localizer["Tracking Order No"] - </span><span class="text-medium">@Model.Id</span></div>
         <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
-            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Shipped Via:</span> UPS Ground</div>
-            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Status:</span> @Model.Status</div>
-            <div class="w-100 text-center py-1 px-2"><span class="text-medium">Expected Date:</span> @Model.OrderDate.ToShortDateString()</div>
+            <div style="color:dimgrey;" class="w-100 text-center py-1 px-2"><span style="color:dimgrey;" class="text-medium">Shipped Via:</span> UPS Ground</div>
+            <div style="color:dimgrey;" class="w-100 text-center py-1 px-2"><span style="color:dimgrey;" class="text-medium">Status:</span> @Model.Status</div>
+            <div style="color:dimgrey;" class="w-100 text-center py-1 px-2"><span style="color:dimgrey;" class="text-medium">Expected Date:</span> @Model.OrderDate.ToShortDateString()</div>
         </div>
         <div class="card-body">
             <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
@@ -124,6 +124,3 @@
 
             </div>
         </div>
-    </div>
-
-</div>

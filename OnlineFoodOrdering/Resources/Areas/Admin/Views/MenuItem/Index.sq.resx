@@ -129,11 +129,17 @@
   <data name="Featured" xml:space="preserve">
     <value>Të veçuara</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>Foto</value>
   </data>
   <data name="IsFeatured" xml:space="preserve">
     <value>E veçuar</value>
+  </data>
+  <data name="Menu Item Table" xml:space="preserve">
+    <value>Tabela e Artikujve</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>

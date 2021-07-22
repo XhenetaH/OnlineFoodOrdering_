@@ -132,4 +132,7 @@
   <data name="SubCategory Name" xml:space="preserve">
     <value>SubCategory Name</value>
   </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>SubCategory Table</value>
+  </data>
 </root>

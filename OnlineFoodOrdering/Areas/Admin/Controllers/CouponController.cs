@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
 using OnlineFoodOrdering.Utility;
-using X.PagedList;
+using System.Linq;
+
 
 namespace OnlineFoodOrdering.Areas.Admin.Controllers
 {
@@ -22,18 +19,17 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index(int?page)
+        public IActionResult Index()
         {
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
-            var onePageOfCoupons =await _db.Coupon.ToPagedListAsync(pageNumber, pageSize);
-            return View(onePageOfCoupons);
+            
+            var listOfCoupons = _db.Coupon.ToList();
+            return View(listOfCoupons);
         }
 
         //GET - Create
         public IActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
         //POST - Create
@@ -42,21 +38,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         public async Task<IActionResult> Create(Coupon coupons)
         {
             if(ModelState.IsValid)
-            {
-                var files = HttpContext.Request.Form.Files;
-                if(files.Count>0)
-                {
-                    byte[] p1 = null;
-                    using(var fs1 = files[0].OpenReadStream())
-                    {
-                        using(var ms1 = new MemoryStream())
-                        {
-                            fs1.CopyTo(ms1);
-                            p1 = ms1.ToArray();
-                        }
-                    }
-                    coupons.Picture = p1;
-                }
+            {               
                 _db.Coupon.Add(coupons);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -65,14 +47,14 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET - Edit
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
                 return NotFound();
-            var coupon = await _db.Coupon.FindAsync(id);
+            var coupon =  _db.Coupon.Find(id);
             if (coupon == null)
                 return NotFound();
-            return PartialView("Edit",coupon);
+            return View("Edit",coupon);
         }
 
        // POST - Edit
@@ -83,20 +65,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             var coupon = await _db.Coupon.FindAsync(id);
             if (ModelState.IsValid)
             {
-                var files = HttpContext.Request.Form.Files;
-                if (files.Count > 0)
-                {
-                    byte[] p1 = null;
-                    using (var fs1 = files[0].OpenReadStream())
-                    {
-                        using (var ms1 = new MemoryStream())
-                        {
-                            fs1.CopyTo(ms1);
-                            p1 = ms1.ToArray();
-                        }
-                    }
-                    coupon.Picture = p1;
-                }
+                
                 coupon.Name = coup.Name;
                 coupon.MinimumAmount = coup.MinimumAmount;
                 coupon.Discount = coup.Discount;
@@ -105,29 +74,29 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView("Edit",coupon);
+            return View("Edit",coupon);
         }
 
         //GET - Details
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
                 return NotFound();
-            var coupon = await _db.Coupon.FindAsync(id);
+            var coupon = _db.Coupon.Find(id);
             if (coupon == null)
                 return NotFound();
-            return PartialView("Details",coupon);
+            return View("Details",coupon);
         }
 
         //GET - Delete
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
                 return NotFound();
-            var coupon = await _db.Coupon.FindAsync(id);
+            var coupon = _db.Coupon.Find(id);
             if (coupon == null)
                 return NotFound();
-            return PartialView("Delete",coupon);
+            return View("Delete",coupon);
         }
 
         //POST - Delete
@@ -137,7 +106,7 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         {
             var coupon = await _db.Coupon.FindAsync(id);
             if (coupon == null)
-                return PartialView();
+                return View();
             _db.Coupon.Remove(coupon);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

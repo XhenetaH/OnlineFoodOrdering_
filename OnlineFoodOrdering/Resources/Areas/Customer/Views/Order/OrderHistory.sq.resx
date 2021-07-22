@@ -123,6 +123,15 @@
   <data name="Full Name" xml:space="preserve">
     <value>Emri Plotë</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
+  </data>
+  <data name="Order History" xml:space="preserve">
+    <value>Historia e Porosive</value>
+  </data>
+  <data name="Order History Table" xml:space="preserve">
+    <value>Tabela e Historisë së Porosive</value>
+  </data>
   <data name="Order Total" xml:space="preserve">
     <value>Totali i porosisë</value>
   </data>

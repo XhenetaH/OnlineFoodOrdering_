@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are you" xml:space="preserve">
+  <data name="Are you sure" xml:space="preserve">
     <value>Je i sigurt që dëshiron ta fshish këtë?</value>
+  </data>
+  <data name="Category Name" xml:space="preserve">
+    <value>Emri i Kategorisë</value>
+  </data>
+  <data name="Category Table" xml:space="preserve">
+    <value>Tabela e Kategorive</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Fshije</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+  <data name="Delete Category" xml:space="preserve">
+    <value>Fshije Kategorinë</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Shëno Emrin</value>
   </data>
 </root>

@@ -5,50 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="header-top-area">
-    <div class="container container-default-2 custom-area">
-        <div class="row">
-            <div class="carousel" data-ride="carousel" data-interval="2500">
-                @for (int i = 0; i < Model.Coupon.Count(); i++)
-                {
-                    if (i == 0)
-                    {
-                        <div class="carousel-item active">
-                            <div class="col-12 col-custom header-top-wrapper text-center">
-                                <div class="short-desc text-white">
-                                    <p>@localizer["get"] @Model.Coupon.ToList()[i].Discount @localizer["off"] @Model.Coupon.ToList()[i].Name @localizer["coupon"] </p>
-                                </div>
-                                <div class="header-top-button">
-                                    <a asp-area="Customer" asp-controller="Shop" asp-action="Index">@localizer["Shop Now"]</a>
-                                </div>
-                                <span class="top-close-button">X</span>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="carousel-item ">
-                            <div class="col-12 col-custom header-top-wrapper text-center">
-                                <div class="short-desc text-white">
-                                    <p>@localizer["get"] @Model.Coupon.ToList()[i].Discount @localizer["off"] @Model.Coupon.ToList()[i].Name @localizer["coupon"] </p>
-                                </div>
-                                <div class="header-top-button">
-                                    <a asp-area="Customer" asp-controller="Shop" asp-action="Index">@localizer["Shop Now"]</a>
-                                </div>
-                                <span class="top-close-button">X</span>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 <div class="home-wrapper home-1">
-    <!-- Begin Slider Area One -->
     <div class="slider-area">
         <div class="obrien-slider arrow-style" data-slick-options='{
         "slidesToShow": 1,
@@ -88,8 +46,6 @@
             </div>
         </div>
     </div>
-    <!-- Slider Area One End Here -->
-    <!-- Call To Action Area Start Here -->
     <div class="call-to-action-area">
         <div class="container container-default custom-area">
             <div class="row">
@@ -129,8 +85,6 @@
             </div>
         </div>
     </div>
-    <!-- Call to Action Area End Here -->
-    <!-- Feature Area Start Here -->
     <div class="feature-area">
         <div class="container container-default custom-wrapper">
             <div class="row">
@@ -150,8 +104,6 @@
             </div>
         </div>
     </div>
-    <!-- Feature Area End Here -->
-    <!-- Product Area Start Here -->
     <div class="product-area">
         <div class="container container-default custom-area">
             <div class="row">
@@ -251,7 +203,6 @@
             </div>
         </div>
     </div>
-    <!-- Feature Area Start Here -->
     <div class="feature-area mb-no-text">
         <div class="container container-default custom-area">
             <div class="row">
@@ -277,8 +228,6 @@
             </div>
         </div>
     </div>
-    <!-- Feature Area End Here -->
-    <!-- Product Area Start Here -->
     <div class="product-area">
         <div class="container container-default custom-area">
             <div class="row">
@@ -376,8 +325,6 @@
         </div>
     </div>
 </div>
-<!-- Product Area End Here -->
-<!-- Modal Area Start Here -->
 <div class="modal fade obrien-modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -390,7 +337,6 @@
         </div>
     </div>
 </div>
-<!-- Modal Area End Here -->
 
 
 @section Scripts

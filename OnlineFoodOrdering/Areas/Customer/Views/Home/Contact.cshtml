@@ -1,0 +1,69 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumbs-area position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="breadcrumb-content position-relative section-content">
+                    <h3 class="title-3">@localizer["Contact Us"]</h3>
+                    <ul>
+                        <li><a asp-action="Index" asp-controller="Home">@localizer["Home"]</a></li>
+                        <li>@localizer["Contact Us"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contact-us-area">
+    <div class="container container-default-2 custom-area">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-custom">
+                <div class="contact-info-item">
+                    <div class="con-info-icon">
+                        <i class="ion-ios-location-outline"></i>
+                    </div>
+                    <div class="con-info-txt">
+                        <h4>@localizer["Our Location"]</h4>
+                        <p>(800) 123 456 789 / (800) 123 456 789 info@example.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-custom">
+                <div class="contact-info-item">
+                    <div class="con-info-icon">
+                        <i class="ion-iphone"></i>
+                    </div>
+                    <div class="con-info-txt">
+                        <h4>@localizer["Contact us Anytime"]</h4>
+                        <p>Mobile: 012 345 678<br>Fax: 123 456 789</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-custom text-align-center">
+                <div class="contact-info-item">
+                    <div class="con-info-icon">
+                        <i class="ion-ios-email-outline"></i>
+                    </div>
+                    <div class="con-info-txt">
+                        <h4>@localizer["Support Overall"]</h4>
+                        <p>Support24/7@example.com <br> info@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="google-map-area">
+    <div id="contacts" class="map-area">
+        <div id="googleMap"></div>
+    </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClpvcUyl31wMd7DJZQnnzI006S99u9nnM"></script>
+<script src="https://www.google.com/jsapi"></script>
+<script src="~/js/plugins/map.js"></script>

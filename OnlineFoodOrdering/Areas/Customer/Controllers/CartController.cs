@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrdering.Data;
 using OnlineFoodOrdering.Models;
@@ -29,7 +28,7 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             this._db = db;
             this._emailSender = emailSender;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             detailCart = new OrderDetailsCart()
             {
@@ -47,7 +46,7 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             }
             foreach(var list in detailCart.listCart)
             {
-                list.MenuItem = await _db.MenuItem.FirstOrDefaultAsync(m => m.Id == list.MenuItemId);
+                list.MenuItem = _db.MenuItem.FirstOrDefault(m => m.Id == list.MenuItemId);
                 detailCart.Order.OrderTotal = detailCart.Order.OrderTotal + (list.MenuItem.Price * list.Count);
                 list.MenuItem.Description = SD.ConvertToRawHtml(list.MenuItem.Description);
                 if(list.MenuItem.Description.Length>100)
@@ -60,39 +59,16 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             if(HttpContext.Session.GetString(SD.ssCouponCode)!=null)
             {
                 detailCart.Order.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
-                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == detailCart.Order.CouponCode.ToLower()).FirstOrDefaultAsync();
+                var couponFromDb = _db.Coupon.Where(c => c.Name.ToLower() == detailCart.Order.CouponCode.ToLower()).FirstOrDefault();
                 detailCart.Order.OrderTotal = SD.DiscountedPrice(couponFromDb, detailCart.Order.OrderTotalOriginal);
             }
             return View(detailCart);
 
         }
 
-        public async Task<IActionResult> SingleSummary(int id, int count)
-        {
-            if (id == null)
-                return NotFound();
-            else
-            {
-                SingleSummaryViewModel vm = new SingleSummaryViewModel()
-                {
-                    MenuItem = await _db.MenuItem.Where(m => m.Id == id).FirstOrDefaultAsync(),
-                    Count = count,
-                    Order = new Models.Order()
+        
 
-                };
-                var claimsIdentity = (ClaimsIdentity)User.Identity;
-                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
-              
-                vm.Order.OrderTotalOriginal = vm.MenuItem.Price;
-                vm.Order.PickupName = applicationUser.Name;
-                vm.Order.PickupLastName = applicationUser.LastName;
-                vm.Order.PhoneNumber = applicationUser.PhoneNumber;
-                vm.Order.PickUpTime = DateTime.Now;
-                return View(vm);
-            }
-           
-        }
+
         public async Task<IActionResult> Summary()
         {
             detailCart = new OrderDetailsCart()
@@ -148,7 +124,6 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             detailCart.Order.Status = SD.PaymentStatusPending;
             detailCart.Order.PickUpTime = Convert.ToDateTime(detailCart.Order.PickUpDate.ToShortDateString() + " " + detailCart.Order.PickUpTime.ToShortTimeString());
            
-            List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             _db.Order.Add(detailCart.Order);
             await _db.SaveChangesAsync();
 
@@ -224,7 +199,99 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
 
         }
 
+        public async Task<IActionResult> SingleSummary(int id, int count)
+        {
+            if (id == null)
+                return NotFound();
+            else
+            {
+                SingleSummaryViewModel vm = new SingleSummaryViewModel()
+                {
+                    MenuItem = await _db.MenuItem.Where(m => m.Id == id).FirstOrDefaultAsync(),
+                    Count = count,
+                    Order = new Models.Order()
 
+                };
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
+ 
+                vm.Order.OrderTotalOriginal = vm.MenuItem.Price;
+                vm.Order.PickupName = applicationUser.Name;
+                vm.Order.PickupLastName = applicationUser.LastName;
+                vm.Order.PhoneNumber = applicationUser.PhoneNumber;
+                vm.Order.PickUpTime = DateTime.Now;
+                vm.Order.OrderTotal = vm.Order.OrderTotalOriginal * count;
+                return View(vm);
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SingleSummary(string stripeToken, SingleSummaryViewModel model)
+        {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            model.Order.PaymentStatus = SD.PaymentStatusPending;
+            model.Order.OrderDate = DateTime.Now;
+            model.Order.UserId = claim.Value;
+            model.Order.Status = SD.PaymentStatusPending;
+            model.Order.PickUpTime = Convert.ToDateTime(detailCart.Order.PickUpDate.ToShortDateString() + " " + detailCart.Order.PickUpTime.ToShortTimeString());
+
+      
+            _db.Order.Add(model.Order);
+            await _db.SaveChangesAsync();
+
+
+            var menuItem = await _db.MenuItem.Where(m => m.Id == model.MenuItem.Id).FirstOrDefaultAsync();
+            OrderDetails orderDetails = new OrderDetails
+            {
+                MenuItemId = menuItem.Id,
+                OrderId = model.Order.Id,
+                Description = menuItem.Description,
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                Count = model.Count
+            };
+            model.Order.OrderTotalOriginal += orderDetails.Count * orderDetails.Price;
+
+            _db.OrderDetails.Add(orderDetails);
+            await _db.SaveChangesAsync();
+            var options = new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(model.Order.OrderTotal * 100),
+                Currency = "eur",
+                Description = "Order ID : " + model.Order.Id,
+                Source = stripeToken
+            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
+
+            if (charge.BalanceTransactionId == null)
+            {
+                model.Order.PaymentStatus = SD.PaymentStatusRejected;
+            }
+            else
+            {
+                model.Order.TransactionId = charge.BalanceTransactionId;
+            }
+            if (charge.Status.ToLower() == "succeeded")
+            {
+                await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == claim.Value).FirstOrDefault().Email, "Ogani - Order Created " + model.Order.Id.ToString(), "Order has been submitted successfully.");
+
+
+                model.Order.PaymentStatus = SD.PaymentStatusApproved;
+                model.Order.Status = SD.StatusSubmitted;
+            }
+            else
+            {
+                model.Order.PaymentStatus = SD.PaymentStatusRejected;
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Confirm", "Order", new { id = model.Order.Id });
+        }
 
 
 
@@ -285,29 +352,7 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        [Authorize]
-        public async Task<IActionResult> OrderHistory()
-        {
-            var claimsIndentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIndentity.FindFirst(ClaimTypes.NameIdentifier);
-
-            List<OrderDetailsViewModel> orderDetailsList = new List<OrderDetailsViewModel>();
-
-            List<Models.Order> orderList = await _db.Order.Include(o => o.ApplicationUser).Where(u => u.UserId == claim.Value).ToListAsync();
-
-            foreach(Models.Order item in orderList)
-            {
-                OrderDetailsViewModel individual = new OrderDetailsViewModel
-                {
-                    Order = item,
-                    OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
-                };
-                orderDetailsList.Add(individual);
-            }
-
-            return View(orderDetailsList);
-        }
-
+       
 
     }
 }

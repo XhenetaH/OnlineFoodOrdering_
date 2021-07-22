@@ -120,19 +120,28 @@
   <data name="Are you" xml:space="preserve">
     <value>Are you sure you want to delete this?</value>
   </data>
+  <data name="Coupon Name" xml:space="preserve">
+    <value>Coupon Name</value>
+  </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Coupon Table</value>
+  </data>
   <data name="Coupon Type" xml:space="preserve">
     <value>Coupon Type</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Delete Coupon" xml:space="preserve">
+    <value>Delete Coupon</value>
+  </data>
   <data name="Discount" xml:space="preserve">
     <value>Discount</value>
   </data>
+  <data name="Is Active" xml:space="preserve">
+    <value>Is Active?</value>
+  </data>
   <data name="Minimum Amount" xml:space="preserve">
     <value>Minimum Amount</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
   </data>
 </root>

@@ -123,6 +123,9 @@
   <data name="Create New" xml:space="preserve">
     <value>Krijo</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
   </data>
@@ -131,5 +134,8 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Kërko...</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>Tabela e Nën Kategorive</value>
   </data>
 </root>

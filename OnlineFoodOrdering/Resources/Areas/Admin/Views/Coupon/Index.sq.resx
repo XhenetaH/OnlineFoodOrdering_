@@ -120,11 +120,17 @@
   <data name="Active" xml:space="preserve">
     <value>Aktiv</value>
   </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Tabela e Kuponëve</value>
+  </data>
   <data name="Create New" xml:space="preserve">
     <value>Krijo </value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>Zbritje</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
   </data>
   <data name="Is Active" xml:space="preserve">
     <value>Është Aktiv?</value>
@@ -133,7 +139,7 @@
     <value>Shuma Minimale</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+    <value>Emri i Kuponit</value>
   </data>
   <data name="Not Active" xml:space="preserve">
     <value>Jo Aktiv</value>

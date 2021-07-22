@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Name" xml:space="preserve">
-    <value>Emri</value>
+  <data name="Category Name" xml:space="preserve">
+    <value>Emri i Kategorisë</value>
+  </data>
+  <data name="Existing Subcategories" xml:space="preserve">
+    <value>Nën kategoritë ekzistuese</value>
   </data>
   <data name="New SubCategory" xml:space="preserve">
     <value>Nën kategori e re</value>
@@ -128,6 +131,15 @@
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Ruaj Ndryshimet</value>
+  </data>
+  <data name="SubCategory Name" xml:space="preserve">
+    <value>Emri i Nën kategorisë</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>Tabela e Nën kategorive</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Përditëso</value>
   </data>
   <data name="Update SubCategory" xml:space="preserve">
     <value>Përditëso Nën Kategorinë</value>

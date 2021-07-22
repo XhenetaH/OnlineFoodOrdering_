@@ -120,10 +120,13 @@
   <data name="Category Details" xml:space="preserve">
     <value>Category Details</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="Category Name" xml:space="preserve">
+    <value>Category Name</value>
   </data>
-  <data name="Save Changes" xml:space="preserve">
-    <value>Save Changes</value>
+  <data name="Category Table" xml:space="preserve">
+    <value>Category Table</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Enter Name</value>
   </data>
 </root>

@@ -117,17 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Choose file" xml:space="preserve">
+    <value>Choose file</value>
+  </data>
+  <data name="Create Menu Item" xml:space="preserve">
+    <value>Create Menu Item</value>
+  </data>
   <data name="Create New" xml:space="preserve">
     <value>Create New</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Enter Description" xml:space="preserve">
+    <value>Enter Description</value>
+  </data>
+  <data name="Enter Menu Item Name" xml:space="preserve">
+    <value>Enter Menu Item Name</value>
+  </data>
+  <data name="Enter Price" xml:space="preserve">
+    <value>Enter Price</value>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
   <data name="Is Featured" xml:space="preserve">
     <value>Is Featured?</value>
+  </data>
+  <data name="Menu Item Table" xml:space="preserve">
+    <value>Menu Item Table</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -137,5 +158,11 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="Spyciness" xml:space="preserve">
+    <value>Spyciness</value>
+  </data>
+  <data name="SubCategory" xml:space="preserve">
+    <value>SubCategory</value>
   </data>
 </root>

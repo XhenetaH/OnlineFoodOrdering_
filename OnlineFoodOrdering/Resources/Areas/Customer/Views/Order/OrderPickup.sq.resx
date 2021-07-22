@@ -123,6 +123,15 @@
   <data name="Full Name" xml:space="preserve">
     <value>Emri i Plotë</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Kryefaqja</value>
+  </data>
+  <data name="Order Pickup" xml:space="preserve">
+    <value>Pranimi i Porosive</value>
+  </data>
+  <data name="Order Pickup Table" xml:space="preserve">
+    <value>Tabela e Pranimit të Porosive</value>
+  </data>
   <data name="OrderTotal" xml:space="preserve">
     <value>Totali i porosisë</value>
   </data>

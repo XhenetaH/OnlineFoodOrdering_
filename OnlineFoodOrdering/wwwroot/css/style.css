@@ -200,6 +200,8 @@ textarea.textarea-field {
     color: #13aff0;
 }*/
 
+
+
 input[type="checkbox"] {
   display: none;
 }
@@ -4640,29 +4642,36 @@ button,
   font-weight: 600;
 }
 
-.login-register-wrapper .single-input-item input {
-  background: #ffffff none repeat scroll 0 0;
-  border: medium none rgba(0, 0, 0, 0);
-  border-radius: 0;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  color: #1B1B1C;
-  font-size: 14px;
-  height: 40px;
-  margin-bottom: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 100%;
+.login-register-wrapper .single-input-item input{
+    background: #ffffff none repeat scroll 0 0;
+    border: medium none rgba(0, 0, 0, 0);
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #1B1B1C;
+    font-size: 14px;
+    height: 40px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
 }
 
 .login-register-wrapper .single-input-item input:focus {
   border: 1px solid #E98C81;
 }
 
+.login-register-wrapper .xheni form button {
+    color: cornflowerblue;
+    font-size: 15px;
+    margin-bottom:10px;
+    
+}
+
+    /*----------------------------------------*/
+    /*    18 - Components - Button
 /*----------------------------------------*/
-/*    18 - Components - Button
-/*----------------------------------------*/
-.obrien-button {
+    .obrien-button {
   display: inline-block;
   font-size: 18px;
   font-weight: 600;
@@ -5566,7 +5575,7 @@ button,
 }
 
 .newsletter-area {
-  background: #f2f2f2 url(../images/bg/1-1.jpg) no-repeat scroll center center/cover;
+  background: #f2f2f2 url(../images/bg/anna.jpg) no-repeat scroll center center/cover;
   height: 430px;
 }
 

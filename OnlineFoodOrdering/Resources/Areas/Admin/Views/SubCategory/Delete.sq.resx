@@ -126,10 +126,16 @@
   <data name="Delete" xml:space="preserve">
     <value>Fshije</value>
   </data>
+  <data name="Delete SubCategory" xml:space="preserve">
+    <value>Fshij Nën kategori</value>
+  </data>
   <data name="New SubCategory" xml:space="preserve">
     <value>Nën kategori e re</value>
   </data>
   <data name="SubCategory Name" xml:space="preserve">
     <value>Emri i nën kategoris</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>Tabela e Nën kategorive</value>
   </data>
 </root>

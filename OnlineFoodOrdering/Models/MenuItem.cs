@@ -12,7 +12,11 @@ namespace OnlineFoodOrdering.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = ("The coupon name is too long."))]
+
         public string Name { get; set; }
+        [MaxLength(200, ErrorMessage = ("The coupon description is too long."))]
+
         public string Description { get; set; }
         public string Spicyness { get; set; }
         public enum ESpicy { NA=0, NotSpicy=1, Spicy=2, VerySpicy=3}
@@ -26,6 +30,8 @@ namespace OnlineFoodOrdering.Models
         [ForeignKey("SubCategoryId")]
         public virtual SubCategory SubCategory { get; set; }
         [Range(1,int.MaxValue, ErrorMessage ="Price should be greater than ${1}")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        [DataType(DataType.Currency)]
         public double Price { get; set; }
         public bool isFeatured { get; set; }
         public DateTime InsertDate { get; set; }

@@ -11,6 +11,7 @@ namespace OnlineFoodOrdering.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [MaxLength(20,ErrorMessage ="Category Name is too long.")]
         public string Name { get; set; }
     }
 }

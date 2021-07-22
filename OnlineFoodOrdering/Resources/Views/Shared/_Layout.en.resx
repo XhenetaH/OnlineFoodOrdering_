@@ -117,46 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About Us" xml:space="preserve">
+    <value>About Us</value>
+  </data>
   <data name="Call our support 24/7 at 01234-567-890" xml:space="preserve">
     <value>Call our support 24/7 at 01234-567-890</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
   </data>
   <data name="Contact now" xml:space="preserve">
     <value>Contact now</value>
   </data>
-  <data name="Coupon" xml:space="preserve">
-    <value>Coupon</value>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="coupon" xml:space="preserve">
+    <value>coupon</value>
+  </data>
+  <data name="Get" xml:space="preserve">
+    <value>Get</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Manage Order" xml:space="preserve">
-    <value>Manage Order</value>
-  </data>
-  <data name="Management" xml:space="preserve">
-    <value>Management</value>
-  </data>
-  <data name="MenuItem" xml:space="preserve">
-    <value>Menu Item</value>
+  <data name="My Account" xml:space="preserve">
+    <value>My Account</value>
   </data>
   <data name="Need Help" xml:space="preserve">
-    <value>Need Help?</value>
+    <value>Need Help</value>
   </data>
-  <data name="Order History" xml:space="preserve">
-    <value>Order History</value>
+  <data name="off with" xml:space="preserve">
+    <value>off with</value>
   </data>
-  <data name="Order Pickup" xml:space="preserve">
-    <value>Order Pickup</value>
+  <data name="Shop" xml:space="preserve">
+    <value>Shop</value>
   </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Orders</value>
-  </data>
-  <data name="SubCategory" xml:space="preserve">
-    <value>Sub Category</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
+  <data name="Shop Now" xml:space="preserve">
+    <value>Shop Now</value>
   </data>
 </root>

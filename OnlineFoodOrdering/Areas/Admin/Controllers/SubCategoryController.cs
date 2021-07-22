@@ -27,24 +27,22 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
             this._db = db;
         }
         //GET - Index
-        public async  Task<IActionResult> Index(int? page)
+        public IActionResult Index()
         {
-            var pageNumber = page ?? 1;
-            int pageSize = 10;
-            var onePageOfsubCategories = await _db.SubCategory.Include(s => s.Category).ToPagedListAsync(pageNumber,pageSize);
-            return View(onePageOfsubCategories);
+            var subCategoryList = _db.SubCategory.Include(s => s.Category).ToList();
+            return View(subCategoryList);
         }
 
         //GET - Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
             {
-                CategoryList = await _db.Category.ToListAsync(),
+                CategoryList = _db.Category.ToList(),
                 SubCategory = new Models.SubCategory(),
-                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToList()
             };
-            return PartialView("Create",model);
+            return View(model);
         }
 
         //POST - Create
@@ -52,14 +50,13 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SubCategoryAndCategoryViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var existSubCategory = _db.SubCategory.Include(s => s.Category).Where(s => s.Name == model.SubCategory.Name && s.Category.Id == model.SubCategory.CategoryId);
 
-                if(existSubCategory.Count()>0)
+                if (existSubCategory.Count() > 0)
                 {
-                    //StatusMessage_ = "Error : SubCategory exists under " + existSubCategory.First().Category.Name + " category. Please use another name.";
-                    return RedirectToAction(nameof(Index));
+                    StatusMessage_ = "Error : SubCategory exists under " + existSubCategory.First().Category.Name + " category. Please use another name.";
                 }
                 else
                 {
@@ -75,29 +72,29 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
                 SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
                 StatusMessage = StatusMessage_
             };
-            return PartialView("Create", modelVM);
+            return View(modelVM);
         }
 
 
         //GET - Edit
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var subCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
-            if(subCategory == null)
+            var subCategory = _db.SubCategory.SingleOrDefault(m => m.Id == id);
+            if (subCategory == null)
             {
                 return NotFound();
             }
             SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
             {
-                CategoryList = await _db.Category.ToListAsync(),
+                CategoryList = _db.Category.ToList(),
                 SubCategory = subCategory,
-                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToList()
             };
-            return PartialView("Edit",model);
+            return View(model);
         }
 
         //POST - Edit
@@ -105,70 +102,53 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,SubCategoryAndCategoryViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var existSubCategory = _db.SubCategory.Include(s => s.Category).Where(s => s.Name == model.SubCategory.Name && s.Category.Id == model.SubCategory.CategoryId);
+
+                if (existSubCategory.Count() > 0)
+                {
+                    StatusMessage_ = "Error : SubCategory exists under " + existSubCategory.First().Category.Name + " category. Please use another name.";
+                }
+                else
+                {
+                    var subCat = await _db.SubCategory.FindAsync(id);
+                    subCat.Name = model.SubCategory.Name;
+
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
             SubCategoryAndCategoryViewModel modelVM = new SubCategoryAndCategoryViewModel()
             {
                 CategoryList = await _db.Category.ToListAsync(),
-                SubCategory = await _db.SubCategory.FindAsync(id),
+                SubCategory = model.SubCategory,
                 SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
                 StatusMessage = StatusMessage_
             };
-            var existSubCategory = _db.SubCategory.Include(s => s.Category).Where(m => m.Name == model.SubCategory.Name && m.Category.Id == model.SubCategory.CategoryId);
-
-            if(existSubCategory.Count()>0)
-            {
-                var subCat = await _db.SubCategory.FindAsync(id);
-                subCat.Name = model.SubCategory.Name;
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return PartialView("Edit", modelVM);
-            }
-            
-            
-            //if (ModelState.IsValid)
-            //{
-            //    var existSubCategory = _db.SubCategory.Include(s => s.Category).Where(s => s.Name == model.SubCategory.Name && s.Category.Id == model.SubCategory.CategoryId);
-            //    if (existSubCategory.Count() < 0)
-            //    {
-            //        var subCat = await _db.SubCategory.FindAsync(id);
-            //        subCat.Name = model.SubCategory.Name;
-            //
-            //        await _db.SaveChangesAsync();
-            //        return PartialView("Index");
-            //    }
-            //
-            //}
-            //SubCategoryAndCategoryViewModel modelVM = new SubCategoryAndCategoryViewModel()
-            //{
-            //    CategoryList = await _db.Category.ToListAsync(),
-            //    SubCategory = model.SubCategory,
-            //    SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
-            //    StatusMessage = StatusMessage_
-            //};
-            //return PartialView("Edit", modelVM);
+            return View(modelVM);
+           
         }
 
         //GET - Delete
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var subCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
+            var subCategory = _db.SubCategory.SingleOrDefault(m => m.Id == id);
             if (subCategory == null)
             {
                 return NotFound();
             }
             SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
             {
-                CategoryList = await _db.Category.ToListAsync(),
+                CategoryList = _db.Category.ToList(),
                 SubCategory = subCategory,
-                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToList()
             };
-            return PartialView("Delete",model);
+            return View("Delete",model);
         }
 
         //POST - Delete
@@ -185,24 +165,24 @@ namespace OnlineFoodOrdering.Areas.Admin.Controllers
         }
 
         //GET - Details
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var subCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
+            var subCategory = _db.SubCategory.SingleOrDefault(m => m.Id == id);
             if (subCategory == null)
             {
                 return NotFound();
             }
             SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
             {
-                CategoryList = await _db.Category.ToListAsync(),
+                CategoryList = _db.Category.ToList(),
                 SubCategory = subCategory,
-                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+                SubCategoryList = _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToList()
             };
-            return PartialView("Details",model);
+            return View("Details",model);
         }
 
         [ActionName("GetSubCategory")]

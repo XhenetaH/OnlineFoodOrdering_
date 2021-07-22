@@ -123,6 +123,9 @@
   <data name="Create New" xml:space="preserve">
     <value>Create New</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -131,5 +134,8 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search...</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>SubCategory Table</value>
   </data>
 </root>

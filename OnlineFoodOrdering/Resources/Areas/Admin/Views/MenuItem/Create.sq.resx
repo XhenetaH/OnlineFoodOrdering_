@@ -117,17 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Category" xml:space="preserve">
+    <value>Kategoria</value>
+  </data>
+  <data name="Choose file" xml:space="preserve">
+    <value>Zgjedhni një foto</value>
+  </data>
+  <data name="Create Menu Item" xml:space="preserve">
+    <value>Krijo Artikull</value>
+  </data>
   <data name="Create New" xml:space="preserve">
     <value>Krijo</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Përshkrimi</value>
   </data>
+  <data name="Enter Description" xml:space="preserve">
+    <value>Shëno Përshkrimin</value>
+  </data>
+  <data name="Enter Menu Item Name" xml:space="preserve">
+    <value>Shëno emrin e Artikullit</value>
+  </data>
+  <data name="Enter Price" xml:space="preserve">
+    <value>Shëno Çmimin</value>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>Foto</value>
   </data>
   <data name="Is Featured" xml:space="preserve">
-    <value>Është e veçant?</value>
+    <value>Dëshironi ta veçoni artikullin?</value>
+  </data>
+  <data name="Menu Item Table" xml:space="preserve">
+    <value>Tabela e Artikujve</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
@@ -137,5 +158,11 @@
   </data>
   <data name="Price" xml:space="preserve">
     <value>Çmimi</value>
+  </data>
+  <data name="Spyciness" xml:space="preserve">
+    <value>Pikante</value>
+  </data>
+  <data name="SubCategory" xml:space="preserve">
+    <value>Nën kategoria</value>
   </data>
 </root>

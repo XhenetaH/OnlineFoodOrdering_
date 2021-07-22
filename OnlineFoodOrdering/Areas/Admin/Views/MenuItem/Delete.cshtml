@@ -1,52 +1,84 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.MenuItemViewModel
-@using OnlineFoodOrdering.Extensions
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
-<div class="myaccount-content">
-    <h3>@localizer["Are you sure you want to delete this?"]</h3>
-    <br />
-    <div class="account-details-form">
-        <form method="post" enctype="multipart/form-data">
-
-            <div class="row">
-
-                <br />
-                <div class="row">
-                    <div class="col-lg-7 col-custom">
-                        <div class="single-input-item mb-12">
-                            <label for="last-name" class="required mb-1">@localizer["Name"]</label>
-                            <input readonly asp-for="MenuItem.Name" />
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7 col-custom">
-                        <br />
-                        <div class="single-input-item mb-3">
-                            <label for="last-name" class="required mb-1">@localizer["Price"]</label>
-                            <input readonly asp-for="MenuItem.Price" />
-                        </div>
-                    </div>
-                    <div class="input-item mb-6">
-
-                        <img src="@Model.MenuItem.Image" class="foto-xh" />
-                    </div>
-                </div>
-
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["SubCategory"]</label>
-                    <input readonly asp-for="MenuItem.SubCategory.Name" />
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Category"]</label>
-                    <input readonly asp-for="MenuItem.Category.Name" />
-                </div>
             </div>
-
-            <div class="single-input-item single-item-button">
-                <br />
-                <button type="submit" asp-route-id="@Model.MenuItem.Id" class="btn obrien-button primary-btn" value="Save Changes">Delete</button>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="MenuItem">@localizer["MenuItem Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Delete MenuItem"]</li>
+                </ol>
             </div>
-
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Are you sure you want to delete this?"]</h3>
+                    </div>
+                    <form method="post">
+                        <br />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label>@localizer["Name"]</label>
+                                        <input asp-for="MenuItem.Name" disabled class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Description"]</label>
+                                        <textarea asp-for="MenuItem.Description" disabled class="form-control" style="height:110px;"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Price"]</label>
+                                        <input asp-for="MenuItem.Price" class="form-control" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Category"]</label>
+                                        <input asp-for="@Model.MenuItem.Category.Name" disabled class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["SubCategory"]</label>
+                                        <input asp-for="@Model.MenuItem.SubCategory.Name" disabled class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Spicyness"]</label>
+                                        <select asp-for="MenuItem.Spicyness" disabled asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
+                                    </div>
+                                    <div class="icheck-danger d-inline">
+                                        <input type="checkbox" disabled id="checkboxSuccess1" asp-for="MenuItem.isFeatured">
+                                        <label for="checkboxSuccess1">
+                                            @localizer["Is Featured"]
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+
+                                        <img src="@Model.MenuItem.Image" width="450" style="margin-top:33px;" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" asp-route-id="@Model.MenuItem.Id" class="btn btn-danger">@localizer["Delete"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

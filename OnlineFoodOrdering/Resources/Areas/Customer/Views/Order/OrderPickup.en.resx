@@ -123,6 +123,15 @@
   <data name="Full Name" xml:space="preserve">
     <value>Full Name</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Order Pickup" xml:space="preserve">
+    <value>Order Pickup</value>
+  </data>
+  <data name="Order Pickup Table" xml:space="preserve">
+    <value>Order Pickup Table</value>
+  </data>
   <data name="OrderTotal" xml:space="preserve">
     <value>Order Total</value>
   </data>

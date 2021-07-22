@@ -1,116 +1,212 @@
 ﻿@page
 @model RegisterModel
 @using OnlineFoodOrdering.Utility
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
 @{
     ViewData["Title"] = "Register";
 
 }
 
-<br/>
+@if (User.IsInRole(SD.ManagerUser))
+{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Name"></label>
-                <input asp-for="Input.Name" class="form-control" />
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.StreetAddress"></label>
-                <input asp-for="Input.StreetAddress" class="form-control" />
-                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.City"></label>
-                <input asp-for="Input.City" class="form-control" />
-                <span asp-validation-for="Input.City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.State"></label>
-                <input asp-for="Input.State" class="form-control" />
-                <span asp-validation-for="Input.State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.PostalCode"></label>
-                <input asp-for="Input.PostalCode" class="form-control" />
-                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
-            </div>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
 
-            @if (User.IsInRole(SD.ManagerUser))
-            {
-                <div class="form-group row">
-                    <div class="col-3">
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="User" asp-area="Admin">@localizer["Users Table"]</a></li>
+                        <li class="breadcrumb-item active">@localizer["Register User"]</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">@localizer["Register New User"]</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">@localizer["Full Name"]</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Input.Name" type="text" class="form-control" placeholder="@localizer["Enter your full Name"]">
+                                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">@localizer["Email"]</label>
+                            <div class="col-sm-10">
+                                <input type="email" asp-for="Input.Email" class="form-control" placeholder="@localizer["Enter your Email"]">
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["Password"]</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Input.Password" type="password" class="form-control" placeholder="@localizer["Enter your Password"]">
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["Confirm Password"]</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="@localizer["Confirm your Password"]">
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["Phone Number"]</label>
+                            <div class="col-sm-10">
+                                <input type="text" asp-for="Input.PhoneNumber" placeholder="@localizer["Enter your Phone Number"]" class="form-control">
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["Street Address"]</label>
+                            <div class="col-sm-10">
+                                <input type="text" asp-for="Input.StreetAddress" placeholder="@localizer["Enter your Streeet Address"]" class="form-control">
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["City"]</label>
+                            <div class="col-sm-10">
+                                <input type="text" asp-for="Input.City" placeholder="@localizer["Enter your City"]" class="form-control">
+                                <span asp-validation-for="Input.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["State"]</label>
+                            <div class="col-sm-10">
+                                <input type="text" asp-for="Input.State" placeholder="@localizer["Enter your State"]" class="form-control">
+                                <span asp-validation-for="Input.State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">@localizer["Postal Code"]</label>
+                            <div class="col-sm-10">
+                                <input type="text" asp-for="Input.PostalCode" placeholder="@localizer["Enter Postal Code"]" class="form-control">
+                                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <div class="offset-sm-2 col-sm-10">
+                                <div class="icheck-success d-inline" style="margin-right:20px;">
+                                    <input type="radio" name="r3" value="@SD.KitchenUser" checked id="radioSuccess1">
+                                    <label for="radioSuccess1">@localizer["Kitchen User"]</label>
+                                </div>
+                                <div class="icheck-success d-inline" style="margin-right:20px;">
+                                    <input type="radio" name="r3" value="@SD.FrontDeskUser" checked id="radioSuccess2">
+                                    <label for="radioSuccess2">@localizer["Front Desk User"]</label>
+                                </div>
+                                <div class="icheck-success d-inline">
+                                    <input type="radio" name="r3" value="@SD.ManagerUser" checked id="radioSuccess3">
+                                    <label for="radioSuccess3">@localizer["Manager"]</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">@localizer["Regiter New User"]</button>
 
                     </div>
-                    <div class="col-6">
-                        <input type="radio" name="rdUserRole" value="@SD.KitchenUser" checked />@SD.KitchenUser
-                        <input type="radio" name="rdUserRole" value="@SD.FrontDeskUser" checked />@SD.FrontDeskUser
-                        <input type="radio" name="rdUserRole" value="@SD.ManagerUser" checked />@SD.ManagerUser
+                </form>
+            </div>
+        </div>
+    </section>
+
+}
+else
+{
+    <!-- Breadcrumb Area Start Here -->
+    <div class="breadcrumbs-area position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="breadcrumb-content position-relative section-content">
+                        <h3 class="title-3">Login-Register</h3>
+                        <ul>
+                            <li><a asp-action="Index" asp-controller="Home">@localizer["Home"]</a></li>
+                            <li>@localizer["Login-Register"]</li>
+                        </ul>
                     </div>
                 </div>
-            }
-
-
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to register.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+    <!-- Breadcrumb Area End Here -->
+    <!-- Login Area Start Here -->
+    <div class="login-register-area mt-no-text mb-no-text">
+        <div class="container container-default-2 custom-area">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-custom">
+                    <div class="login-register-wrapper">
+                        <div class="section-content text-center mb-5">
+                            <h2 class="title-4 mb-2">Create Account</h2>
+                            <p class="desc-content">Please Register using account detail bellow.</p>
                         </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.Name" placeholder="@localizer["Enter your full Name"]">
+                                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.Email" placeholder="@localizer["Enter your Email"]">
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+                            <div class="single-input-item mb-3">
+                                <input asp-for="Input.Password" type="password" placeholder="@localizer["Enter your Password"]">
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input asp-for="Input.ConfirmPassword" type="password" placeholder="@localizer["Confirm your Password"]">
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.PhoneNumber" placeholder="@localizer["Enter your Phone Number"]">
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.StreetAddress" placeholder="@localizer["Enter your Streeet Address"]">
+                                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.City" placeholder="@localizer["Enter your City"]">
+                                <span asp-validation-for="Input.City" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.State" placeholder="@localizer["Enter your State"]">
+                                <span asp-validation-for="Input.State" class="text-danger"></span>
+                            </div>
+                            <div class="single-input-item mb-3">
+                                <input type="text" asp-for="Input.PostalCode" placeholder="@localizer["Enter Postal Code"]">
+                                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="single-input-item mb-3">
+                                <button class="btn obrien-button-2 primary-color" type="submit">@localizer["Register"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }

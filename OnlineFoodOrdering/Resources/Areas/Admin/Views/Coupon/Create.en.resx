@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Choose Coupon Type" xml:space="preserve">
+    <value>Choose Coupon Type</value>
+  </data>
+  <data name="Coupon Name" xml:space="preserve">
+    <value>Coupon Name</value>
+  </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Coupon Table</value>
+  </data>
   <data name="Coupon Type" xml:space="preserve">
     <value>Coupon Type</value>
+  </data>
+  <data name="Create Coupon" xml:space="preserve">
+    <value>Create Coupon</value>
   </data>
   <data name="Create New" xml:space="preserve">
     <value>Create New</value>
@@ -126,16 +138,19 @@
   <data name="Discount" xml:space="preserve">
     <value>Discount</value>
   </data>
+  <data name="Enter Discount" xml:space="preserve">
+    <value>Enter Discount</value>
+  </data>
+  <data name="Enter Minimum Amount" xml:space="preserve">
+    <value>Enter Minimum Amount</value>
+  </data>
+  <data name="Enter Name" xml:space="preserve">
+    <value>Enter Name</value>
+  </data>
   <data name="Is Active" xml:space="preserve">
     <value>Is Active?</value>
   </data>
   <data name="Minimum Amount" xml:space="preserve">
     <value>Minimum Amount</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="New Coupon" xml:space="preserve">
-    <value>New Coupon</value>
   </data>
 </root>

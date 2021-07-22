@@ -18,6 +18,7 @@ namespace OnlineFoodOrdering.Models
         [Required]
         public DateTime OrderDate { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public double OrderTotalOriginal { get; set; }
         [Required]
         [DisplayFormat(DataFormatString = "{0:C}")]

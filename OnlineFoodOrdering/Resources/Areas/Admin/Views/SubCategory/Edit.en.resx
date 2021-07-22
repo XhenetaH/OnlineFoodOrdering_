@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="Category Name" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="Existing Subcategories" xml:space="preserve">
+    <value>Existing Subcategories</value>
   </data>
   <data name="New SubCategory" xml:space="preserve">
     <value>New SubCategory</value>
@@ -128,6 +131,15 @@
   </data>
   <data name="Save Changes" xml:space="preserve">
     <value>Save Changes</value>
+  </data>
+  <data name="SubCategory Name" xml:space="preserve">
+    <value>SubCategory Name</value>
+  </data>
+  <data name="SubCategory Table" xml:space="preserve">
+    <value>SubCategory Table</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
   </data>
   <data name="Update SubCategory" xml:space="preserve">
     <value>Update SubCategory</value>

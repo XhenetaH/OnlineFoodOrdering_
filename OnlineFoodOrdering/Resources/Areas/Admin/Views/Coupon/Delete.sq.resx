@@ -120,19 +120,28 @@
   <data name="Are you" xml:space="preserve">
     <value>Je i sigurt që dëshiron ta fshish këtë?</value>
   </data>
+  <data name="Coupon Name" xml:space="preserve">
+    <value>Emri i Kuponit</value>
+  </data>
+  <data name="Coupon Table" xml:space="preserve">
+    <value>Tabela e Kuponëve</value>
+  </data>
   <data name="Coupon Type" xml:space="preserve">
     <value>Lloji i kuponit</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Fshije</value>
   </data>
+  <data name="Delete Coupon" xml:space="preserve">
+    <value>Fshije Kuponin</value>
+  </data>
   <data name="Discount" xml:space="preserve">
     <value>Zbritje</value>
   </data>
+  <data name="Is Active" xml:space="preserve">
+    <value>A është aktiv?</value>
+  </data>
   <data name="Minimum Amount" xml:space="preserve">
     <value>Shuma minimale</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Emri</value>
   </data>
 </root>

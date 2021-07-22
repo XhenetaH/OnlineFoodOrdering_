@@ -22,17 +22,14 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
         {
             this._db = db;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             CompareViewModel compareList = new CompareViewModel()
             {
-                CompareList = await _db.Compare.Include(m => m.MenuItem.Category).Where(c => c.ApplicationUserId == claim.Value).ToListAsync(),
-        };
-           
-
-            
+                CompareList = _db.Compare.Include(m => m.MenuItem.Category).Where(c => c.ApplicationUserId == claim.Value).ToList(),
+            };                       
             return View(compareList);
         }
 
@@ -57,9 +54,8 @@ namespace OnlineFoodOrdering.Areas.Customer.Controllers
             {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+               
                 ShoppingCart shop = new ShoppingCart();
-
-
                 ShoppingCart cartFromDb = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value && c.MenuItemId == CompareObject.Compare.MenuItemId).FirstOrDefaultAsync();
 
                 if (cartFromDb == null)

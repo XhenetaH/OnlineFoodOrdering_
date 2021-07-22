@@ -1,83 +1,113 @@
 ﻿@model OnlineFoodOrdering.Models.ViewModels.MenuItemViewModel
-@using OnlineFoodOrdering.Extensions
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-<div class="myaccount-content">
-    <h3>@localizer["Menu Item Update"]</h3>
-    <br />
-    <div class="account-details-form">
-        <form method="post" enctype="multipart/form-data">
-
-            <div class="row">
-
-                <br />
-                <div class="row">
-                    <div class="col-lg-7 col-custom">
-                        <input type="hidden" asp-for="MenuItem.Id" />
-                        <div class="single-input-item mb-12">
-                            <label for="last-name" class="required mb-1">@localizer["Name"]</label>
-                            <input asp-for="MenuItem.Name" />
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7 col-custom">
-                        <br />
-                        <div class="single-input-item mb-3">
-                            <label for="last-name" class="required mb-1">@localizer["Price"]</label>
-                            <input asp-for="MenuItem.Price" />
-                        </div>
-                    </div>
-                    <div class="input-item mb-6">
-
-                        <img src="@Model.MenuItem.Image" width="280" style="float:right; margin-top:-170px;" />
-                    </div>
-                </div>
-
-
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Description"]</label>
-                    <textarea asp-for="MenuItem.Description" cols="30" rows="5" class="border rounded-0 w-100 custom-textarea input-area" style="padding:10px;"></textarea>
-
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Image"]</label>
-                    <input type="file" name="files" multiple class="form-control" />
-                </div>
-                <div class="single-input-item mb-3">
-                    <label asp-for="MenuItem.CategoryId" class="required mb-1"></label>
-                    <select asp-for="@Model.MenuItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryId)" class="form-control"></select>
-                </div>
-                <div class="single-input-item mb-3">
-                    <label asp-for="MenuItem.SubCategoryId" class="required mb-1"></label>
-                    <select asp-for="@Model.MenuItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="Model.SubCategory.ToSelectListItem(Model.MenuItem.SubCategory.Id)" class="form-control"></select>
-                </div>
-                <div class="single-input-item mb-3">
-                    <label for="first-name" class="required mb-1">@localizer["Spiciness"]</label>
-                    <select asp-for="MenuItem.Spicyness" asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" asp-for="MenuItem.isFeatured">
-                    <label class="custom-control-label">@localizer["Is Featured"]</label>
-                </div>
+@using OnlineFoodOrdering.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
 
             </div>
-
-            <div class="single-input-item single-item-button">
-                <br />
-                <button type="submit" asp-route-id="@Model.MenuItem.Id" class="btn obrien-button primary-btn" value="Save Changes">@localizer["Save Changes"]</button>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="MenuItem">@localizer["MenuItem Table"]</a></li>
+                    <li class="breadcrumb-item active">@localizer["Update MenuItem"]</li>
+                </ol>
             </div>
-
-        </form>
+        </div>
     </div>
-</div>
-<script type="text/javascript">
-            $(document).ready(function () {
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">@localizer["Update MenuItem"]</h3>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <br />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <input type="hidden" asp-for="MenuItem.Id" />
+                                    <div class="form-group">
+                                        <label>@localizer["Name"]</label>
+                                        <input asp-for="MenuItem.Name" class="form-control">
+                                        <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Description"]</label>
+                                        <textarea asp-for="MenuItem.Description" class="form-control" style="height:110px;"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Price"]</label>
+                                        <input asp-for="MenuItem.Price" class="form-control">
+                                        <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Category"]</label>
+                                        <select asp-for="@Model.MenuItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.MenuItem.CategoryId)" class="form-control"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["SubCategory"]</label>
+                                        <select asp-for="@Model.MenuItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@localizer["Spiciness"]</label>
+                                        <select asp-for="MenuItem.Spicyness" asp-items="Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" id="checkboxSuccess1" asp-for="MenuItem.isFeatured">
+                                        <label for="checkboxSuccess1">
+                                            @localizer["Is Featured"]
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <img src="@Model.MenuItem.Image" width="470" style="margin-top:33px; max-height:350px;" />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="files" class="custom-file-input" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">@localizer["Choose file"]</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+
+        $(document).ready(function () {
                 getSubCategory();
                 $('#CategoryId').change(function () {
                     getSubCategory();
-
                 });
-
             });
 
 
@@ -88,10 +118,10 @@
                         var items = '';
                         $('#SubCategoryId').empty();
                         $.each(data, function (i, subcategory) {
-                            items += "<option value='" + subcategory.value + "' " + (subcategory.value == @Model.MenuItem.SubCategoryId ? "selected" : "") + ">" + subcategory.text + "</option>";
+                            items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
                         });
                         $('#SubCategoryId').html(items);
                     })
                 }
-</script>
-
+    </script>
+}

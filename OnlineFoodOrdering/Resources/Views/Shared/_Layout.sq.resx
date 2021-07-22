@@ -117,46 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Call our support 24/7 at 01234-567-890" xml:space="preserve">
-    <value>Telefononi 24/7 në numrin 01234-567-890</value>
+  <data name="About Us" xml:space="preserve">
+    <value>Rreth Nesh</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Kategori</value>
+  <data name="Call our support 24/7 at 01234-567-890" xml:space="preserve">
+    <value>Telefononi në 01234-567-890</value>
   </data>
   <data name="Contact now" xml:space="preserve">
     <value>Kontaktoni Tani</value>
   </data>
-  <data name="Coupon" xml:space="preserve">
-    <value>Kuponi</value>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Kontakti</value>
+  </data>
+  <data name="coupon" xml:space="preserve">
+    <value>kuponin</value>
+  </data>
+  <data name="Get" xml:space="preserve">
+    <value>Merr</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Kryefaqja</value>
   </data>
-  <data name="Manage Order" xml:space="preserve">
-    <value>Menaxhimi i Porosive</value>
-  </data>
-  <data name="Management" xml:space="preserve">
-    <value>Menaxhimi</value>
-  </data>
-  <data name="MenuItem" xml:space="preserve">
-    <value>Menyja</value>
+  <data name="My Account" xml:space="preserve">
+    <value>Llogaria Ime</value>
   </data>
   <data name="Need Help" xml:space="preserve">
     <value>Ju nevoitet ndihmë?</value>
   </data>
-  <data name="Order History" xml:space="preserve">
-    <value>Historia e Porosive</value>
+  <data name="off with" xml:space="preserve">
+    <value>zbritje me</value>
   </data>
-  <data name="Order Pickup" xml:space="preserve">
-    <value>Marrja e Porosive</value>
+  <data name="Shop" xml:space="preserve">
+    <value>Dyqani</value>
   </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Porositë</value>
-  </data>
-  <data name="SubCategory" xml:space="preserve">
-    <value>Nën Kategori</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Përdoruesit</value>
+  <data name="Shop Now" xml:space="preserve">
+    <value>Blej Tani</value>
   </data>
 </root>

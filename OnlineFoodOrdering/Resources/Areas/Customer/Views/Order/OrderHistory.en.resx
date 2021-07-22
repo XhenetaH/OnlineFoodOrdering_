@@ -123,6 +123,15 @@
   <data name="Full Name" xml:space="preserve">
     <value>Full Name</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Order History" xml:space="preserve">
+    <value>Order History</value>
+  </data>
+  <data name="Order History Table" xml:space="preserve">
+    <value>Order History Table</value>
+  </data>
   <data name="Order Total" xml:space="preserve">
     <value>Order Total</value>
   </data>

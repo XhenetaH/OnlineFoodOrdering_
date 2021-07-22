@@ -132,6 +132,9 @@
   <data name="Menu Item Details" xml:space="preserve">
     <value>Detajet e Menysë</value>
   </data>
+  <data name="MenuItem Table" xml:space="preserve">
+    <value>Tabela e Artikujve</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Emri</value>
   </data>
